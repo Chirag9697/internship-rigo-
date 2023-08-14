@@ -1,4 +1,7 @@
+//lib
 import {Model} from 'objection';
+
+//local
 import { animal } from '../../animal';
 
 export class person extends Model{

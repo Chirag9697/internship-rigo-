@@ -1,4 +1,7 @@
+//lib
 import express from 'express';
+
+//local
 import * as fromPersonUseCase from ".."
 
 export const router=express.Router();

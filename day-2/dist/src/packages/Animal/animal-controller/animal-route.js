@@ -54,5 +54,4 @@ exports.router.patch('/updateanimal/:id/:animalname', (req, res) => {
     console.log(fromAnimalUseCase.update(data2));
     res.send("updaing the record");
 });
-// module.exports=router;
 //# sourceMappingURL=animal-route.js.map

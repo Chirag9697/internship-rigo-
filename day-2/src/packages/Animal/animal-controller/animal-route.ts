@@ -34,5 +34,3 @@ router.patch('/updateanimal/:id/:animalname',(req,res)=>{
     res.send("updaing the record");
 })
 
-
-// module.exports=router;
