@@ -20,12 +20,12 @@ router.get('/getallperson',(req,res)=>{
     res.send("getting all the persons");
 })
 
-router.get('/getone/:id',async(req,res)=>{
+router.get('/getone/:id',(req,res)=>{
     // console.log(req.params);
     const person=fromPersonUseCase.get_one(req.params.id);
     // console.log(await person);
     // res.send('hello');
-    res.send(await person);
+    res.send("person is found");
 })
 
 router.delete('/deleteperson/:id/',(req,res)=>{
@@ -40,6 +40,12 @@ router.patch('/updateperson/:id/:first_name',(req,res)=>{
     console.log(fromPersonUseCase.update(data2));
     res.send("updaing the record");
 })
+router.post('/pdf-service',async(req,res)=>{
+    console.log("hello");
+    const pdf=await fromPersonUseCase.generatepdf(req.body);
+    res.send(pdf);
+})
+
 
 
 // module.exports=route
