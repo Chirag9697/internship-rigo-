@@ -26,41 +26,42 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.router = void 0;
 const express_1 = __importDefault(require("express"));
 const fromPersonUseCase = __importStar(require("../../Person"));
-const router = express_1.default.Router();
-router.get('/', (req, res) => {
+exports.router = express_1.default.Router();
+exports.router.get('/', (req, res) => {
     res.send("hello I am person");
 });
-router.post('/createperson/', (req, res) => {
+exports.router.post('/createperson/', (req, res) => {
     const data = { first_name: req.body.first_name };
     console.log(fromPersonUseCase.create(data));
     res.send("person is created");
 });
-router.get('/getallperson', (req, res) => {
+exports.router.get('/getallperson', (req, res) => {
     const allPersons = fromPersonUseCase.get_all();
     console.log(allPersons);
     res.send("getting all the persons");
 });
-router.get('/getone/:id', (req, res) => {
+exports.router.get('/getone/:id', (req, res) => {
     const person = fromPersonUseCase.get_one(req.params.id);
     res.send("person is found");
 });
-router.delete('/deleteperson/:id/', (req, res) => {
+exports.router.delete('/deleteperson/:id/', (req, res) => {
     console.log("hello");
     const deleting = fromPersonUseCase.deleterecord(req.params.id);
     res.send('deleted');
 });
-router.patch('/updateperson/:id/:first_name', (req, res) => {
+exports.router.patch('/updateperson/:id/:first_name', (req, res) => {
     const data2 = { idi: req.params.id, first_name: req.params.first_name };
     console.log(fromPersonUseCase.update(data2));
     res.send("updaing the record");
 });
-router.post('/pdf-service', async (req, res) => {
-    console.log("hello");
+exports.router.post('/pdf-service', async (req, res) => {
+    // console.log("hello");
     const pdf = await fromPersonUseCase.generatepdf(req.body);
     res.send(pdf);
 });
 // module.exports=route
-module.exports = router;
+// module.exports=router;
 //# sourceMappingURL=personroute.js.map

@@ -1,34 +1,36 @@
+//lib
 import {Model} from "objection";
 import {development} from "../knexfile.js"
-import * as fromPersonUseCase from "./packages/Person"
 import knex from "knex";
 import express from 'express';
 import bodyParser from 'body-parser';
 import puppeteer from 'puppeteer';
-import { globalErrorHandler } from "./errorhandler/globalerrorhandler.js";
-// import { Person } from "./packages/Person";
 
-// import {personController} from '../src/packages/Person/personController/personroute.js';
+//local
+import { globalErrorHandler } from "./error-handler/global-error-handler.js";
+import * as fromPersonUseCase from "./packages/person";
+import * as fromAnimalUseCase from "./packages/animal";
+
+
 const app=express();
 const connection: any = development;
-const personController=require('./packages/Person/personController/personroute.js')
-const animalController=require('./packages/Animal/animalController/animalroute.js');
+
 Model.knex(knex(connection));
 
-app.use(express.json()); 
-app.use('/person',personController);
-app.use('/animal',animalController);
+app.use(express.json());
+
+
+// app.all('/v1/api');
+// app.use('/v1/api');
+const path='/v1/api';
+app.use(`${path}/person`,fromPersonUseCase.router);
+app.use(`${path}/animal`,fromAnimalUseCase.router);
 
 app.all("*",(req,res,next)=>{
     const err=new Error('somethin went wrong');
     next(err);
 })
 app.use(globalErrorHandler); 
-// express route
-// app.ues(personController)
-// app.ues(animalController)
-
-
 
 app.listen(3000,()=>{
     console.log("listening on port 3000");   

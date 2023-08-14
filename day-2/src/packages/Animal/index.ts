@@ -1,3 +1,3 @@
-export * from './domain/Animal';
-export * from './usecases';
-export * from './animalController';
+export * from './domain/animal';
+export * from './use-cases';
+export * from './animal-controller/animal-route';

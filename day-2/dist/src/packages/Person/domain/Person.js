@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Person = void 0;
+exports.person = void 0;
 const objection_1 = require("objection");
-const Animal_1 = require("../../Animal");
-class Person extends objection_1.Model {
+const animal_1 = require("../../animal");
+class person extends objection_1.Model {
     static get tableName() {
         return 'persons';
     }
 }
-exports.Person = Person;
-Person.relationMappings = {
+exports.person = person;
+person.relationMappings = {
     animals: {
         relation: objection_1.Model.HasManyRelation,
-        modelClass: Animal_1.Animal,
+        modelClass: animal_1.animal,
         join: {
             from: 'persons.id',
             to: 'animals.ownerid'
         }
     }
 };
-//# sourceMappingURL=Person.js.map
+//# sourceMappingURL=person.js.map

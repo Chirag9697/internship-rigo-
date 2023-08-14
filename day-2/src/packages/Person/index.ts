@@ -1,3 +1,3 @@
-export * from './domain/Person';
-export * from './usecases';
-export * from './personController';
+export * from './domain/person'
+export * from './use-cases';
+export * from './person-controller/person-route';

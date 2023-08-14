@@ -1,7 +1,7 @@
 import {Model} from 'objection';
-import { Animal } from '../../Animal';
+import { animal } from '../../animal';
 
-export class Person extends Model{
+export class person extends Model{
     first_name?: string;
     idi?:number;
     static get tableName(){
@@ -10,7 +10,7 @@ export class Person extends Model{
     static relationMappings = {
         animals: {
             relation: Model.HasManyRelation,
-            modelClass:Animal,
+            modelClass:animal,
             join: {
                 from: 'persons.id',
                 to: 'animals.ownerid'

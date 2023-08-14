@@ -1,6 +1,6 @@
 import {Model} from 'objection';
 // import { Person } from '../../Person';
-export class Animal extends Model{
+export class animal extends Model{
     animalname?: string;
     idi?:number;
     ownerid?:number;
