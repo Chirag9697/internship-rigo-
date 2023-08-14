@@ -19,9 +19,6 @@ Model.knex(knex(connection));
 
 app.use(express.json());
 
-
-// app.all('/v1/api');
-// app.use('/v1/api');
 const path='/v1/api';
 app.use(`${path}/person`,fromPersonUseCase.router);
 app.use(`${path}/animal`,fromAnimalUseCase.router);

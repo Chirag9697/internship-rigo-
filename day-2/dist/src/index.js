@@ -39,8 +39,6 @@ const app = (0, express_1.default)();
 const connection = knexfile_js_1.development;
 objection_1.Model.knex((0, knex_1.default)(connection));
 app.use(express_1.default.json());
-// app.all('/v1/api');
-// app.use('/v1/api');
 const path = '/v1/api';
 app.use(`${path}/person`, fromPersonUseCase.router);
 app.use(`${path}/animal`, fromAnimalUseCase.router);
