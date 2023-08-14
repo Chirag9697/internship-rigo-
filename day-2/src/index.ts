@@ -1,34 +1,53 @@
-import { Model } from "objection";
+import {Model} from "objection";
 import {development} from "../knexfile.js"
-import { create, deleterecord, get_all, get_one, update } from "./packages/Person/index.js";
+import * as fromPersonUseCase from "./packages/Person"
 import knex from "knex";
-import { Person } from "./packages/Person/index.js";
-const connection:any=development;
-
+import express from 'express';
+import bodyParser from 'body-parser';
+import puppeteer from 'puppeteer';
+import { globalErrorHandler } from "./errorhandler/globalerrorhandler.js";
+// import {personController} from '../src/packages/Person/personController/personroute.js';
+const app=express();
+const connection: any = development;
+const personController=require('./packages/Person/personController/personroute.js')
 Model.knex(knex(connection));
-async function main(){
-    const data:Partial<Person>={first_name:"chirag"};
+
+app.use(express.json()); 
+app.use('/person',personController);
+app.all("*",(req,res,next)=>{
+    const err=new Error('somethin went wrong');
+    next(err);
+})
+app.use(globalErrorHandler); 
+// express route
+// app.ues(personController)
+// app.ues(animalController)
+
+async function main() {
+    const data: Partial<fromPersonUseCase.Person> = {first_name: "chirag"};
     console.log("creating new data");
-    await create(data);
+    await fromPersonUseCase.create(data);
     console.log("getting all the data");
     // console.log(get_all())
-    await get_all();
-    const data2:Partial<Person>={idi:27,first_name:'rohanram'};
+    await fromPersonUseCase.get_all();
+    const data2: Partial<fromPersonUseCase.Person> = {idi: 27, first_name: 'rohanram'};
     console.log("updating a record");
-    await update(data2);
+    await fromPersonUseCase.update(data2);
 
     console.log("getting all the records");
-    await get_all();
-    
+    await fromPersonUseCase.get_all();
+
     console.log("deleting a record");
-    await deleterecord(27);
+    await fromPersonUseCase.deleterecord(27);
 
     console.log("getting all the records");
-    await get_all();
+    await fromPersonUseCase.get_all();
 
     console.log("getting a record with id 1");
-    await get_one(11);
+    await fromPersonUseCase.get_one(11);
 }
 
-main();
-    
+// main();
+app.listen(3000,()=>{
+    console.log("listening on port 3000");   
+})
