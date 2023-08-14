@@ -32,8 +32,6 @@ const router = express_1.default.Router();
 router.get('/', (req, res) => {
     res.send("hello I am person");
 });
-// console.log("creating new data");
-// await fromPersonUseCase.create(data);
 router.post('/createperson/', (req, res) => {
     const data = { first_name: req.body.first_name };
     console.log(fromPersonUseCase.create(data));
@@ -45,10 +43,7 @@ router.get('/getallperson', (req, res) => {
     res.send("getting all the persons");
 });
 router.get('/getone/:id', (req, res) => {
-    // console.log(req.params);
     const person = fromPersonUseCase.get_one(req.params.id);
-    // console.log(await person);
-    // res.send('hello');
     res.send("person is found");
 });
 router.delete('/deleteperson/:id/', (req, res) => {

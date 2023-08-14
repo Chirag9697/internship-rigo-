@@ -6,9 +6,7 @@ const router=express.Router();
 
 router.get('/',(req,res)=>{
     res.send("hello I am animal");
-})
-// console.log("creating new data");
-// await fromAnimalUseCase.create(data);
+})  
 router.post('/createanimal/',(req,res)=>{
     const data: Partial<fromAnimalUseCase.Animal> = {animalname:req.body.animalname,ownerid:req.body.ownerid};
     console.log(fromAnimalUseCase.create(data));
@@ -22,10 +20,7 @@ router.get('/getallanimal',(req,res)=>{
 })
 
 router.get('/getone/:id',(req,res)=>{
-    // console.log(req.params);
     const person=fromAnimalUseCase.get_one(req.params.id);
-    // console.log(await person);
-    // res.send('hello');
     res.send("animal is found");
 })
 
@@ -36,13 +31,11 @@ router.delete('/deleteanimal/:id/',(req,res)=>{
     res.send('deleted');
 })
 
-router.patch('/updateanimal/:id/:first_name',(req,res)=>{
+router.patch('/updateanimal/:id/:animalname',(req,res)=>{
     const data2: Partial<fromAnimalUseCase.Animal> = {idi: req.params.id, animalname: req.params.animalname};
     console.log(fromAnimalUseCase.update(data2));
     res.send("updaing the record");
 })
 
 
-
-// module.exports=route
 module.exports=router;
