@@ -3,10 +3,12 @@ import {Model} from 'objection';
 export class Animal extends Model{
     animalname?: string;
     idi?:number;
-    
+    ownerid?:number;
     static get tableName(){
         return 'animals';
     }
+
+
   
 }
 

@@ -35,9 +35,9 @@ router.get('/', (req, res) => {
 // console.log("creating new data");
 // await fromAnimalUseCase.create(data);
 router.post('/createanimal/', (req, res) => {
-    const data = { animalname: req.body.animalname };
+    const data = { animalname: req.body.animalname, ownerid: req.body.ownerid };
     console.log(fromAnimalUseCase.create(data));
-    res.send("person is created");
+    res.send("animal is created");
 });
 router.get('/getallanimal', (req, res) => {
     const allanimals = fromAnimalUseCase.get_all();

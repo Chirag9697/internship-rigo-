@@ -1,4 +1,5 @@
 import {Model} from 'objection';
+import { Animal } from '../../Animal';
 
 export class Person extends Model{
     first_name?: string;
@@ -6,5 +7,15 @@ export class Person extends Model{
     static get tableName(){
         return 'persons';
     }
+    static relationMappings = {
+        animals: {
+            relation: Model.HasManyRelation,
+            modelClass:Animal,
+            join: {
+                from: 'persons.id',
+                to: 'animals.ownerid'
+            }
+        }
+    };
 }
 

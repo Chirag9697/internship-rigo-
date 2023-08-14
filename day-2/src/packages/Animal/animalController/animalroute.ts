@@ -10,9 +10,9 @@ router.get('/',(req,res)=>{
 // console.log("creating new data");
 // await fromAnimalUseCase.create(data);
 router.post('/createanimal/',(req,res)=>{
-    const data: Partial<fromAnimalUseCase.Animal> = {animalname:req.body.animalname};
+    const data: Partial<fromAnimalUseCase.Animal> = {animalname:req.body.animalname,ownerid:req.body.ownerid};
     console.log(fromAnimalUseCase.create(data));
-    res.send("person is created");
+    res.send("animal is created");
 
 })
 router.get('/getallanimal',(req,res)=>{
