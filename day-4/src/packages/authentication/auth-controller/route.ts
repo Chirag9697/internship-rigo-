@@ -10,11 +10,7 @@ import * as fromroles from  '../../roles';
 dotenv.config();
 
 const app=express();
-// const saltRounds=0;
-// const salt='helo';
 export const router=express.Router()
-
-
 
 router.post('/register',async(req,res)=>{
     console.log("welcome to register page");
