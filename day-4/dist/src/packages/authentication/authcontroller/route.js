@@ -29,9 +29,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = __importDefault(require("express"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const fromusers = __importStar(require("../../users"));
 const app = (0, express_1.default)();
-const saltRounds = 10;
+const saltRounds = 0;
 const salt = 'helo';
 // const jwt=jsonwebtoken();
 exports.router = express_1.default.Router();
@@ -59,5 +60,24 @@ exports.router.post('/register', async (req, res) => {
     });
     console.log(roles);
     res.send("successfully registered");
+});
+exports.router.get('/login', async (req, res) => {
+    const { email, password } = req.body;
+    console.log(email, password);
+    const userpassword = await fromusers.user.query().select('password').where('email', '=', email);
+    if (userpassword) {
+        const check = await bcrypt_1.default.compare(password, userpassword[0]['password']);
+        if (check) {
+            const token = jsonwebtoken_1.default.sign({ email: email, password: password }, 'shhh');
+            console.log(token);
+            res.json({ token: token });
+        }
+        else {
+            res.send("password is not correct");
+        }
+    }
+    else {
+        res.send("user not found");
+    }
 });
 //# sourceMappingURL=route.js.map

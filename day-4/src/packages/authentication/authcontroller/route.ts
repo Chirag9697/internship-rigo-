@@ -1,13 +1,13 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
-import {jwt} from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import * as fromusers from '../../users';
 import * as fromroles from  '../../roles';
 
 
 
 const app=express();
-const saltRounds=10;
+const saltRounds=0;
 const salt='helo';
 // const jwt=jsonwebtoken();
 export const router=express.Router();
@@ -38,5 +38,23 @@ router.post('/register',async(req,res)=>{
     })
     console.log(roles);
     res.send("successfully registered")
-
+})
+router.get('/login',async(req,res)=>{
+    const {email,password}=req.body;
+    console.log(email,password);
+    const userpassword=await fromusers.user.query().select('password').where('email','=',email);
+    if(userpassword){
+        const check=await bcrypt.compare(password,userpassword[0]['password']);
+        if(check){
+            const token=jwt.sign({email:email,password:password},'shhh');
+            console.log(token);
+            res.json({token:token});
+        }
+        else{
+            res.send("password is not correct");
+        }
+    }  
+    else{
+        res.send("user not found")
+    }
 })
