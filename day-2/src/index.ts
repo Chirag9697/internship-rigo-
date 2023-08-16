@@ -27,6 +27,7 @@ app.all("*",(req,res,next)=>{
     const err=new Error('somethin went wrong');
     next(err);
 })
+
 app.use(globalErrorHandler); 
 
 app.listen(3000,()=>{

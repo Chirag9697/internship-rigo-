@@ -8,8 +8,8 @@ router.post('/createanimal/',(req,res)=>{
     const data: Partial<fromAnimalUseCase.animal> = {animalname:req.body.animalname,ownerid:req.body.ownerid};
     console.log(fromAnimalUseCase.create(data));
     res.send("animal is created");
-
 })
+
 router.get('/getallanimal',(req,res)=>{
     const allanimals=fromAnimalUseCase.get_all();
     console.log(allanimals);

@@ -6,9 +6,6 @@ export class animal extends Model{
     ownerid?:number;
     static get tableName(){
         return 'animals';
-    }
-
-
-  
+    } 
 }
 
