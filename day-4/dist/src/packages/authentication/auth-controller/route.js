@@ -31,17 +31,19 @@ exports.router = void 0;
 const express_1 = __importDefault(require("express"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const dotenv_1 = __importDefault(require("dotenv"));
 //local
 const fromusers = __importStar(require("../../users"));
 const fromroles = __importStar(require("../../roles"));
+dotenv_1.default.config();
 const app = (0, express_1.default)();
-const saltRounds = 0;
-const salt = 'helo';
+// const saltRounds=0;
+// const salt='helo';
 exports.router = express_1.default.Router();
 exports.router.post('/register', async (req, res) => {
     console.log("welcome to register page");
     const { email, password, roleuser } = req.body;
-    const data = { email: email, password: await bcrypt_1.default.hash(password, saltRounds) };
+    const data = { email: email, password: await bcrypt_1.default.hash(password, parseInt(process.env.Saltrounds)) };
     const userid = await fromusers.create(data);
     const roledata = { id: userid['id'], rolename: roleuser };
     const pass = await fromroles.create(roledata);
@@ -60,7 +62,7 @@ exports.router.get('/login', async (req, res) => {
     if (!check) {
         return res.send("user not found");
     }
-    const token = jsonwebtoken_1.default.sign({ email: email, password: password }, 'shhh');
+    const token = jsonwebtoken_1.default.sign({ email: email, password: password }, process.env.PRIVATE_KEY);
     console.log(token);
     res.json({ token: token });
 });

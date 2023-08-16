@@ -2,24 +2,24 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-
+import dotenv from 'dotenv';
 //local
 import * as fromusers from '../../users';
 import * as fromroles from  '../../roles';
 
-
+dotenv.config();
 
 const app=express();
-const saltRounds=0;
-const salt='helo';
-export const router=express.Router();
+// const saltRounds=0;
+// const salt='helo';
+export const router=express.Router()
 
 
 
 router.post('/register',async(req,res)=>{
     console.log("welcome to register page");
     const {email,password,roleuser}=req.body;
-    const data={email:email,password:await bcrypt.hash(password,saltRounds)};
+    const data={email:email,password:await bcrypt.hash(password,parseInt(process.env.Saltrounds))};
     const userid=await fromusers.create(data);
     const roledata={id:userid['id'],rolename:roleuser}
     const pass=await fromroles.create(roledata);
@@ -38,7 +38,7 @@ router.get('/login',async(req,res)=>{
     if(!check){
         return res.send("user not found")
     }
-    const token=jwt.sign({email:email,password:password},'shhh');
+    const token=jwt.sign({email:email,password:password},process.env.PRIVATE_KEY);
     console.log(token);
     res.json({token:token});
 })
