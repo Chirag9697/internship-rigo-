@@ -37,8 +37,6 @@ const fromusers = __importStar(require("../../users"));
 const fromroles = __importStar(require("../../roles"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
-// const saltRounds=0;
-// const salt='helo';
 exports.router = express_1.default.Router();
 exports.router.post('/register', async (req, res) => {
     console.log("welcome to register page");

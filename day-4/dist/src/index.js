@@ -28,20 +28,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const auth = __importStar(require("./packages/authentication"));
-// import {development} from "../knexfile.js"
+const fromAnimalUseCase = __importStar(require("./packages/animal"));
 const knex_1 = __importDefault(require("knex"));
 const knexfile_1 = require("../knexfile");
 const objection_1 = require("objection");
-// const Knex=require('knex');
 const app = (0, express_1.default)();
 const connection = knexfile_1.development;
-// console.log(connection);
-// console.log(development);
 objection_1.Model.knex((0, knex_1.default)(connection));
 app.use(express_1.default.json());
 app.use('/', auth.router);
+app.use('/animal', fromAnimalUseCase.router);
 app.listen(3000, (req, res) => {
-    // console.log(development);
     console.log("listening on port 3000");
 });
 //# sourceMappingURL=index.js.map
