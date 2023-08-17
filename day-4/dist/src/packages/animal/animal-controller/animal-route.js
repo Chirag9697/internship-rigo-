@@ -29,37 +29,37 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 //lib
 const express_1 = __importDefault(require("express"));
+const authentication_1 = require("../../authentication");
 //local
 const fromAnimalUseCase = __importStar(require(".."));
-const fromAuth = __importStar(require("../../authentication"));
 exports.router = express_1.default.Router();
-exports.router.post('/createanimal/', (req, res) => {
+exports.router.post('/createanimal/', (0, authentication_1.checktoken)(['employee', 'admin']), (req, res) => {
     const data = { animalname: req.body.animalname };
     console.log(fromAnimalUseCase.create(data));
     res.send("animal is created");
 });
-exports.router.get('/getallanimal', fromAuth.checktoken, (req, res) => {
+exports.router.get('/getallanimal', (0, authentication_1.checktoken)(['employee', 'admin']), (req, res) => {
     // console.log('hello');
     console.log(req.user);
     const allanimals = fromAnimalUseCase.get_all();
     console.log(allanimals);
     res.send("getting all the animals");
 });
-exports.router.get('/getone/:id', (req, res) => {
+exports.router.get('/getone/:id', (0, authentication_1.checktoken)(['admin', 'employee']), (req, res) => {
     const animal = fromAnimalUseCase.get_one(req.params.id);
     res.send("animal is found");
 });
-exports.router.delete('/deleteanimal/:id/', (req, res) => {
+exports.router.delete('/deleteanimal/:id/', (0, authentication_1.checktoken)(['admin']), (req, res) => {
     console.log("hello");
     const deleting = fromAnimalUseCase.deleterecord(req.params.id);
     res.send('deleted');
 });
-exports.router.patch('/updateanimal/:id/:first_name', (req, res) => {
+exports.router.patch('/updateanimal/:id/:first_name', (0, authentication_1.checktoken)(['admin']), (req, res) => {
     const data2 = { idi: req.params.id, animalname: req.params.animalname };
     console.log(fromAnimalUseCase.update(data2));
     res.send("updaing the record");
 });
-exports.router.post('/pdf-service', async (req, res) => {
+exports.router.post('/pdf-service', (0, authentication_1.checktoken)(['admin', 'employee']), async (req, res) => {
     // console.log("hello");
     const pdf = await fromAnimalUseCase.generatepdf(req.body);
     res.send(pdf);
