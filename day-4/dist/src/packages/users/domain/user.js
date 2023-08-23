@@ -26,6 +26,14 @@ user.relationMappings = {
             from: "users.id",
             to: "recipies.ownerid"
         }
-    }
+    },
+    userfavouriterelation: {
+        relation: objection_1.Model.HasManyRelation,
+        modelClass: user,
+        join: {
+            from: "users.id",
+            to: "favouriterecipies.userid",
+        }
+    },
 };
 //# sourceMappingURL=user.js.map

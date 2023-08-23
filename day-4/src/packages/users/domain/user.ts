@@ -24,6 +24,14 @@ export class user extends Model{
                 from:"users.id",
                 to:"recipies.ownerid"
             }
-        }
+        },
+        userfavouriterelation:{
+            relation:Model.HasManyRelation,
+            modelClass:user,
+            join:{
+                from:"users.id",
+                to:"favouriterecipies.userid",
+            }
+        },
     };
 }
