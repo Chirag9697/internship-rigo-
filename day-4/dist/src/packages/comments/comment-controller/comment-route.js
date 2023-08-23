@@ -28,55 +28,53 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = __importDefault(require("express"));
-const fromusermodel = __importStar(require("../../users"));
-const fromrecipemodel = __importStar(require("../../recipies"));
 const fromcommentmodel = __importStar(require("../../comments"));
 const authentication_1 = require("../../authentication");
 exports.router = express_1.default.Router();
-exports.router.post('/addcomment', (0, authentication_1.checktoken)(['admin', 'user']), async (req, res) => {
-    console.log("gello");
+exports.router.post('/', (0, authentication_1.checktoken)(['admin', 'user']), async (req, res) => {
     const { commenttext, recipeid, userid } = req.body;
-    const finduser = await fromusermodel.get_one(userid);
-    console.log(finduser);
-    if (!finduser) {
-        return res.status(400).send({ "error": "User not found" });
+    const data1 = { commenttext, recipeid, userid };
+    try {
+        const succ = await fromcommentmodel.create(data1);
+        return res.send("comment successfully added");
     }
-    const findrecipe = await fromrecipemodel.get_one(recipeid);
-    if (!findrecipe) {
-        return res.status(400).send({ "error": "recipe not found" });
+    catch (error) {
+        return res.send("there is some error");
     }
-    const data = { commenttext, recipeid, userid };
-    const insertcomment = await fromcommentmodel.create(data);
-    if (!insertcomment) {
-        return res.status(400).send({ "error": "failed to add the comment" });
-    }
-    res.status(200).send({ "success": "comment is successfully added" });
 });
-exports.router.get('/getallcomments', (0, authentication_1.checktoken)(['admin', 'user']), async (req, res) => {
-    console.log("helo");
-    const allcomments = await fromcommentmodel.get_all();
-    if (!allcomments) {
-        return res.status(400).send({ "error": "failed to get the recipies" });
+exports.router.get('/', (0, authentication_1.checktoken)(['admin', 'user']), async (req, res) => {
+    try {
+        const allcomments = await fromcommentmodel.get_all();
+        return res.send(allcomments);
     }
-    res.send(allcomments);
+    catch (error) {
+        res.send("there is some error");
+    }
 });
-exports.router.delete('/deletecomment/:id', (0, authentication_1.checktoken)(['admin']), async (req, res) => {
+exports.router.delete('/:id', (0, authentication_1.checktoken)(['admin', 'user']), async (req, res) => {
     const { id } = req.params;
-    const delet = fromcommentmodel.deleterecord(id);
-    if (!delet) {
-        return res.status(400).send({ "error": "not able to delete" });
+    try {
+        await fromcommentmodel.deleterecord(id);
+        return res.send("successfully deleted");
     }
-    return res.status(200).send({ "success": "successfully deleted" });
+    catch (error) {
+        return res.send("there is some error");
+    }
 });
-exports.router.patch('/updatecomment/:id', (0, authentication_1.checktoken)(['admin']), async (req, res) => {
+exports.router.put('/:id', (0, authentication_1.checktoken)(['admin', 'user']), async (req, res) => {
     const { id } = req.params;
     const { commenttext, recipeid, userid } = req.body;
     const data = { commenttext, recipeid, userid };
-    const updatecomment = await fromcommentmodel.update(data, id);
-    console.log(updatecomment);
-    if (!updatecomment) {
-        return res.status(400).send({ "error": "not updated" });
+    try {
+        await fromcommentmodel.update(data, id);
+        return res.send("successfully updated");
     }
-    res.status(200).send({ "success": "successfully updated" });
+    catch (error) {
+        return res.send("there is some error");
+    }
+    // if(!updatecomment){
+    // return res.status(400).send({"error":"not updated"});
+    // }
+    // res.status(200).send({"success":"successfully updated"});
 });
 //# sourceMappingURL=comment-route.js.map

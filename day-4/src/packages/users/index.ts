@@ -1,2 +1,2 @@
 export * from './domain/user';
-export * from './usecases';
+export * from './use-cases';

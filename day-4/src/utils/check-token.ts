@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import * as fromusers from '../packages/users';
 import * as fromroles from '../packages/roles';
 dotenv.config();
-export const checktoken=(rolesdata)=>{
+export const checktoken=(rolesdata:any)=>{
     return async(req,res,next)=>{
 
         const token=req.headers['x-access-token'];

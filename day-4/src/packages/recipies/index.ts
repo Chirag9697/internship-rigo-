@@ -1,3 +1,3 @@
 export * from './domain/recipe';
-export * from './usecases';
+export * from './use-cases';
 export * from './recipe-controller'

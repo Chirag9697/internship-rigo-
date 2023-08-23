@@ -5,53 +5,49 @@ import * as fromcommentmodel from '../../comments';
 import { checktoken } from '../../authentication';
 export const router=express.Router();
 
-router.post('/addcomment',checktoken(['admin','user']),async(req,res)=>{
-    console.log("gello");
+router.post('/',checktoken(['admin','user']),async(req,res)=>{
     const{commenttext,recipeid,userid}=req.body;
-    const finduser=await fromusermodel.get_one(userid);
-    console.log(finduser);
-    if(!finduser){
-        return res.status(400).send({"error":"User not found"});
+    const data1={commenttext,recipeid,userid};
+    try{
+        const succ=await fromcommentmodel.create(data1);
+        return res.send("comment successfully added");
+    }catch(error){
+        return res.send("there is some error");
     }
-    const findrecipe=await fromrecipemodel.get_one(recipeid);
-    if(!findrecipe){
-        return res.status(400).send({"error":"recipe not found"});
-    }
-    const data={commenttext,recipeid,userid};
-    const insertcomment=await fromcommentmodel.create(data);
-    if(!insertcomment){
-        return  res.status(400).send({"error":"failed to add the comment"});
-    }
-    res.status(200).send({"success":"comment is successfully added"});    
 })
 
-router.get('/getallcomments',checktoken(['admin','user']),async(req,res)=>{
-    console.log("helo")
-    const allcomments=await fromcommentmodel.get_all();
-    if(!allcomments){
-        return res.status(400).send({"error":"failed to get the recipies"});
+router.get('/',checktoken(['admin','user']),async(req,res)=>{
+    try{
+        const allcomments=await fromcommentmodel.get_all();
+        return res.send(allcomments);
+    }catch(error){
+        res.send("there is some error");
     }
-    res.send(allcomments);
 })
 
-router.delete('/deletecomment/:id',checktoken(['admin']),async(req,res)=>{
+router.delete('/:id',checktoken(['admin','user']),async(req,res)=>{
     const{id}=req.params;
-    const delet=fromcommentmodel.deleterecord(id);
-    if(!delet){
-        return res.status(400).send({"error":"not able to delete"});
+    try{
+        await fromcommentmodel.deleterecord(id);
+        return res.send("successfully deleted");
+    }catch(error){
+        return res.send("there is some error");
     }
-    return res.status(200).send({"success":"successfully deleted"});
 })
 
 
-router.patch('/updatecomment/:id',checktoken(['admin']),async(req,res)=>{
+router.put('/:id',checktoken(['admin','user']),async(req,res)=>{
     const{id}=req.params;
     const{commenttext,recipeid,userid}=req.body;
     const data={commenttext,recipeid,userid};
-    const updatecomment=await fromcommentmodel.update(data,id);
-    console.log(updatecomment);
-    if(!updatecomment){
-        return res.status(400).send({"error":"not updated"});
+    try{
+        await fromcommentmodel.update(data,id);
+        return res.send("successfully updated");
+    }catch(error){
+        return res.send("there is some error");
     }
-    res.status(200).send({"success":"successfully updated"});
+    // if(!updatecomment){
+        // return res.status(400).send({"error":"not updated"});
+    // }
+    // res.status(200).send({"success":"successfully updated"});
 })  

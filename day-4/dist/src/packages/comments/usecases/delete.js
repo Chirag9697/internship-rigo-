@@ -5,8 +5,11 @@ exports.deleterecord = void 0;
 const comment_1 = require("../domain/comment");
 const deleterecord = async (id) => {
     const deleting = await comment_1.comment.query().deleteById(id);
-    console.log(deleting);
-    return deleting;
+    // console.log(deleting);]
+    if (!deleting) {
+        throw new Error("not able to delete");
+    }
+    // return deleting;
     // console.log(allpersons);
 };
 exports.deleterecord = deleterecord;

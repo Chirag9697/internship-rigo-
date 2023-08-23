@@ -4,8 +4,10 @@ exports.update = void 0;
 const comment_1 = require("../domain/comment");
 const update = async (data, id) => {
     const hel = await comment_1.comment.query().findById(id).update(data);
-    console.log("insert=", hel);
-    return hel;
+    if (!hel) {
+        throw new Error("not able to update");
+        return;
+    }
 };
 exports.update = update;
 //# sourceMappingURL=update.js.map

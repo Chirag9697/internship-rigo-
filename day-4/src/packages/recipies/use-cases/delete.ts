@@ -2,6 +2,8 @@
 import { Recipe } from "../domain/recipe";
 export const deleterecord=async(id:number)=>{
     const deleting=await Recipe.query().deleteById(id);
-    console.log(deleting);
-    // console.log(allpersons);
+    if(!deleting){
+        throw new Error("there is some error");
+        return;
+    }
 }

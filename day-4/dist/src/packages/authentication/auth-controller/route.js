@@ -29,39 +29,32 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 //lib
 const express_1 = __importDefault(require("express"));
-const bcrypt_1 = __importDefault(require("bcrypt"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
-//local
-const fromusers = __importStar(require("../../users"));
-const fromroles = __importStar(require("../../roles"));
+const fromauth = __importStar(require("../../authentication"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 exports.router = express_1.default.Router();
 exports.router.post('/register', async (req, res) => {
-    console.log("welcome to register page");
     const { email, password, roleuser } = req.body;
-    const data = { email: email, password: await bcrypt_1.default.hash(password, parseInt(process.env.Saltrounds)) };
-    const userid = await fromusers.create(data);
-    const roledata = { id: userid['id'], rolename: roleuser };
-    const pass = await fromroles.create(roledata);
-    if (!pass) {
-        return res.send('there is some error');
+    const data1 = { email, password, roleuser };
+    try {
+        fromauth.register(data1);
+        return res.send({ "success": "registered successfully" });
     }
-    res.send("successfully registered");
+    catch (error) {
+        return res.send(error);
+    }
 });
 exports.router.get('/login', async (req, res) => {
     const { email, password } = req.body;
-    const userlogging = await fromusers.get_one2(email);
-    if (!userlogging) {
-        return res.send("user not found");
+    const data = { email, password };
+    try {
+        return res.send(await fromauth.login(data));
+        //    return res.send();
     }
-    const check = await bcrypt_1.default.compare(password, userlogging['password']);
-    if (!check) {
-        return res.send("password not correct");
+    catch (e) {
+        console.log(e);
+        return res.send("there is some error");
     }
-    const token = jsonwebtoken_1.default.sign({ email: email, password: password }, process.env.PRIVATE_KEY);
-    console.log(token);
-    res.json({ token: token });
 });
 //# sourceMappingURL=route.js.map

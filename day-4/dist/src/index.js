@@ -26,14 +26,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
+//local
 const auth = __importStar(require("./packages/authentication"));
-// import * as fromAnimalUseCase from './packages/animal';
 const fromrecipemodel = __importStar(require("./packages/recipies"));
 const fromcommentmodel = __importStar(require("./packages/comments"));
 const fromlikemodel = __importStar(require("./packages/likes"));
 const fromfavouriterecipe = __importStar(require("./packages/favourite-recipe"));
+//lib
 const knex_1 = __importDefault(require("knex"));
+const express_1 = __importDefault(require("express"));
 const knexfile_1 = require("../knexfile");
 const objection_1 = require("objection");
 const app = (0, express_1.default)();
@@ -45,24 +46,6 @@ app.use('/recipe', fromrecipemodel.router);
 app.use('/comment', fromcommentmodel.router);
 app.use('/likes', fromlikemodel.router);
 app.use('/favouriterecipe', fromfavouriterecipe.router);
-function checkrecipe() {
-    const data = {
-        ownerid: '1',
-        recipename: 'burger',
-        cookingtime: '30 min',
-        description: 'hello',
-        instruction: 'cook'
-    };
-    // const newrecipe=fromrecipemodel.create(data);
-    const data2 = {
-        email: "chlel",
-        password: "hello"
-    };
-    // const newuser=fromusermodel.create(data2);
-    // console.log(newuser);
-    // console.log(newrecipe);
-}
-checkrecipe();
 app.listen(3000, (req, res) => {
     console.log("listening on port 3000");
 });

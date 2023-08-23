@@ -1,2 +1,2 @@
 export * from './auth-controller';
-export * from './usecases';
+export * from './use-cases';

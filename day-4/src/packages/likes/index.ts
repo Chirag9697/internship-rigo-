@@ -1,3 +1,3 @@
 export * from './domain/likes';
-export * from './usecases';
+export * from './use-cases';
 export * from './likes-controller';

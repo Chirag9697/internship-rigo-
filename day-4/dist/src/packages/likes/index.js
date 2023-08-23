@@ -15,6 +15,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./domain/likes"), exports);
-__exportStar(require("./usecases"), exports);
+__exportStar(require("./use-cases"), exports);
 __exportStar(require("./likes-controller"), exports);
 //# sourceMappingURL=index.js.map

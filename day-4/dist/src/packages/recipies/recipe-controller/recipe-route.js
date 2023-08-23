@@ -29,52 +29,51 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = __importDefault(require("express"));
 const multer_1 = __importDefault(require("multer"));
-const fromusermodel = __importStar(require("../../users"));
 const fromrecipemodel = __importStar(require("../../recipies"));
-const check_token_1 = require("../../../utils/check-token");
 exports.router = express_1.default.Router();
 const upload = (0, multer_1.default)({ dest: 'uploads/' });
-exports.router.post('/addrecipe', upload.single('avatar'), (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
-    console.log("addrecipe");
-    const filename = "hello";
+exports.router.post('/', upload.single('avatar'), async (req, res) => {
+    const { filename } = req.file;
     const { recipename, cookingtime, description, instruction, ownerid } = req.body;
-    console.log(ownerid);
-    const finduser = await fromusermodel.get_one(ownerid);
-    console.log(finduser);
-    if (!finduser) {
-        return res.status(400).send({ "error": "User not found" });
-    }
     const data = { recipename, cookingtime, description, instruction, ownerid, filename };
-    const insertrecipe = await fromrecipemodel.create(data);
-    if (!insertrecipe) {
-        return res.status(400).send({ "error": "failed to insert the recipe" });
+    try {
+        await fromrecipemodel.create(data);
+        return res.send("recipe successfully added");
     }
-    res.status(200).send({ "success": "recipe is successfully uploaded" });
-});
-exports.router.get('/getallrecipe', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
-    const allrecipies = await fromrecipemodel.get_all();
-    if (!allrecipies) {
-        return res.status(400).send({ "error": "failed to get the recipies" });
+    catch (error) {
+        return res.send("there is some error");
     }
-    res.send(allrecipies);
 });
-exports.router.delete('/deleterecipe/:id', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
+exports.router.get('/', async (req, res) => {
+    try {
+        const result = await fromrecipemodel.get_all(req.query);
+        return res.send(result);
+    }
+    catch (error) {
+        return res.send('there is some error');
+    }
+});
+exports.router.delete('/:id', async (req, res) => {
     const { id } = req.params;
-    const delet = fromrecipemodel.deleterecord(id);
-    if (!delet) {
-        return res.status(400).send({ "error": "not able to delete" });
+    try {
+        await fromrecipemodel.deleterecord(id);
+        return res.send("successfully deleted");
     }
-    return res.status(200).send({ "success": "successfully deleted" });
+    catch (error) {
+        return res.send("there is some error");
+    }
 });
-exports.router.patch('/updaterecipe/:id', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
+exports.router.put('/updaterecipe/:id', upload.single('avatar'), async (req, res) => {
     const { id } = req.params;
+    const { filename } = req.file;
     const { recipename, cookingtime, description, instruction, ownerid } = req.body;
-    const data = { recipename, cookingtime, description, instruction, ownerid };
-    const updaterecipe = await fromrecipemodel.update(data, id);
-    console.log(updaterecipe);
-    if (!updaterecipe) {
-        return res.status(400).send({ "error": "not updated" });
+    const data = { recipename, cookingtime, description, instruction, ownerid, filename };
+    try {
+        await fromrecipemodel.update(data, id);
+        return res.send('successfully updated');
     }
-    res.status(200).send({ "success": "successfully updated" });
+    catch (error) {
+        return res.send("not able to update");
+    }
 });
 //# sourceMappingURL=recipe-route.js.map
