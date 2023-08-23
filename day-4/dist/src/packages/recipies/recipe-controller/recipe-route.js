@@ -36,7 +36,7 @@ exports.router = express_1.default.Router();
 const upload = (0, multer_1.default)({ dest: 'uploads/' });
 exports.router.post('/addrecipe', upload.single('avatar'), (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     console.log("addrecipe");
-    const { filename } = req.file;
+    const filename = "hello";
     const { recipename, cookingtime, description, instruction, ownerid } = req.body;
     console.log(ownerid);
     const finduser = await fromusermodel.get_one(ownerid);

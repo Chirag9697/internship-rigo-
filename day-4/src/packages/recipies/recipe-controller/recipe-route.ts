@@ -9,7 +9,7 @@ const upload=multer({dest:'uploads/'});
 
 router.post('/addrecipe',upload.single('avatar'),checktoken(['admin','user']),async(req,res)=>{
     console.log("addrecipe");
-    const{filename}=req.file;
+    const filename="hello";
     const{recipename,cookingtime,description,instruction,ownerid}=req.body
     console.log(ownerid);
     const finduser=await fromusermodel.get_one(ownerid);

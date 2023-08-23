@@ -1,1 +1,1 @@
-export * from '../favourite-recipe-controller';
+export * from '../favourite-recipe-controller/favourite-recipe-route';

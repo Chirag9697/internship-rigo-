@@ -1,0 +1,110 @@
+{
+	"info": {
+		"_postman_id": "8a0c8d04-f01d-4ee1-8b6d-2bcd7cb84cd4",
+		"name": "comments api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29016492"
+	},
+	"item": [
+		{
+			"name": "get all comments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/comment/getallcoments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"comment",
+						"getallcoments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete comment",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/comment/deletecomment/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"comment",
+						"deletecomment",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add a comment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"commenttext\":\"hello bye bye\",\r\n    \"userid\":\"1\",\r\n    \"recipeid\":\"2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhaost:3000/comment/addcomment",
+					"protocol": "http",
+					"host": [
+						"localhaost"
+					],
+					"port": "3000",
+					"path": [
+						"comment",
+						"addcomment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updating a comment",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"commenttext\":\"hello bye bye bye\",\r\n    \"userid\":\"1\",\r\n    \"recipeid\":\"2\"\r\n}   ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/comment/updatecomment/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"comment",
+						"updatecomment",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

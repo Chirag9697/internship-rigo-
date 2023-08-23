@@ -1,0 +1,236 @@
+{
+	"info": {
+		"_postman_id": "89b06073-daf8-4f06-8ab7-9f9c54a4770d",
+		"name": "authentication api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29016492"
+	},
+	"item": [
+		{
+			"name": "api used for registering",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoaXJhZzkxQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiY2hpcmFnIiwiaWF0IjoxNjkyMjY4MDE4fQ.jHSxeu3z58TdJsQ5fCry0r5CIIK-htqcmokdlI5iiwQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"chirag91@gmail.com\",\r\n    \"password\": \"chirag\",\r\n    \"roleuser\":\"user\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/register/",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"register",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiY2hpcmFnIiwicGFzc3dvcmQiOiJjaGlycnUxMjMiLCJpYXQiOjE2OTE0OTIyMzh9.9D55RnFG-Rz-pX65SFBAuyntOvPQigFyso5jqrEBZ5w\"",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<h1>hello</h1>",
+							"options": {
+								"raw": {
+									"language": "html"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/pdf-service",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pdf-service"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "raw",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/octet-stream"
+						},
+						{
+							"key": "Content-Length",
+							"value": "12477"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"30bd-TmxYXoBqQPEeml5TvQUbN4uXyeI\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 11 Aug 2023 06:03:16 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "%PDF-1.4\n%����\n1 0 obj\n<</Creator (Chromium)\n/Producer (Skia/PDF m115)\n/CreationDate (D:20230811060316+00'00')\n/ModDate (D:20230811060316+00'00')>>\nendobj\n3 0 obj\n<</ca 1\n/BM /Normal>>\nendobj\n5 0 obj\n<</Filter /FlateDecode\n/Length 158>> stream\nx�UN�\n�0\u0010��W�Y0�f�<���'\u001e\n*\u0001?@� T��?��\u0017�a`�Y�Q��zh\u0004{�c�#�(���\u0019^�ͭ\u000bI��\u0005ra�\n�=.7���)\u001f��z&vk׿�\n���X&�\u0003��:�>bY�9��TU�6�{�l1߁�m�\u00119`��4���(�7\u0016����nl��p\u0012|\u0000��,2\nendstream\nendobj\n2 0 obj\n<</Type /Page\n/Resources <</ProcSet [/PDF /Text /ImageB /ImageC /ImageI]\n/ExtGState <</G3 3 0 R>>\n/Font <</F4 4 0 R>>>>\n/MediaBox [0 0 594.95996 841.91998]\n/Contents 5 0 R\n/StructParents 0\n/Parent 6 0 R>>\nendobj\n6 0 obj\n<</Type /Pages\n/Count 1\n/Kids [2 0 R]>>\nendobj\n10 0 obj\n<</Type /StructElem\n/S /NonStruct\n/P 9 0 R\n/K [<</Type /MCR\n/Pg 2 0 R\n/MCID 0>>]\n/ID (node00000003)>>\nendobj\n9 0 obj\n<</Type /StructElem\n/S /H1\n/P 8 0 R\n/K [10 0 R]\n/ID (node00000002)>>\nendobj\n8 0 obj\n<</Type /StructElem\n/S /Document\n/Lang (en-US)\n/P 7 0 R\n/K [9 0 R]\n/ID (node00000001)>>\nendobj\n11 0 obj\n[10 0 R]\nendobj\n12 0 obj\n<</Type /ParentTree\n/Nums [0 11 0 R]>>\nendobj\n13 0 obj\n<</Limits [(node00000001) (node00000003)]\n/Names [(node00000001) 8 0 R (node00000002) 9 0 R (node00000003) 10 0 R]>>\nendobj\n14 0 obj\n<</Kids [13 0 R]>>\nendobj\n7 0 obj\n<</Type /StructTreeRoot\n/K 8 0 R\n/ParentTreeNextKey 1\n/ParentTree 12 0 R\n/IDTree 14 0 R>>\nendobj\n15 0 obj\n<</Type /Catalog\n/Pages 6 0 R\n/MarkInfo <</Type /MarkInfo\n/Marked true>>\n/StructTreeRoot 7 0 R>>\nendobj\n16 0 obj\n<</Length1 19092\n/Filter /FlateDecode\n/Length 9436>> stream\nx��|\txTE���[����I����v�;����$$\u0004H:�H\b�EM�\f\tK\u0004��\"�:&��\u001a\u0017�O�]��љ���`\u0003��a�]A\u001d\u0005�\u0001\u0014�qC�\u0019qƅ�����7�������}�<ޛ�SU�N��:�nU'\u001dbDd\u0003�D��\u0015�V\\�-�HA�:�khi���%v��;��o�������=D,��sV�t��������D��\u000b\u0017W���ȴ��Xsa׊\u001eJ�(�ǈV.\\���$c�D�/�S2��K�8�C�ي��������m5���?j>2\u0012T��H�D�=��K\u0013�+�D\u001c���EK�t�/O삿sQ���K{��5n@Y\u0006Ҏ%]�獏�*A��Pgf��\u0015+u7�@�XQ޳|^�2�3����(a>�8�I!+1]�,�f��\u0006���dD����<xz��\u001b2 �I^�S��\u0007\u0017ꛜC�t�����\u001b�M�vM�9&�����fV�أ�4�,x�@y��o_�g��7\u001c벑y9t�N��H\t#\u001c�4\u0011sX\t\u001e-���<�O�h)zB'e�@�>�\u0013�/R�F�̆�\r�p2'��\u0006�V�̠(fn2\u0018\u0014����`zK��\u001c��԰p�����l�_\f\u001e��\u0019&�Q�$1���nf\u0010�R9|?%n~�q�������7��㲺��N-SF��D\u0019�\u0004\u0012Q=CD���_ɢ��2�,znXV\u0010��\f˜�\"B#�J��0,\u001b(�\n�e#$\u0004\u001d-�ň�\u00154\tx\t�-E���P+��B�Cz\u0011ͥ\u0016h�\u0007���\\��%��\n*�\u0012�'m8��8N��8ņ���V�j�^�?]Ӂ>�@w\u000e�_\n���\r+g�(����\u0014)\u001f�\u001c\t�\u001dН\u000f\r���A�H-�,�\u000b��~\u0016��\u0016�,�6\u0017Ѕ��R�4U�(�d\u0015p�Դb�\u00104\u001e9�Q\u0012�e�la\t�>��D��\u001a�/�-�XM`W��\u0001Z\n�ը{�-ǉ\u001e�P)��\u0013�\n̡�\u000b\u0016z��@�����\u001cZ8�;\u0001��r<ǣ��r�\"�\u0012c�@�e��O�\u001c\u000f1\u0017\u000bУE2�K���}��Y:�S�l�b�Α�=>g���r�s1����s ����\u0003���,�����\u001d#�ϓ\u001a�0���hϕ�\u0018�踮C毐��\u0000��<\u0011���!�W\u0005�����u�N��T�\u001b;�jteEyY�odIqQa��sV~^n�ە�thY�\u0019�#�RS��\u0012\u0013��Xk�%:�l2\u001aT�0*ht5u:\u0002��\u00015�5~|�H����uJFg�����u\u0002�N��8]�\u000f����G4�'4��1��\u0016\u00168\u001a]���\r.G�͘�\u0006��\u0006W�#pH�-R^'e+d�\u0013\u0015\u001c���\u001b\u001c\u0001��h\f4������\u0000s\u0003��zW����\u0002\u001a��@�@\n��z\u0006XJ5����X5���\n�\u0002#\\\r��4W�� �s\u001a��\u0006Z��56�;��\u0005\u0001V?�5;@��@�W�P�l&`�\u000f�d3�\u0005�7t�c�`�����fwzc��v�l\u000b�v�F�\u0017�6\u0004R.;�z2\t�����N-M����\u000b\u001c\"���#�aJ۩�N������JNSg\u0013��\t��<́֔k��\u0002�Z4�\u0010=\u0011���o��Q�t^�\bD��\\��/��Ԍ�\u000f������\u0011�-�~\u001a�����r\u0006j�]�]\r\u0019\u0003��?uu(��H;���`�\u0016\u001f\u0019؁ظa!�z�0�D��������\u0018Y&<r���\b8�8�I�\u000b}�\u00140����TB\rW;C��\\�Ȃ@T}g��J��\u0001C����?J�\u0000ס�O��\u001a�1�؎�\u0010E��\b5�\u001f�\u0003^o��\u0011!b�ǜ��j�./,X\u0015Vֻzl\u000e0\f\u001f�bl�ګ�1�N���\u001b�~��D�oJ[$����A�\u0017{�\u0003J�(\u0019<^�t�(�;^r�z�\u000b��I\u0002��\u0013?q����U\u0001���\u0014ϋ�7Os5O���h��\u001c\u001e��駥\"�'ʆ�@B}\u001bOW�%%��R\u0004��\u0013�\"�\u0016\u0013Ps�c�A=7l2#*e\u000es4\u0005l��#�\u001e�t�����\u0011QK��Ն�\fTyOO�9-}�{1�\u001c\u000e��J��\u0019��ѧ�5a\u0005��or9��;���z�l�������x^Oc��\u0019\r�[oL\u000f4�ԎN�gU�V��\u0006\\��)\u0003~v��\u0019m[�Gw\\?�-�0����}����-\u000e\"��UD��\u0014\t�HP3C�\u0007\u0015��O��'ꓥ�̐�9aF2�|<�ќ�\u0012ɳE\u001aʕ\r��'�\u0013V#%���*�̑���v���\u0019%6Q�����,�\\bը��vj<ȇ��\u0010jb�k�0���6)l��\u0014�f\u0002\u0019�\u001d��M�\u000eFif�a�f�\u0014�r�y��}5���I�/Ƕ\u001c\u001bK5�m�\u0001F�8��9\u0000���w\u000e>���@ߒC\u001d\u0014����A��w�\u001c�`��6��9�#qi���y��\u0013M9я)�)/ƿ����X�$����\u001aݛĲ�\tIe��n�4�\u0012ޛ}5�Q�֏��<f=�����d��\u001dfn�08��5%�Y����\u0004�!̲B1���>���j��i�e�\u000b\b��H�a�!�,�e��S��iDqvM�����j��8�1��lB\t��g�#<��LpLLl�.\u001b��9+oI�bD:��Z�u\u001c�d����]�m9��b�\u000e�\u001c�\u0012�4\u0016\u001a\u0007���e#K�W���2sRS�R\u0014c�]ˢ\u0011��Y,+>=��$\u0001��e^�ǻ�uxiY\u0007[Ɯ�)ɥ�Q\u0015)F�+;/���^�K6���庲MƤ$�qL����5vve����]\u000b�;��-���Ir�9ǰ�[\u0017M�??��5\u001b�<�)K���\u0007.�����0\u0014�ū�8�\u0015�}[Ȩ\u001f\tZF\u0017�\u001e\u00167��\u0019�\u0014��hW��ӟ1٘kT㬔M\u0005�Ֆm+0�7�>\u001b��3Jpk�a�=|v�[�veG�5�˕�֜a�]�\u001cW�[+p�X:�Rj�j�v:cc��f-�Ey\u0012\u0013��ښ\u0004��e\t�q�\t�z��*$JF\u0002��\u0001�B@�\u001b��\u0001l�e;\u0013X\\\u0002s$�LPl\t,!�s�}��iE�\"����H)�W����`JrX�\u001c\u0006%�%�\u000b�$��\"ފ(.C�P2<�y2\u000b�\u001d�c�y�y���\b튪2ɋGF8���Q�β���Ikd4�`�X��c�1��\\\u001d˖�\u0001�Ƣ\u0018�\u0011�c,\u0002el���2��bǎe\u001dXX��\u0013m�-5N�FbLM�\u001f S\t�V�Rb\u0001iq�t[M,��Ě���Y��\u0012ֱ�:���,~�(�MrR|brJ��|TŨ���\\���\u0014��rj^^9������ó��\r����voz�Ă��1C�c���\r\u0013�\u001d�R?��\rC�.,7��&�y쁕c�\u0015�C��i�f���H^�7_Tf�A��l��\u0011e6\u001a�g���Sj:�,`gq\u0006\u001c�l��f�ٌ\u0016�f\f�/6e3�f\u0010�+ƭ� ��]�i4DS����X�0a\u0011ݭ*\u0017,TXV&��%�ߕ�R\u0016���\u0016F\u0016�E�\\��7�\u0003v^l����\u000f���\rv�?��L�ͅEe�\u0006���\n�t�\u0004Ռ�\u001c\u0019�e\u0018�Ŀ\u001b�PQ���:+���0��Us*T�[�N��_�]��\u0015p\u0002V���\u0002Z�ɦ�S�\u001f��b��|sl���)%�\u0014e�d�U\u0019rXqT��,Ne�\b��as�dgGX�d����\u0004���e��].�\\~W�K�\u0006�k�Kq��5�b��0��J&9L\u000b�\u0019\u000b�%-\u001b6�6�W.K�\u000e�mGˡ\u000e�a�q�\u0015ơ�\u0010�`�!Ar�j`N[���e9�\u0014cbBR�b4�g��H���8�=\u000f���b�Q�,J5e����<��c�XBtJ\u0016e\u0018R�H\u0018g\u0002<^���]S��\u001f��F�s�9��1�\u001ecoL��'�ϸ6f��/�\u0005�9-���c��M]k��ŭM5�\u000e�X�ΰD��N4aqT�6�d\u001b�I\bh,�\u0015�%1I�l�7\u0016ϻl��\u0007?�YzNJ�e|QaV�517g\u0004�q������A���E�=���K\u000b;Ξ��=n\u0016s>ћ�D�[HC�\n��Q:��\u0001� ��\t�w���\u001a�H��\u0013��;B�W\u000e]Cn��n�g��^V85�\"j#��R\u001a�ã�}�Q\n\u0019X4哋��\u0015��\t�\u0011��F��?eM����4~/\u0016�I��s��i\u0003;[���Лl\u0001=�ڏ3?��D6^�GS�U\nm\u0010Πw��,�4�D3��\u0017\u0016V�u���&�fН�\r�Ҋ��\u0012�)�I��\u0019�\u0002=\u0003��%t%�I\u000f�v:Ȯg��A�rqnf&����U��Ti�\u0013�K�7�.<�K���>W�j��\u0005��c���H�ٿ\u0014�\u000f�fz���r^O�T��:�\n�����x�\u0001}��.g\u001by��0zS��p/�g��A�i�c8�_Fv��\f�����+�A��Z\u0013��\u0017\u000f�蓰����4��k�G�\u000b�ܯq���1'\u0002�r�+��}���?��ct�����|��]��(W\u0019|��迤\\��\u000f\u001b���8e���2?�\u0000u�U.Q�Tz�f����\u001e�+�\u001dX���{\u0015=�~�Fo�n�W\u0013kao+W��G����\u0017��#���2\u0003�b1,�9X)�@�.g��\u0003%Sq)m|6�h�I_��LN�J����\"�����h'}H��!6\u00025�Q������Z�\u001be'?��䷫~�v�I���w�xï�^\u001fڏQ\u0017vJ�\u0005w\u0007u�e\u0018�0�\u001d�.�,�e��86\u0001�f�nv\u0005[�~�\u001eb����y��}�\u000e���T�&�6e��[e���gr\u000fo���+�S}W���u,s�١úE���:�^�=����\fD|\r�#�\u0016R\u001fz��~B�a�7ѫ�\u0016�n��\u000f�\u0011���̈hJ�G����X\u0001zw>kc��~v+{�=�>`\u0007�w\n)1J6n�2J���T�R>W�����k���\u000e�\u0006�F]m��~��K�\u0011�AS�����9�w��\u0016\f�>t�^�X4\"�\u0012�̕Q\u001dbn\u0002fy.-�->\t�\u0004ct\u0019F�^D�F\n�6z�^�����}鯸?�L|I�h\bo ���\u0019w��\u0012�L=������F���U�\u0006v'�{���\u0001����\r�&��\u000e����y�P�U�F�Z�\u000b�\u000eܳ�9�\u001a�Fe\u0013�ה����\u000f�o���s\r�F~!����\u0000����Rs�Zu��P}^}\u001d=\u001fo8�0�0�p��\u0001�C�_\u001b^2\u001c4��[�\u000f\u001a�ƏMѦQ�V�t�\r������7��<�S\u000b�?딏poe\u0017���:�+a��\u0019e%Y��=yꧼ�~x0�f)a�]��u�C�3�*� \u001bd�8�b�����M5��1=���/�\u001e�ƻ�g���T6��Q�U_���\u001a~>��SL�Fh|�٘E�4��z\u001e\u001d���4�cL����I�\u000f& �����6��6�<V\u0001���/�\u001b�1��\u001dl3⮗v�����j�:�Ƙ��2Va���)���Y�gx�?`��{�\u001b��yl\u0012+�G�\u0000f�-V�4uHM�ױ�e�=��?R\b��K�\u001bO�Q���h��\u001fs^|�š\u0006�J~5�J��t�ȕ{�X��\u0006߉�J����\u0011��UD>џѫ,\u001b����]����V�D9�\u0011\u001c�t������|\"Z�!֧\fV\u0006K�i\u0001����0�0,\\D�T�f�\u0019Ԁ��/��b-��3��\f�\u0006/��&�$z\u0016�W*F�vC��!hn�s�\u001e�g7Rhh.\r⽒�#�\u000f�tȰʰ���a��\u0019ëƑt)��{0�\u001fҗxk8�\u001c�ŧ�W�z\u001d��\u0002<?��b<�a��v����\b��\u001a��u�\u000ec0C~Z{)VǛ�<=�w�kt���Lz����I�s>\u0007�a���Ŭ��G�:^�BșKY��8}�bY��\u0012�u�v�����}�\u0003V\u000e]�U�ư\u0006��\u001c��x���(je\u0003x'o��xS6�W�#r��Z�g�a��Dl�R&�6\u001c`\n\u0015\fM�+�\u0005|;K��0\u0016Q5\u001do�ql\u0019��C?�Q\u0012�L�Cg�ړX�Z\r����ś!IIR�7�\u000b��ś�5Z����M\r|7?�� �RAm�����_�\f_F��A�K\u0015H\u0014�/�k����؍��9Cv��G�\u0015��/�\u001bo��9�b��\u0011�\u0010\u0017w��F���b\u0011��$��\fم5KĮ`�\t\tg�.��!EL�\u0019KOJ:CvaM\f)�9\u0016,3%�\fم���v\u001diig�.��IN�0�\u001c1�\fٍ;a7\u001e,'3�\fم�b��#�=N�\u0019���\u0012S\u0015#�`������U�'����\u001b\u00131���;Cv���_\u0005 ,D$��xΐ]8+�\n�'\"����\fم5���\t����ΐ�,q��Ӈ-\f5WU�!��+�\u000bM���V[{��8\u0005#\u0018Č�\u001c?�\fم��$�Y��;i�\u0019�[@�w0i�H\u0006'��e�\u001c�&F���-��7���)J\u001f�\u0013\u001f\r��h!\u000b0�b�c�T��\u0014\u000b��h�8�;,\u000f\u0002�d\u0003&P��-\u001e\u0019;0�\u0012�ɔ\bL��JI�4J\u0005�\u0000~��Q\u001a0�F\u00003%fQ��5\"-\u0013���~�k\u0004�\u0006t�C�\u001bN�N`\u000ee\u0003s�\u0005�\u0003�\u0015{E7�,�\u0005z(\u000f�|`\u0001��E��\u0001\u0016�\u0017X,��\n��4�\n�>*\u0002�R1��J�/qn\u001f\t\u001cE>`��J*\u0005��r`\u0015���Bc$��\n�8�\u0004VK��*���c�\u0001�J����z\u001a��\t��j`#�\u0000����\u0013�M��\u0011�~\u0005�C��\t�\u0000l�F�D�-Ԥ\u001f�\u000e�l�d:G�\u0002��s O�\t��R3p����\u0002<�&\u0001ϣ�8C�/��Z��4\u00058��\u0001/\u0000~���t`\u0007�\u000b���Yt��\u0019v�m�.j\u0007Ζ8�f��L5S���Q\u0007�[��\u0003�|�\u0005\\\u0000�\u0004g�.�B�\r\\Ds���\u001f��t\u0000.�n`\u000f]��\u0011g�\u000b!/���W�\u0002�J�\u0017�B�\u000f8E/�|\t-�|��մ\u0004x\u0019�\u0000/�e�Gt��\u001fb��\u0011]I+���\u0012�G\u0017�\u0007i\r�\u0002^E�\u0000��x\r]\n��.�\u000fЏ�r�u\u0012��+�7�\u000f�\u000f���\u0004�H����\u000fx3��?�[$������\u001a���Z}?�X\u0002o�\u001f���6�\u000e�O�z��t\u0003r�~��t#�.�w���^��n�|/��|���i\u001dp=�\u0018���C�==@�\u0002\u001f�ۀ\u000f�O�\u000fK|�����)�N�ct\u0017�q�?���O�=�{8a�\u0007��ğ�����\u000bZ\u000f�(1@\u000f���\u0000=\b9H\u000fA\u000eI�D\u000f\u0003I�\u00027�c���{pR}\u001c��~\n�*q\u001b=�����g���s�3\u0012��_\u0000\u0007)\u0000�\u0015\r�oӯ%� �7\u0014\u0002�\u0016�\u0016=G�\u0004>O��/�S�\u0017%�Da�w�2m\u0005�Bۀ�J|���ߤ��\u001d���\u0001�N��o�\u001b4\b�M�\u0015��I|�~\rDk���[�\u001e���\u000e=\u0007|��\u0007�G/\u0000ߧ\u0017�]�{z\t��^\u0006�^\u0001~@�����\u0003\u0012\u000f�.�G�:�\u000f��\u001aN�o\u0002?��\u0001?����\u0002_ŉ�m��\u0007x��\u0001~!�0������{�?���?�����/�\u0017�\u000f�Q�_�\u0007��҇���\u0001�%�Z�7t\u0010�-}\u0004���\u0000<F�_�!�\u0018��'�����������5���������5���pM?��������>�ᚾ�nM����j�r7VVMM�&`��Ԅ�1Ss�՘PL�O�`B�/�ZB�\u000e-�֦ک\u000f�P\u001c�\u00064\u000b�%2��॥�0��\b[\u0012a\u0017E��R��P���rP��RR}\";\u0014\u001d��\u0013�\u001c%���\u0019���(5\u001e˓Ћ��%y��T\u0016�\b+�X\u0016en��1R�.�]=�\\U�պ�v���\u001e�F�\u0011�\u0011��S1h\u001dH\u0007�2%�zAkA\u001b@����f.��MWm(�ɾ�0R6Ա���@\u0001�q�\u0019�b�ɠ���T5:H��-0�C��S\u001e�\u0016I\u001e�?�'\u000b�#2|�U�܅W��\f\u0016LN�%\u0014��\u001b\u0016FUF���з�6Z%:���6�\f�6Y+�_�;�,Ҍ\u000fQ\u001cc\"�\u0017�%�5~,\u0014��������\nR(�\u0007h\u0010��R~�zA\n�7\u0006\u000bG����Pt��\u0006���\u0000��8m\u00002������PB�0��`\\���/XR\u0016\u0011B�T_km\"\u001f������Y�\u001f�g�?\u000f�����\u0017�u\u0010~>\u001c������CP��ƛZ���������J�\u0006��;��H;�\u0004�=��h�\u0018�B�����j��\"�0��\u001c���\"\u001e��(����-ɷ��\u0017b\u0003���J���%T\f\u0012=\t����u�1<�n�1,\u001a|d�^���\u0011�!��Sއm��w�5��h�\t~U0I\u001b���*վ\u0012V�ރ�\u0018�B�X�`m\u0014PD\b�3F�ϲ�/C��>���7Q\tH��\u001e�t@|1�\u0001\t/p�RP/h=�H�\u000f��\u0010t��^����:�z�*L�\u000eb\u0004�H�����ȯ�Hضa�\u0018r�\fE�\nϮ\b�\u0013��\u0015�\u0001���w�d�\u0002���'r�6~��ʺPj���`T\f����\\��eb\u000e��>~�\u001c�5r\u0004\u0002� ���W��z(&�׋ٟ��R�Z�.�a�\n����t�\u0005�Po\r�����\u0019��9��Rm;\u001f�����5>��-}>{XP��Y�g�@��ȧƪ�`�6e\u001boF�L擂s5�>%\b���Pe��d\u001b�$�bRPsE��\tiRh\nFE�>\u0014\u001d/<i��ޠ9Vf{�\u001fI�\t%��4�i��m���\u0003���U`j*�����lvD�\\�=�Q'h\u0003(\u0000R1�>��0�>�/s��(tw\u0014� ��\u001dEG@Xj�H�\u0001�\u0005=\u000b�\u000f2��N���\u0012��\t\\\u0007R`�\u0018i\u001b�\u000f�\u0004��6�\u0006AG@&��\u000b�N!�K�}�\u0000h\u001fH�\\\u0015��\u0002�ٹ����/`z���U��zY���{�^C��7��/�)��/\u0012P$ \u001fP�\u0019�\u0013�\u0017�K��Q�Q�\u0016�R�_z��J�_xڍU��|��M\u000b�W�3�3);kcX<�\u0003\u001d\u0006q��lHِ����;��U\u001f��;[��\u001cn�;���{x/�Y���p!���W�*f�����e�ƊY\r���Y|)��k���b^�XP;-=�>\u000b/��-�\u0016n�8,�:�\u0006K�2h�e1\u0004���]���#FC����c�3�3n0\u001a5S����7�Gj��0�\u001b�\u0001�B}�uR�ɒA�.�^'ӝ�\u001e��\u0003[��\u0002�\b\t䂭w��\u0007\\\u0007\u0012z\"�\u0002��4ȅ��\u001d��\u0000ׁ\u0014�\u001dFv���Vln�[!7;�f����J�=�V\u0006k��=��=�r��r\u000fj�m�]H \u0017��-�vCo���\r=!���N`����V)��%BRv\u0007]\u0015q�)�=�8\u000b�\u001e�\u000fĩ\u0018X\u0003Z*S��P�\u0001���Cy\u0005x�+w\u0007s�F�eGXV�eH\u0016J\u001b�U\u001b�\r�z�>\u0010'��@5\"�\u000f*w\u0005\u001b��]�q\u0011VU��v4ޢ�h#H����R*\u0006�Hi�ԉ;�\u000e\u0000�K�\u0007��D�YR\u0012z\u001a�x}U�\u001b�]��ː{�ߢPr2\u0011������5�����M�|\u001bX(��&(\u001c�oe_H����\u0012o�x��8��e��e������Z\u001b�L���ʎH�D�E�X��c��9��!��A�u\u001b;�S��9�#��\u001fe[�m}*��D���l��l�l��la*_|GV�\u0014�~ 1ß�~�~ా찾�>శ;�U\u000e��?�je�J�Cb�SeV�̚Yfݪ`l�\u0005�8�ڦ(�\u0002��蠧Z\u000b�(�\u0014g�%\u0007,#�R\u000b�\u001el�\n6\"ز\u001c,!�r�V\u001b�ı\u0001lX4%�\r�\u0005�\tz֠�\u0012a��\u0007`��g�\u0016fCA�\u000b��`w&�7��,����e`G\u0005{����\u0015�a\nv�\u000f��S�\u0017f�\u001f)Wy\u0012<\u001cl���S���&�f9�\u000eb�'�~\u0016��9�xГ\u000f�X��\u0006{4�\u001e\nz4�\u0007��E`�\u0007�o\u0005�/�}\u0010��`�\"a�.ʗv�\\�W\u0004[�Q�,�\",�\u0004[���\u0006[��\u0016\u0006�_\u0005[\u0010�>(�^�\u0006\u0018��u�Gz�\u0015���x�pG:(_\u0016Ϥri��`�\u0018�&a���\u001a�;���ž�ձ\u0001i�\u001f��@�:��\u0005\u001b\u0017\u0019���n/Xe0\u001fc�*���c�F\r7p�����\u001bn\bC���I(i�����ݍ`�&�J\u0018n�N�ҩ��Ghق\u001e��\f�P��\u0018M�����1���:��\u000bj���f\u0016���\u000f�Y��e��YK\u0018�^�S<�On��Auo5D�E{�sP{�;[{�\u0003\r����Hۑ�Z\u000b�o�B-Y�\u0000\u001c\u000bt��6vK\u000b��E���x~Xa���{�v�ǫݑ\u001b\u0016>�\u0007��\u0013m�е���U�k��\u0011\n+[n�Vx2���\u001fh\u0017勆R�\u0005���|t�Bԙ�}���U�,�\u001e���6�\\���[��jY0�{��\u0004\u000fPP#\n��\u0018ĥ\u000fU�ʷ�1�n�>��vn��\n�Ĭ\u000f��_d�n��4�4�T�wN�)��4e�\u0012�v��\u001ck�1G��f�Y5+f��0\u0012��~�W��D��/\u001cFU�*e�\"P�7\r�\r:fVp�\n$�f�yZ]���\u001c6�S\u0003��怹���\u0001�niǵ�9�<�\u0011�j�+̢��\b\u0018\\u,`o���u�P\u000e(ׇ\u0019Mo\u000b3]Ը6]|�w\u000b1Vp���7]{s{;%��I��WǏnj�\u0007�9��\r�|g(��=-�\u0019��yZ[�����O\bzf{s�,�\u0015�-�\"�Ɔ-�B��۶��ʢƩ\"��oh��\u0018�F��B�Q�`PSfR�PC��S��\u0000�\u001b\u0006��#J�ـP�C3Y*͈(՟��od�R���(��4�\u001fh�/\u0018�\f��#\u001b�\u0018\u0016I�T�6��\u000bKݹBe��\u000b��\\�,�r�8?R��H��Eq�����\u0011o�)W����C��?xͫ���B�V-i\u0013_��t5�\u0003u\u0006n\\5?5�7��\u0018X�j�;߹����\u0017�k^`�k^C`���10��\u001f\u0014���q��\u0001jk��6���\u0010\u001c�\u001f���jh\u000fMZS�촶n8�V�`l�0V)ښ��\u001f\u0014/\u0013œD[�D[�D[���d[�S�Xskۀ����gFxH�D�i�Lw��%�z��3ƙze�V���d�\u0007b\\u\u0001+H\u0014\u0015�\u0016֊\"<Ң(V|}�(��1������\"\u001b��]u�2�qA\u0003~V�Z��b\\\u0018�\u0015+\"c�\u001a)X�m��PX\ti���\tY�\n�;\\��.>yy�\u0011]Z�o\u001bhiiL]А.�y%����\u0015��F\u001a�z\tm��r��,7�\u0016cr�[-\u001f�\u001cm�r��\u000b�_��\u0007���\u0005ڏ]~\u0016\u001f��U���\u000f��j�\u000fݽ�����\u0007\u000bw\u0015�/�\u0015�\u001e���\u0019<<y_�]q���2�[�o�\b�� z}|\u0018VȂ�r`pE�eU/\fyOT��\u0014VD\n/�U\"�+N�0\n���\u0017{��\u0015Ʌq����\u0000#�by\nendstream\nendobj\n17 0 obj\n<</Type /FontDescriptor\n/FontName /AAAAAA+TimesNewRomanPS-BoldMT\n/Flags 6\n/Ascent 891.11328\n/Descent 216.30859\n/StemV 83.984375\n/CapHeight 662.10938\n/ItalicAngle 0\n/FontBBox [-558.10547 -327.63672 2000 1055.66406]\n/FontFile2 16 0 R>>\nendobj\n18 0 obj\n<</Type /Font\n/FontDescriptor 17 0 R\n/BaseFont /AAAAAA+TimesNewRomanPS-BoldMT\n/Subtype /CIDFontType2\n/CIDToGIDMap /Identity\n/CIDSystemInfo <</Registry (Adobe)\n/Ordering (Identity)\n/Supplement 0>>\n/W [0 [777.83203] 72 [443.84766 0 0 556.15234 0 0 0 277.83203 0 0 500]]\n/DW 0>>\nendobj\n19 0 obj\n<</Filter /FlateDecode\n/Length 243>> stream\nx�]�Mj�0\u0010��:�,�E�c���\u0011�.\u0001/�C�\u001e@�Ʈ���,/|����B\u0007$��yo\u001e��&\u0002\u000fN�\u0018a4V\u0007\\�\u001a\u0014���P�6*�(�j��q\u0012��\u0012q���X�\u0000�\u000f�.1l��h7�\u0003�oAc0v��W�\u0013���?8��P1!@�HN/ҿ�\u0019�gپ��7qۓ�o�s�\bu�CI����K�A�\tYSQ\th�T�����Ǣ\u001aF�-C�>�i��\u001eO\"�S�s�k�6ө.T|o\u000eiC��=�ZC���\\9r\nk,�/�O��~\u0001U6w�\nendstream\nendobj\n4 0 obj\n<</Type /Font\n/Subtype /Type0\n/BaseFont /AAAAAA+TimesNewRomanPS-BoldMT\n/Encoding /Identity-H\n/DescendantFonts [18 0 R]\n/ToUnicode 19 0 R>>\nendobj\nxref\n0 20\n0000000000 65535 f \n0000000015 00000 n \n0000000420 00000 n \n0000000155 00000 n \n0000011845 00000 n \n0000000192 00000 n \n0000000640 00000 n \n0000001248 00000 n \n0000000897 00000 n \n0000000813 00000 n \n0000000695 00000 n \n0000001000 00000 n \n0000001025 00000 n \n0000001080 00000 n \n0000001213 00000 n \n0000001353 00000 n \n0000001466 00000 n \n0000010989 00000 n \n0000011239 00000 n \n0000011531 00000 n \ntrailer\n<</Size 20\n/Root 15 0 R\n/Info 1 0 R>>\nstartxref\n11999\n%%EOF\n"
+				}
+			]
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"chirag91@gmail.com\",\r\n    \"password\": \"chirag\",\r\n    \"roleuser\": \"employee\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/register",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api used for generating token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/animal/getallanimals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"animal",
+						"getallanimals"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "jwt",
+		"jwt": [
+			{
+				"key": "algorithm",
+				"value": "HS256",
+				"type": "string"
+			},
+			{
+				"key": "isSecretBase64Encoded",
+				"value": false,
+				"type": "boolean"
+			},
+			{
+				"key": "payload",
+				"value": "{}",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "headerPrefix",
+				"value": "Bearer",
+				"type": "string"
+			},
+			{
+				"key": "queryParamKey",
+				"value": "token",
+				"type": "string"
+			},
+			{
+				"key": "header",
+				"value": "{}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL\n",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}

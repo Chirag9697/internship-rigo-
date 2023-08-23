@@ -32,6 +32,7 @@ const auth = __importStar(require("./packages/authentication"));
 const fromrecipemodel = __importStar(require("./packages/recipies"));
 const fromcommentmodel = __importStar(require("./packages/comments"));
 const fromlikemodel = __importStar(require("./packages/likes"));
+const fromfavouriterecipe = __importStar(require("./packages/favourite-recipe"));
 const knex_1 = __importDefault(require("knex"));
 const knexfile_1 = require("../knexfile");
 const objection_1 = require("objection");
@@ -43,6 +44,7 @@ app.use('/', auth.router);
 app.use('/recipe', fromrecipemodel.router);
 app.use('/comment', fromcommentmodel.router);
 app.use('/likes', fromlikemodel.router);
+app.use('/favouriterecipe', fromfavouriterecipe.router);
 function checkrecipe() {
     const data = {
         ownerid: '1',

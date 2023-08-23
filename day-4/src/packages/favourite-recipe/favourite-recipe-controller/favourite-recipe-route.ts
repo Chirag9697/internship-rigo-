@@ -28,8 +28,9 @@ router.post('/addfavouriterecipe',checktoken(['admin','user']),async(req,res)=>{
 })
 
 router.get('/getallfavouriterecipe',checktoken(['admin','user']),async(req,res)=>{
-   const favouriterecipe=fromfavouriterecipe.get_all();
-   res.send({favouriterecipe});
+   console.log("hello");
+    const favouriterecipe=await fromfavouriterecipe.get_all();
+   res.send(favouriterecipe);
 })
 
 router.delete('/deletefavouriterecipe/:id',checktoken(['admin','user']),async(req,res)=>{
@@ -42,21 +43,3 @@ router.delete('/deletefavouriterecipe/:id',checktoken(['admin','user']),async(re
 })
 
 
-router.patch('/updatefavouriterecipe/:id',checktoken(['admin','user']),async(req,res)=>{
-    const{recipeid,userid}=req.body;
-    const found=fromusermodel.get_one(userid);
-    if(!found){
-        return res.send({"failed":"user not found"});
-    }
-    const recipefound=fromrecipemodel.get_one(recipeid);
-    if(!recipefound){
-        return res.send({"failed":"recipe not found"});
-    }
-    const data={recipeid,userid};
-    const {id}=req.params;
-    const addedfavouriterecipe=fromfavouriterecipe.update(data,id);
-    if(!addedfavouriterecipe){
-        res.send({"failed":"there is  some errror"})
-    }
-    res.send({"success":"recipe added to favourite recipe"});
-})

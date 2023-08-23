@@ -1,0 +1,98 @@
+{
+	"info": {
+		"_postman_id": "af2f4bff-3234-4d8c-b8cf-8f446b81acff",
+		"name": "favouriterecipies",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29016492"
+	},
+	"item": [
+		{
+			"name": "get all favourite recipe",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoaXJhZzkxQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiY2hpcmFnIiwiaWF0IjoxNjkyNzcwMTcxfQ.EY9sGw0xI-CNHcuZ-WE0-cmqR4i6tUNc0vQ_eFZY1Zs",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/favouriterecipe/getallfavouriterecipe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"favouriterecipe",
+						"getallfavouriterecipe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add a favourite recipe",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoaXJhZzkxQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiY2hpcmFnIiwiaWF0IjoxNjkyNzcwMTcxfQ.EY9sGw0xI-CNHcuZ-WE0-cmqR4i6tUNc0vQ_eFZY1Zs",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"recipeid\":\"2\",\r\n    \"userid\":\"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/favouriterecipe/addfavouriterecipe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"favouriterecipe",
+						"addfavouriterecipe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete favourite recipe",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoaXJhZzkxQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiY2hpcmFnIiwiaWF0IjoxNjkyNzcwMTcxfQ.EY9sGw0xI-CNHcuZ-WE0-cmqR4i6tUNc0vQ_eFZY1Zs",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/favouriterecipe/deletefavouriterecipe/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"favouriterecipe",
+						"deletefavouriterecipe",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

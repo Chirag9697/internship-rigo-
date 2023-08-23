@@ -5,6 +5,7 @@ import * as fromusermodel from './packages/users';
 import * as fromrecipemodel from './packages/recipies';
 import * as fromcommentmodel from './packages/comments';
 import * as fromlikemodel from './packages/likes';
+import * as fromfavouriterecipe from './packages/favourite-recipe';
 
 import knex from "knex";
 import {development} from '../knexfile'
@@ -21,6 +22,7 @@ app.use('/',auth.router);
 app.use('/recipe',fromrecipemodel.router);
 app.use('/comment',fromcommentmodel.router);
 app.use('/likes',fromlikemodel.router);
+app.use('/favouriterecipe',fromfavouriterecipe.router);
 
 function checkrecipe(){
     const data={
