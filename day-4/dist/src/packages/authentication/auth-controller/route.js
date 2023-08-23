@@ -52,13 +52,13 @@ exports.router.post('/register', async (req, res) => {
 });
 exports.router.get('/login', async (req, res) => {
     const { email, password } = req.body;
-    const userlogging = await fromusers.get_one(email);
+    const userlogging = await fromusers.get_one2(email);
     if (!userlogging) {
-        return res.send("password is not correct");
+        return res.send("user not found");
     }
     const check = await bcrypt_1.default.compare(password, userlogging['password']);
     if (!check) {
-        return res.send("user not found");
+        return res.send("password not correct");
     }
     const token = jsonwebtoken_1.default.sign({ email: email, password: password }, process.env.PRIVATE_KEY);
     console.log(token);

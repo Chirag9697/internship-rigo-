@@ -1,0 +1,1 @@
+{"version":3,"file":"get_all.js","sourceRoot":"","sources":["../../../../../src/packages/likes/usecases/get_all.ts"],"names":[],"mappings":";;;AAAA,2CAA2C;AAC3C,2CAAuC;AAEhC,MAAM,OAAO,GAAC,KAAK,IAAE,EAAE;IAC1B,MAAM,OAAO,GAAC,MAAM,YAAI,CAAC,KAAK,EAAE,CAAC;IACjC,OAAO,CAAC,GAAG,CAAC,OAAO,CAAC,CAAC;IACrB,OAAO,OAAO,CAAC;AACnB,CAAC,CAAA;AAJY,QAAA,OAAO,WAInB"}

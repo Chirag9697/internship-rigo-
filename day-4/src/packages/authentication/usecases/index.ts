@@ -1,1 +1,1 @@
-export * from './checktoken';
+export * from '../../../utils/check-token';
