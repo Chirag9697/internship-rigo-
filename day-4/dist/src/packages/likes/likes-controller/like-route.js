@@ -28,36 +28,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = __importDefault(require("express"));
-const fromusermodel = __importStar(require("../../users"));
-const fromrecipemodel = __importStar(require("../../recipies"));
 const fromlikemodel = __importStar(require("../../likes"));
-const authentication_1 = require("../../authentication");
+const check_token_1 = require("../../../utils/check-token");
 exports.router = express_1.default.Router();
-exports.router.post('/addlike', (0, authentication_1.checktoken)(['admin', 'user']), async (req, res) => {
-    console.log("gello");
+exports.router.post('/', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     const { recipeid, userid } = req.body;
-    const finduser = await fromusermodel.get_one(userid);
-    console.log(finduser);
-    if (!finduser) {
-        return res.status(400).send({ "error": "User not found" });
+    try {
+        fromlikemodel.create({ recipeid, userid });
+        res.send("successfully liked");
     }
-    const findrecipe = await fromrecipemodel.get_one(recipeid);
-    if (!findrecipe) {
-        return res.status(400).send({ "error": "recipe not found" });
+    catch (error) {
+        return res.send("there is some error");
     }
-    const data = { recipeid, userid };
-    const insertcomment = await fromlikemodel.create(data);
-    if (!insertcomment) {
-        return res.status(400).send({ "error": "failed to like" });
-    }
-    res.status(200).send({ "success": "recipe is liked" });
 });
-exports.router.delete('/deletelike/:id', (0, authentication_1.checktoken)(['admin', 'user']), async (req, res) => {
+exports.router.delete('/:id', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     const { id } = req.params;
-    const delet = fromlikemodel.deleterecord(id);
-    if (!delet) {
-        return res.status(400).send({ "error": "not able to delete" });
+    try {
+        await fromlikemodel.deleterecord(id);
+        return res.send("successfully deleted");
     }
-    return res.status(200).send({ "success": "successfully deleted" });
+    catch (error) {
+        return res.send("there is some error");
+    }
 });
 //# sourceMappingURL=like-route.js.map

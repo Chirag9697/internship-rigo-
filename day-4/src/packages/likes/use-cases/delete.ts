@@ -1,9 +1,13 @@
 // import {user} from '../domain/user';
-import { like } from "../domain/likes";
+import { likes } from "../domain/likes";
 export const deleterecord=async(id:number)=>{
-    const deleting=await like.query().deleteById(id);
+    const deleting=await likes.query().deleteById(id);
     console.log(deleting);
-    return deleting;
+    if(!deleting){
+        throw new Error("not able to delete");
+        return;
+    }
+    // return deleting;
     // console.log(allpersons);
 }
     

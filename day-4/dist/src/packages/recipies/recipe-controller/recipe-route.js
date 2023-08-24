@@ -30,9 +30,11 @@ exports.router = void 0;
 const express_1 = __importDefault(require("express"));
 const multer_1 = __importDefault(require("multer"));
 const fromrecipemodel = __importStar(require("../../recipies"));
+const check_token_1 = require("../../../utils/check-token");
 exports.router = express_1.default.Router();
 const upload = (0, multer_1.default)({ dest: 'uploads/' });
-exports.router.post('/', upload.single('avatar'), async (req, res) => {
+exports.router.post('/', upload.single('avatar'), (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
+    console.log('helo');
     const { filename } = req.file;
     const { recipename, cookingtime, description, instruction, ownerid } = req.body;
     const data = { recipename, cookingtime, description, instruction, ownerid, filename };
@@ -44,7 +46,7 @@ exports.router.post('/', upload.single('avatar'), async (req, res) => {
         return res.send("there is some error");
     }
 });
-exports.router.get('/', async (req, res) => {
+exports.router.get('/', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     try {
         const result = await fromrecipemodel.get_all(req.query);
         return res.send(result);
@@ -53,7 +55,7 @@ exports.router.get('/', async (req, res) => {
         return res.send('there is some error');
     }
 });
-exports.router.delete('/:id', async (req, res) => {
+exports.router.delete('/:id', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     const { id } = req.params;
     try {
         await fromrecipemodel.deleterecord(id);
@@ -63,7 +65,7 @@ exports.router.delete('/:id', async (req, res) => {
         return res.send("there is some error");
     }
 });
-exports.router.put('/updaterecipe/:id', upload.single('avatar'), async (req, res) => {
+exports.router.put('/:id', upload.single('avatar'), (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     const { id } = req.params;
     const { filename } = req.file;
     const { recipename, cookingtime, description, instruction, ownerid } = req.body;

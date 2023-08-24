@@ -34,3 +34,5 @@ export const checktoken=(rolesdata:any)=>{
         });
     }
 }
+
+// module.exports=checktoken;

@@ -1,19 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.user = void 0;
+exports.users = void 0;
 const objection_1 = require("objection");
-const role_1 = require("../../roles/domain/role");
+const roles_1 = require("../../roles/domain/roles");
 const recipies_1 = require("../../recipies");
-class user extends objection_1.Model {
+const favourite_recipe_1 = require("../../favourite-recipe");
+class users extends objection_1.Model {
     static get tableName() {
         return 'users';
     }
 }
-exports.user = user;
-user.relationMappings = {
+exports.users = users;
+users.relationMappings = {
     roles: {
         relation: objection_1.Model.HasManyRelation,
-        modelClass: role_1.role,
+        modelClass: roles_1.roles,
         join: {
             from: 'users.id',
             to: 'roles.roleuser'
@@ -21,7 +22,7 @@ user.relationMappings = {
     },
     userrelation: {
         relation: objection_1.Model.HasManyRelation,
-        modelClass: recipies_1.Recipe,
+        modelClass: recipies_1.recipies,
         join: {
             from: "users.id",
             to: "recipies.ownerid"
@@ -29,7 +30,7 @@ user.relationMappings = {
     },
     userfavouriterelation: {
         relation: objection_1.Model.HasManyRelation,
-        modelClass: user,
+        modelClass: favourite_recipe_1.favouriterecipe,
         join: {
             from: "users.id",
             to: "favouriterecipies.userid",

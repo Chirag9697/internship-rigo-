@@ -1,2 +1,2 @@
-export * from './domain/user';
+export * from './domain/users';
 export * from './use-cases';

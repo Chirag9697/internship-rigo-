@@ -2,7 +2,7 @@ import express from 'express';
 import * as fromusermodel from '../../users'; 
 import * as fromrecipemodel from '../../recipies';
 import * as fromcommentmodel from '../../comments';
-import { checktoken } from '../../authentication';
+import { checktoken } from '../../../utils/check-token';
 export const router=express.Router();
 
 router.post('/',checktoken(['admin','user']),async(req,res)=>{

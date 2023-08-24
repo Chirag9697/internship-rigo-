@@ -12,7 +12,7 @@ exports.fileupload = fileupload;
 fileupload.relationMappings = {
     reciperelation: {
         relation: objection_1.Model.HasOneRelation,
-        modelClass: recipies_1.Recipe,
+        modelClass: recipies_1.recipies,
         join: {
             from: "fileupload.recipeid",
             to: "recipies.id"

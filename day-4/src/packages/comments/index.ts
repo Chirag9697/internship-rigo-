@@ -1,3 +1,3 @@
-export * from './domain/comment';
-export * from './usecases';
+export * from './domain/comments';
+export * from './use-cases';
 export * from './comment-controller';

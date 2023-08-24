@@ -1,9 +1,9 @@
-import {role} from '../domain/role';
+import {roles} from '../domain/roles';
 
 export const get_one=async(id:any)=>{
-    const roles=await role.query().first().where('roleuser','=',id);
+    const allroles=await roles.query().first().where('roleuser','=',id);
     // console.log(person);
     // const userone=(await person);
-    console.log(roles);
-    return roles;
+    console.log(allroles);
+    return allroles;
 }

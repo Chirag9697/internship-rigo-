@@ -1,8 +1,8 @@
-import { Recipe } from "../../recipies";
-import { user } from "../../users";
+import { recipies } from "../../recipies";
+import { users } from "../../users";
 import { Model } from "objection";
 
-export class like extends Model{
+export class likes extends Model{
     // commenttext?:String
     recipeid?:String
     userid?:String
@@ -13,7 +13,7 @@ export class like extends Model{
     static relationMappings={
         commentreciperelation:{
             relation:Model.HasOneRelation,
-            modelClass:Recipe,
+            modelClass:recipies,
             join:{
                 from:"likes.recipeid",
                 to:"recipies.id"
@@ -21,7 +21,7 @@ export class like extends Model{
         },
         commentuserrelation:{
             relation:Model.HasOneRelation,
-            modelClass:user,
+            modelClass:users,
             join:{
                 from:"likes.userid",
                 to:"users.id"

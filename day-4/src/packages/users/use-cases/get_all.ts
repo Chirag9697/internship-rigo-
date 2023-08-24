@@ -1,7 +1,7 @@
-import {user} from '../domain/user';
+import {users} from '../domain/users';
 
 export const get_all=async()=>{
-    const allpersons=await user.query();
+    const allpersons=await users.query();
     console.log(allpersons);
     // return allpersons;
 }

@@ -3,34 +3,26 @@ import * as fromusermodel from '../../users';
 import * as fromrecipemodel from '../../recipies';
 import * as fromcommentmodel from '../../comments';
 import * as fromlikemodel from '../../likes';
-import { checktoken } from '../../authentication';
+import { checktoken } from '../../../utils/check-token';
 export const router=express.Router();
 
-router.post('/addlike',checktoken(['admin','user']),async(req,res)=>{
-    console.log("gello");
+router.post('/',checktoken(['admin','user']),async(req,res)=>{
     const{recipeid,userid}=req.body;
-    const finduser=await fromusermodel.get_one(userid);
-    console.log(finduser);
-    if(!finduser){
-        return res.status(400).send({"error":"User not found"})
+    try{
+        fromlikemodel.create({recipeid,userid});
+        res.send("successfully liked");
+    }catch(error){
+        return res.send("there is some error");
     }
-    const findrecipe=await fromrecipemodel.get_one(recipeid);
-    if(!findrecipe){
-        return res.status(400).send({"error":"recipe not found"});
-    }
-    const data={recipeid,userid};
-    const insertcomment=await fromlikemodel.create(data);
-    if(!insertcomment){
-        return  res.status(400).send({"error":"failed to like"});
-    }
-    res.status(200).send({"success":"recipe is liked"});    
+   
 })
 
-router.delete('/deletelike/:id',checktoken(['admin','user']),async(req,res)=>{
+router.delete('/:id',checktoken(['admin','user']),async(req,res)=>{
     const{id}=req.params;
-    const delet=fromlikemodel.deleterecord(id);
-    if(!delet){
-        return res.status(400).send({"error":"not able to delete"});
+    try{
+        await fromlikemodel.deleterecord(id);
+        return res.send("successfully deleted");
+    }catch(error){
+        return res.send("there is some error");
     }
-    return res.status(200).send({"success":"successfully deleted"});
 })

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleterecord = void 0;
-const user_1 = require("../domain/user");
+const users_1 = require("../domain/users");
 const deleterecord = async (id) => {
-    const deleting = await user_1.user.query().deleteById(id);
+    const deleting = await users_1.users.query().deleteById(id);
     console.log(deleting);
     // console.log(allpersons);
 };

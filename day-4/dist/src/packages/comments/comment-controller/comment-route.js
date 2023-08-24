@@ -29,9 +29,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = __importDefault(require("express"));
 const fromcommentmodel = __importStar(require("../../comments"));
-const authentication_1 = require("../../authentication");
+const check_token_1 = require("../../../utils/check-token");
 exports.router = express_1.default.Router();
-exports.router.post('/', (0, authentication_1.checktoken)(['admin', 'user']), async (req, res) => {
+exports.router.post('/', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     const { commenttext, recipeid, userid } = req.body;
     const data1 = { commenttext, recipeid, userid };
     try {
@@ -42,7 +42,7 @@ exports.router.post('/', (0, authentication_1.checktoken)(['admin', 'user']), as
         return res.send("there is some error");
     }
 });
-exports.router.get('/', (0, authentication_1.checktoken)(['admin', 'user']), async (req, res) => {
+exports.router.get('/', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     try {
         const allcomments = await fromcommentmodel.get_all();
         return res.send(allcomments);
@@ -51,7 +51,7 @@ exports.router.get('/', (0, authentication_1.checktoken)(['admin', 'user']), asy
         res.send("there is some error");
     }
 });
-exports.router.delete('/:id', (0, authentication_1.checktoken)(['admin', 'user']), async (req, res) => {
+exports.router.delete('/:id', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     const { id } = req.params;
     try {
         await fromcommentmodel.deleterecord(id);
@@ -61,7 +61,7 @@ exports.router.delete('/:id', (0, authentication_1.checktoken)(['admin', 'user']
         return res.send("there is some error");
     }
 });
-exports.router.put('/:id', (0, authentication_1.checktoken)(['admin', 'user']), async (req, res) => {
+exports.router.put('/:id', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     const { id } = req.params;
     const { commenttext, recipeid, userid } = req.body;
     const data = { commenttext, recipeid, userid };

@@ -1,7 +1,7 @@
-import {user} from '../domain/user';
+import {users} from '../domain/users';
 
 export const deleterecord=async(id:number)=>{
-    const deleting=await user.query().deleteById(id);
+    const deleting=await users.query().deleteById(id);
     console.log(deleting);
     // console.log(allpersons);
 }

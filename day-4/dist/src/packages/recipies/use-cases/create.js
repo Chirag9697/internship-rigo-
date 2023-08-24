@@ -24,17 +24,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.create = void 0;
-const recipe_1 = require("../domain/recipe");
+const recipies_1 = require("../domain/recipies");
 const fromusermodel = __importStar(require("../../users"));
 const create = async (data) => {
     const { recipename, cookingtime, description, instruction, ownerid, filename } = data;
     const finduser = await fromusermodel.get_one(ownerid);
     console.log(finduser);
     if (!finduser) {
-        throw new Error("user not found");
+        throw new Error("users not found");
     }
     const data1 = { recipename, cookingtime, description, instruction, ownerid, filename };
-    const hel = await recipe_1.Recipe.query().insert(data);
+    const hel = await recipies_1.recipies.query().insert(data);
     if (!hel) {
         throw new Error('failed to insert the recipe');
     }

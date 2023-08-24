@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Recipe = void 0;
+exports.recipies = void 0;
 const objection_1 = require("objection");
 // import { role } from "../../roles/domain/role";
 const users_1 = require("../../users");
 const fileupload_1 = require("../../fileuploads/domain/fileupload");
 const favourite_recipe_1 = require("../../favourite-recipe/domain/favourite-recipe");
-class Recipe extends objection_1.Model {
+class recipies extends objection_1.Model {
     static get tableName() {
         return "recipies";
     }
 }
-exports.Recipe = Recipe;
-Recipe.relationMappings = {
+exports.recipies = recipies;
+recipies.relationMappings = {
     userrelation: {
         relation: objection_1.Model.BelongsToOneRelation,
         modelClass: users_1.user,

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.role = void 0;
+exports.roles = void 0;
 const objection_1 = require("objection");
 const users_1 = require("../../users");
-class role extends objection_1.Model {
+class roles extends objection_1.Model {
     static get tableName() {
         return 'roles';
     }
 }
-exports.role = role;
-role.relationMappings = {
+exports.roles = roles;
+roles.relationMappings = {
     roles: {
         relation: objection_1.Model.BelongsToOneRelation,
         modelClass: users_1.user,

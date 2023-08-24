@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.create = void 0;
-const user_1 = require("../domain/user");
+const users_1 = require("../domain/users");
 const create = async (data) => {
     // console.log("create");
-    const hel = await user_1.user.query().insert(data);
+    const hel = await users_1.users.query().insert(data);
     console.log("insert=", hel);
     return hel;
     // console.log(await hel);   

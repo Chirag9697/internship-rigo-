@@ -1,7 +1,7 @@
 // import {user} from '../domain/user';
-import { Recipe } from "../domain/recipe";
+import { recipies } from "../domain/recipies";
 export const deleterecord=async(id:number)=>{
-    const deleting=await Recipe.query().deleteById(id);
+    const deleting=await recipies.query().deleteById(id);
     if(!deleting){
         throw new Error("there is some error");
         return;

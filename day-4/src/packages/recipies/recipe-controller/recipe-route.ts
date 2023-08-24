@@ -7,7 +7,8 @@ export const router=express.Router();
 
 const upload=multer({dest:'uploads/'});
 
-router.post('/',upload.single('avatar'),async(req,res)=>{
+router.post('/',upload.single('avatar'),checktoken(['admin','user']),async(req,res)=>{
+    console.log('helo');
     const {filename}=req.file;
     const{recipename,cookingtime,description,instruction,ownerid}=req.body
     const data={recipename,cookingtime,description,instruction,ownerid,filename};
@@ -19,7 +20,7 @@ router.post('/',upload.single('avatar'),async(req,res)=>{
     } 
 })
 
-router.get('/',async(req,res)=>{
+router.get('/',checktoken(['admin','user']),async(req,res)=>{
     try{
         const result=await fromrecipemodel.get_all(req.query);
         return res.send(result);
@@ -28,7 +29,7 @@ router.get('/',async(req,res)=>{
     }
 })
 
-router.delete('/:id',async(req,res)=>{
+router.delete('/:id',checktoken(['admin','user']),async(req,res)=>{
     const{id}=req.params;
     try{
         await fromrecipemodel.deleterecord(id);
@@ -40,9 +41,9 @@ router.delete('/:id',async(req,res)=>{
 })
 
 
-router.put('/updaterecipe/:id',upload.single('avatar'),async(req,res)=>{
+router.put('/:id',upload.single('avatar'),checktoken(['admin','user']),async(req,res)=>{
     const{id}=req.params;
-    const{filename}=req.file;
+    const{filename}=req.file
     const{recipename,cookingtime,description,instruction,ownerid}=req.body;
     const data={recipename,cookingtime,description,instruction,ownerid,filename};
     try{

@@ -1,49 +1,20 @@
-import {Recipe} from '../domain/recipe';
+import {recipies} from '../domain/recipies';
 
 export const get_all=async(data:any)=>{
-    const allrecipies=await Recipe.query();
-    // console.log(allrecipies);
-    if(!allrecipies){
-        throw new Error("cannot get all recipies");
-        return;
-    }
+    const query=recipies.query();
     const{recipename}=data;
     const page=parseInt(data.page);
     const limit=parseInt(data.limit);
-    const result={recipies:{},next:{},previous:{}};
+    // const finalrecipie=query;
+    var query2=query;
     if(recipename){
-        var newrecipies=allrecipies.filter((recipe)=>{
-            if(recipe.recipename.includes(recipename)==true){
-                return recipe;
-            }
-        })
-        if(page && limit){
-            const startindex=(page-1)*limit;
-            const endindex=page*limit;
-            if(endindex<newrecipies.length){
-                result.next={
-                    page:page+1,
-                    limit:limit
-                }
-            }
-            if(startindex>0){
-                result.previous={
-                    page:page-1,
-                    limit:limit
-                }
-            }
-            const recipies=newrecipies.slice(startindex,endindex);
-            result.recipies=recipies;
-            // return res.send(result);
-            return result;
-        }
-        else{
-            result.recipies=newrecipies;
-            // return res.send(result);
-            return result;
-        }
+        query2=query.where('recipename','LIKE',`%${recipename}%`);
     }
-    result.recipies=allrecipies;
-    return result;   
+    const finalrecipies=await query2.page(page ?? 1,limit && 10);
+    return {
+        recipies:finalrecipies,
+        page:data.page || 1, 
+        limit:data.limit || 10
+    }   
 }
 

@@ -1,6 +1,6 @@
 import { Model } from "objection";
-import { role } from "../../roles/domain/role";
-import { Recipe } from "../../recipies";
+import { roles } from "../../roles/domain/roles";
+import { recipies } from "../../recipies";
 export class fileupload extends Model{
     filename?:String
     recipeid?:String
@@ -11,7 +11,7 @@ export class fileupload extends Model{
     static relationMappings={  
        reciperelation:{
             relation:Model.HasOneRelation,
-            modelClass:Recipe,
+            modelClass:recipies,
             join:{
                 from:"fileupload.recipeid",
                 to:"recipies.id"

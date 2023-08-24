@@ -1,52 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.get_all = void 0;
-const recipe_1 = require("../domain/recipe");
+const recipies_1 = require("../domain/recipies");
 const get_all = async (data) => {
-    const allrecipies = await recipe_1.Recipe.query();
-    // console.log(allrecipies);
-    if (!allrecipies) {
-        throw new Error("cannot get all recipies");
-        return;
-    }
+    const query = recipies_1.recipies.query();
     const { recipename } = data;
     const page = parseInt(data.page);
     const limit = parseInt(data.limit);
-    const result = { recipies: {}, next: {}, previous: {} };
+    // const finalrecipie=query;
+    var query2 = query;
     if (recipename) {
-        var newrecipies = allrecipies.filter((recipe) => {
-            if (recipe.recipename.includes(recipename) == true) {
-                return recipe;
-            }
-        });
-        if (page && limit) {
-            const startindex = (page - 1) * limit;
-            const endindex = page * limit;
-            if (endindex < newrecipies.length) {
-                result.next = {
-                    page: page + 1,
-                    limit: limit
-                };
-            }
-            if (startindex > 0) {
-                result.previous = {
-                    page: page - 1,
-                    limit: limit
-                };
-            }
-            const recipies = newrecipies.slice(startindex, endindex);
-            result.recipies = recipies;
-            // return res.send(result);
-            return result;
-        }
-        else {
-            result.recipies = newrecipies;
-            // return res.send(result);
-            return result;
-        }
+        query2 = query.where('recipename', 'LIKE', `%${recipename}%`);
     }
-    result.recipies = allrecipies;
-    return result;
+    const finalrecipies = await query2.page(page !== null && page !== void 0 ? page : 1, limit && 10);
+    return {
+        recipies: finalrecipies,
+        page: data.page || 1,
+        limit: data.limit || 10
+    };
 };
 exports.get_all = get_all;
 //# sourceMappingURL=get_all.js.map
