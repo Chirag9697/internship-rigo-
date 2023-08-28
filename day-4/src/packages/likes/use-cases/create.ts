@@ -21,4 +21,5 @@ export const create=async(data:Partial<likes>)=>{
         throw new Error("not able to like");
         return;
     }
+    return liked;
 }

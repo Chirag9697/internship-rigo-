@@ -33,7 +33,6 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const register = async (data) => {
-    console.log('hello i am register');
     const { email, password, roleuser } = data;
     const data1 = { email: email, password: await bcrypt_1.default.hash(password, parseInt(process.env.Saltrounds)) };
     const userid = await fromusers.create(data1);
@@ -42,7 +41,7 @@ const register = async (data) => {
     if (!pass) {
         throw new Error('there is some error');
     }
-    // return pass;
+    return userid;
 };
 exports.register = register;
 //# sourceMappingURL=register.js.map

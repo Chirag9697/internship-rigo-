@@ -45,6 +45,7 @@ const create = async (data) => {
         throw new Error("not able to like");
         return;
     }
+    return liked;
 };
 exports.create = create;
 //# sourceMappingURL=create.js.map

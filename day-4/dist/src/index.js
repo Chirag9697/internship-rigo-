@@ -26,6 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.app = void 0;
 //local
 const auth = __importStar(require("./packages/authentication"));
 const fromrecipemodel = __importStar(require("./packages/recipies"));
@@ -37,17 +38,18 @@ const knex_1 = __importDefault(require("knex"));
 const express_1 = __importDefault(require("express"));
 const knexfile_1 = require("../knexfile");
 const objection_1 = require("objection");
-const app = (0, express_1.default)();
+exports.app = (0, express_1.default)();
 const connection = knexfile_1.development;
 const initial = "api/v1";
 objection_1.Model.knex((0, knex_1.default)(connection));
-app.use(express_1.default.json());
-app.use(`/${initial}`, auth.router);
-app.use(`/${initial}/recipies`, fromrecipemodel.router);
-app.use(`/${initial}/comments`, fromcommentmodel.router);
-app.use(`/${initial}/likes`, fromlikemodel.router);
-app.use(`/${initial}/recipies/favourites`, fromfavouriterecipe.router);
-app.listen(3000, (req, res) => {
+exports.app.use(express_1.default.json());
+exports.app.use(`/${initial}/auth`, auth.router);
+exports.app.use(`/${initial}/recipies`, fromrecipemodel.router);
+exports.app.use(`/${initial}/comments`, fromcommentmodel.router);
+exports.app.use(`/${initial}/likes`, fromlikemodel.router);
+exports.app.use(`/${initial}/recipies/favourites`, fromfavouriterecipe.router);
+exports.app.listen(3000, (req, res) => {
     console.log("listening on port 3000");
 });
+// module.exports=app;
 //# sourceMappingURL=index.js.map

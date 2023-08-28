@@ -38,6 +38,7 @@ const create = async (data) => {
     if (!hel) {
         throw new Error('failed to insert the recipe');
     }
+    return hel;
 };
 exports.create = create;
 //# sourceMappingURL=create.js.map

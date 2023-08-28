@@ -17,4 +17,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // export * from '../../../utils/check-token';
 __exportStar(require("./register"), exports);
 __exportStar(require("./login"), exports);
+__exportStar(require("./deleteuser"), exports);
 //# sourceMappingURL=index.js.map

@@ -33,24 +33,18 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 dotenv_1.default.config();
 const login = async (data) => {
-    console.log("login");
     const { email, password } = data;
-    // console.log(email,password);
     const userlogging = await fromusers.get_one2(email);
-    // console.log(userlogging);
     if (!userlogging) {
         throw new Error("user not found");
         return;
     }
     const check = await bcrypt_1.default.compare(password, userlogging['password']);
-    // console.log(check);
     if (!check) {
         throw new Error("password is not correct");
         return;
     }
     const token = jsonwebtoken_1.default.sign({ email: email, password: password }, process.env.PRIVATE_KEY);
-    // console.log(token);
-    console.log(token);
     const result = { token: token };
     return result;
 };

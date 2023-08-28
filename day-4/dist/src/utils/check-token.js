@@ -61,5 +61,6 @@ const checktoken = (rolesdata) => {
     };
 };
 exports.checktoken = checktoken;
+// 
 // module.exports=checktoken;
 //# sourceMappingURL=check-token.js.map

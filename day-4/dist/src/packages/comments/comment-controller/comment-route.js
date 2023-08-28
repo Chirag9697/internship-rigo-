@@ -36,29 +36,30 @@ exports.router.post('/', (0, check_token_1.checktoken)(['admin', 'user']), async
     const data1 = { commenttext, recipeid, userid };
     try {
         const succ = await fromcommentmodel.create(data1);
-        return res.send("comment successfully added");
+        console.log(succ);
+        return res.status(200).send(succ);
     }
     catch (error) {
-        return res.send("there is some error");
+        return res.status(400).send("there is some error");
     }
 });
 exports.router.get('/', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     try {
         const allcomments = await fromcommentmodel.get_all();
-        return res.send(allcomments);
+        return res.status(200).send(allcomments);
     }
     catch (error) {
-        res.send("there is some error");
+        res.status(400).send("there is some error");
     }
 });
 exports.router.delete('/:id', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     const { id } = req.params;
     try {
         await fromcommentmodel.deleterecord(id);
-        return res.send("successfully deleted");
+        return res.status(200).send("successfully deleted");
     }
     catch (error) {
-        return res.send("there is some error");
+        return res.status(400).send("there is some error");
     }
 });
 exports.router.put('/:id', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
@@ -67,14 +68,10 @@ exports.router.put('/:id', (0, check_token_1.checktoken)(['admin', 'user']), asy
     const data = { commenttext, recipeid, userid };
     try {
         await fromcommentmodel.update(data, id);
-        return res.send("successfully updated");
+        return res.status(200).send("successfully updated");
     }
     catch (error) {
-        return res.send("there is some error");
+        return res.status(400).send("there is some error");
     }
-    // if(!updatecomment){
-    // return res.status(400).send({"error":"not updated"});
-    // }
-    // res.status(200).send({"success":"successfully updated"});
 });
 //# sourceMappingURL=comment-route.js.map

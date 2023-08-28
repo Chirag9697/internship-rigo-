@@ -50,6 +50,7 @@ const create = async (data) => {
         throw new Error("not able to add to favourite recipe");
         return;
     }
+    return hel;
     // console.log("insert=",hel);
     // return hel;
 };

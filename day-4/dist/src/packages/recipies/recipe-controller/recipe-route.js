@@ -30,6 +30,7 @@ exports.router = void 0;
 const express_1 = __importDefault(require("express"));
 const multer_1 = __importDefault(require("multer"));
 const fromrecipemodel = __importStar(require("../../recipies"));
+// import {checktoken} from '../../../utils/check-token'
 const check_token_1 = require("../../../utils/check-token");
 exports.router = express_1.default.Router();
 const upload = (0, multer_1.default)({ dest: 'uploads/' });
@@ -39,30 +40,30 @@ exports.router.post('/', upload.single('avatar'), (0, check_token_1.checktoken)(
     const { recipename, cookingtime, description, instruction, ownerid } = req.body;
     const data = { recipename, cookingtime, description, instruction, ownerid, filename };
     try {
-        await fromrecipemodel.create(data);
-        return res.send("recipe successfully added");
+        const recipe = await fromrecipemodel.create(data);
+        return res.status(200).send(recipe);
     }
     catch (error) {
-        return res.send("there is some error");
+        return res.status(200).send("there is some error");
     }
 });
 exports.router.get('/', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     try {
         const result = await fromrecipemodel.get_all(req.query);
-        return res.send(result);
+        return res.status(200).send(result);
     }
     catch (error) {
-        return res.send('there is some error');
+        return res.status(400).send('there is some error');
     }
 });
 exports.router.delete('/:id', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     const { id } = req.params;
     try {
         await fromrecipemodel.deleterecord(id);
-        return res.send("successfully deleted");
+        return res.status(200).send("successfully deleted");
     }
     catch (error) {
-        return res.send("there is some error");
+        return res.status(400).send("there is some error");
     }
 });
 exports.router.put('/:id', upload.single('avatar'), (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {

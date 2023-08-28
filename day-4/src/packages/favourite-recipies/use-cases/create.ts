@@ -25,6 +25,7 @@ export const create=async(data:Partial<favouriterecipies>)=>{
         throw new Error("not able to add to favourite recipe");
         return;
     }
+    return hel;
     // console.log("insert=",hel);
     // return hel;
 }

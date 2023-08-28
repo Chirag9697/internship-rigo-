@@ -6,7 +6,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const register=async(data)=>{
-    console.log('hello i am register');
     const {email,password,roleuser}=data;
     const data1={email:email,password:await bcrypt.hash(password,parseInt(process.env.Saltrounds))};
     const userid=await fromusers.create(data1);
@@ -15,6 +14,6 @@ export const register=async(data)=>{
     if(!pass){
         throw new Error('there is some error');
     }
-    // return pass;
+    return userid;
 }
 

@@ -2,7 +2,8 @@ import express from 'express';
 import multer from 'multer';
 import * as fromusermodel from '../../users'; 
 import * as fromrecipemodel from '../../recipies';
-import {checktoken} from '../../../utils/check-token'
+// import {checktoken} from '../../../utils/check-token'
+import { checktoken } from '../../../utils/check-token';
 export const router=express.Router();
 
 const upload=multer({dest:'uploads/'});
@@ -13,19 +14,19 @@ router.post('/',upload.single('avatar'),checktoken(['admin','user']),async(req,r
     const{recipename,cookingtime,description,instruction,ownerid}=req.body
     const data={recipename,cookingtime,description,instruction,ownerid,filename};
     try{
-        await fromrecipemodel.create(data);
-        return res.send("recipe successfully added");
+        const recipe=await fromrecipemodel.create(data);
+        return res.status(200).send(recipe);
     }catch(error){
-        return res.send("there is some error");
+        return res.status(200).send("there is some error");
     } 
 })
 
 router.get('/',checktoken(['admin','user']),async(req,res)=>{
     try{
         const result=await fromrecipemodel.get_all(req.query);
-        return res.send(result);
+        return res.status(200).send(result);
     }catch(error){
-        return res.send('there is some error');
+        return res.status(400).send('there is some error');
     }
 })
 
@@ -33,9 +34,9 @@ router.delete('/:id',checktoken(['admin','user']),async(req,res)=>{
     const{id}=req.params;
     try{
         await fromrecipemodel.deleterecord(id);
-        return res.send("successfully deleted");
+        return res.status(200).send("successfully deleted");
     }catch(error){
-        return res.send("there is some error");
+        return res.status(400).send("there is some error");
     }
  
 })

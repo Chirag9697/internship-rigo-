@@ -15,4 +15,5 @@ export const create=async(data:Partial<recipies>)=>{
     if(!hel){
         throw new Error('failed to insert the recipe');
     }
+    return  hel;
 }

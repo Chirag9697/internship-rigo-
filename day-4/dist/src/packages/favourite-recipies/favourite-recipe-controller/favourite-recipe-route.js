@@ -29,15 +29,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = __importDefault(require("express"));
 const fromfavouriterecipe = __importStar(require("../../favourite-recipies"));
-const check_token_1 = require("../../../utils/check-token");
+// import { checktoken } from '../../../utils/check-token';
 // import checktoken from '../../../utils/check-token'
+const check_token_1 = require("../../../utils/check-token");
 exports.router = express_1.default.Router();
 exports.router.post('/', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     const { recipeid, userid } = req.body;
     const data1 = { recipeid, userid };
     try {
-        await fromfavouriterecipe.create(data1);
-        return res.send("added to favourite recipe");
+        const favrecipe = await fromfavouriterecipe.create(data1);
+        return res.send(favrecipe);
     }
     catch (error) {
         return res.send("there is some error");

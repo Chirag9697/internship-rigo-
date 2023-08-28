@@ -9,10 +9,10 @@ export const router=express.Router();
 router.post('/',checktoken(['admin','user']),async(req,res)=>{
     const{recipeid,userid}=req.body;
     try{
-        fromlikemodel.create({recipeid,userid});
-        res.send("successfully liked");
+        const liked=await fromlikemodel.create({recipeid,userid});
+        res.status(200).send(liked);
     }catch(error){
-        return res.send("there is some error");
+        return res.status(400).send("there is some errer");
     }
    
 })
@@ -21,8 +21,8 @@ router.delete('/:id',checktoken(['admin','user']),async(req,res)=>{
     const{id}=req.params;
     try{
         await fromlikemodel.deleterecord(id);
-        return res.send("successfully deleted");
+        return res.status(200).send("successfully deleted");
     }catch(error){
-        return res.send("there is some error");
+        return res.status(400).send("there is some error");
     }
 })
