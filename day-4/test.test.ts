@@ -12,9 +12,9 @@ let addedUserId;
 let addedFavouriterecipeid;
 let addedLikeId;
 const newuser = {
-    email: "chirag2121214@gmail.com",
+    email: "chiragranasaria123121312@gmail.com",
     password: "chirag",
-    roleuser: "user"
+    roleuser: "admin"
 }
 describe('/api/v1/auth', () => {
     describe('api/v1/auth/register', () => {
@@ -51,7 +51,7 @@ describe('/api/v1/recipies', () => {
                 cookingtime: "30 min",
                 description: "hello",
                 instruction: "hello",
-                ownerid: "1",
+                ownerid: addedUserId.toString(),
                 // filename:"hello"
             }
             const path = './images/recipephoto1.jpeg'
@@ -67,7 +67,7 @@ describe('/api/v1/recipies', () => {
                 .field("cookingtime", "30 min")
                 .field('description', 'heloo')
                 .field('instruction', 'hello')
-                .field('ownerid', '1')
+                .field('ownerid', `${newrecipe.ownerid}`)
                 .attach('avatar', path)
                 // .send(newrecipe)
                 .expect(200);
@@ -101,7 +101,7 @@ describe('/api/v1/recipies', () => {
                 cookingtime: "30 min",
                 description: "hello",
                 instruction: "hello",
-                ownerid: "1",
+                ownerid: addedUserId.toString(),
                 // filename:"hello"
             }
             const path = './images/recipephoto1.jpeg'
