@@ -3,6 +3,7 @@ import request from 'supertest';
 import assert from 'assert';
 import express from 'express';
 import { app } from './src/index';
+import {faker} from '@faker-js/faker';
 import { expect } from 'chai';
 import { favouriterecipies } from './src/packages/favourite-recipies';
 
@@ -12,7 +13,7 @@ let addedUserId;
 let addedFavouriterecipeid;
 let addedLikeId;
 const newuser = {
-    email: "chiragranasaria123121312@gmail.com",
+    email: faker.internet.email(),
     password: "chirag",
     roleuser: "admin"
 }
@@ -24,7 +25,8 @@ describe('/api/v1/auth', () => {
             const response = await request(app).post('/api/v1/auth/register').send(newuser)
                 .expect(200);
             addedUserId = response.body.id;
-            // console.log("added user id",addedUserId);
+            
+            console.log("added user id",addedUserId);
         })
     })
     describe('api/v1/auth/login', () => {

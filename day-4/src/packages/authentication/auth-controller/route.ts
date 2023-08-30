@@ -27,9 +27,13 @@ router.post('/register',async(req,res)=>{
 })
 
 router.delete('/deleteuser/:id',async(req,res)=>{
+    console.log("delete this user please");
+
+    
     const{id}=req.params;
+    console.log("id of the user",id);
     try{
-        await fromauth.deleteuser(id);
+        await fromauth.deleteuser(parseInt(id));
         res.status(200).send("user deleted");
         
     }catch(error){

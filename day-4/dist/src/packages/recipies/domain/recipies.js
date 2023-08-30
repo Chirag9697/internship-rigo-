@@ -6,6 +6,7 @@ const objection_1 = require("objection");
 const users_1 = require("../../users");
 const fileupload_1 = require("../../fileuploads/domain/fileupload");
 const favourite_recipies_1 = require("../../favourite-recipies");
+const ingredients_1 = require("../../ingredients/domain/ingredients");
 class recipies extends objection_1.Model {
     static get tableName() {
         return "recipies";
@@ -36,6 +37,18 @@ recipies.relationMappings = {
             from: "Recipe.id",
             to: "favouriterecipies.recipeid",
         }
-    }
+    },
+    ingredientreciperelation: {
+        relation: objection_1.Model.ManyToManyRelation,
+        modelClass: ingredients_1.ingredients,
+        join: {
+            from: "recipies.id",
+            through: {
+                from: "recipeingredients.recipeid",
+                to: "recipeingredients.ingredientid"
+            },
+            to: "ingredients.id",
+        }
+    },
 };
 //# sourceMappingURL=recipies.js.map

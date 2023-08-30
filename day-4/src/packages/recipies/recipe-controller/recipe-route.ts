@@ -9,16 +9,19 @@ export const router=express.Router();
 const upload=multer({dest:'uploads/'});
 
 router.post('/',upload.single('avatar'),checktoken(['admin','user']),async(req,res)=>{
-    console.log('helo');
+    // console.log('helo');
     const {filename}=req.file;
+    const{ingredients}=req.body;
     const{recipename,cookingtime,description,instruction,ownerid}=req.body
-    const data={recipename,cookingtime,description,instruction,ownerid,filename};
+    // console.log(ingredients);
+    const data={recipename,cookingtime,filename,description,instruction,ownerid,ingredients};
     try{
         const recipe=await fromrecipemodel.create(data);
         return res.status(200).send(recipe);
     }catch(error){
-        return res.status(200).send("there is some error");
+        return res.status(200).send("there is some error")
     } 
+    // return res.send("success");
 })
 
 router.get('/',checktoken(['admin','user']),async(req,res)=>{

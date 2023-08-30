@@ -49,6 +49,7 @@ const checktoken = (rolesdata) => {
             // console.log("hello I am user",decoded);
             req.user = decoded;
             const user = await fromusers.get_one2(decoded.email);
+            console.log(user);
             const role = await fromroles.get_one(user['id']);
             console.log("roles", role);
             console.log("logged in");

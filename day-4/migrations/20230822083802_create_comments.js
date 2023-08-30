@@ -6,8 +6,8 @@ exports.up = function(knex) {
     return knex.schema.createTable('comments',table=>{
         table.increments('id');
         table.string('commenttext').notNullable();
-        table.string('recipeid').references('recipies.id');
-        table.string('userid').references('users.id');
+        table.integer('recipeid').references('recipies.id');
+        table.integer('userid').references('users.id');
         // table.string('instruction').notNullable();
         // table.string('ownerid').references('users.id');
       })

@@ -22,10 +22,11 @@ export const checktoken=(rolesdata:any)=>{
             
             req.user=decoded;
             const user=await fromusers.get_one2(decoded.email);
+            console.log(user);
             const role=await fromroles.get_one(user['id']);
             console.log("roles",role);
 
-            console.log("logged in");
+            console.log("logged in")
             console.log(rolesdata)
             if(!rolesdata.includes(role.rolename)){
                 return res.status(400).send("not accessible");

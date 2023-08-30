@@ -35,10 +35,12 @@ const check_token_1 = require("../../../utils/check-token");
 exports.router = express_1.default.Router();
 const upload = (0, multer_1.default)({ dest: 'uploads/' });
 exports.router.post('/', upload.single('avatar'), (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
-    console.log('helo');
+    // console.log('helo');
     const { filename } = req.file;
+    const { ingredients } = req.body;
     const { recipename, cookingtime, description, instruction, ownerid } = req.body;
-    const data = { recipename, cookingtime, description, instruction, ownerid, filename };
+    // console.log(ingredients);
+    const data = { recipename, cookingtime, filename, description, instruction, ownerid, ingredients };
     try {
         const recipe = await fromrecipemodel.create(data);
         return res.status(200).send(recipe);
@@ -46,6 +48,7 @@ exports.router.post('/', upload.single('avatar'), (0, check_token_1.checktoken)(
     catch (error) {
         return res.status(200).send("there is some error");
     }
+    // return res.send("success");
 });
 exports.router.get('/', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     try {

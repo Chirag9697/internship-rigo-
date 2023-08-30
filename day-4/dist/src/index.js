@@ -33,6 +33,7 @@ const fromrecipemodel = __importStar(require("./packages/recipies"));
 const fromcommentmodel = __importStar(require("./packages/comments"));
 const fromlikemodel = __importStar(require("./packages/likes"));
 const fromfavouriterecipe = __importStar(require("./packages/favourite-recipies"));
+const fromingredientmodel = __importStar(require("./packages/ingredients"));
 //lib
 const knex_1 = __importDefault(require("knex"));
 const express_1 = __importDefault(require("express"));
@@ -48,6 +49,14 @@ exports.app.use(`/${initial}/recipies`, fromrecipemodel.router);
 exports.app.use(`/${initial}/comments`, fromcommentmodel.router);
 exports.app.use(`/${initial}/likes`, fromlikemodel.router);
 exports.app.use(`/${initial}/recipies/favourites`, fromfavouriterecipe.router);
+function addingredients() {
+    const ingredient = ['rice', 'barley', 'wheat', 'water', 'aachar', 'kachar'];
+    for (var i = 0; i < ingredient.length; i++) {
+        fromingredientmodel.create({ ingredientname: ingredient[i] });
+    }
+    console.log('added all ingredient');
+}
+// addingredients();
 exports.app.listen(3000, (req, res) => {
     console.log("listening on port 3000");
 });

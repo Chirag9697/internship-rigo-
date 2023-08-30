@@ -5,8 +5,8 @@
 exports.up = function(knex) {
     return knex.schema.createTable('likes',table=>{
         table.increments('id');
-        table.string('recipeid').references('recipies.id');
-        table.string('userid').references('users.id');
+        table.integer('recipeid').references('recipies.id');
+        table.integer('userid').references('users.id');
       })
 };
 
