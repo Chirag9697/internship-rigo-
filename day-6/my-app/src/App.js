@@ -1,205 +1,467 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import logo from "./logo.svg";
-import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
+import { Card, CardHeader, CardBody, CardFooter, AlertDialog } from "@chakra-ui/react";
 import { Droppable } from "react-beautiful-dnd";
 import { Draggable } from "react-beautiful-dnd";
 import { DragDropContext } from "react-beautiful-dnd";
-import uuid from 'react-uuid';
+import { Container } from "@chakra-ui/react";
+import uuid from "react-uuid";
 import { Text } from "@chakra-ui/react";
+import { Input } from "@chakra-ui/react";
+import { Select } from "@chakra-ui/react";
+import { Textarea } from "@chakra-ui/react";
+import { Spinner } from "@chakra-ui/react";
+// import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar";
+import { Button, ButtonGroup } from "@chakra-ui/react";
 import "./App.css";
-// import {initialdata from './initialData';
-const initialdata=require("./initialData");
-const dataadded=[];
-const reorder=(list,startIndex,endIndex)=>{
-  console.log(list,startIndex,endIndex);
-  const result=Array.from(list);
-  const [removed]=result.splice(startIndex,1);
-  console.log("removed",removed);
-  result.splice(endIndex,0,removed);
+import { SearchIcon } from "@chakra-ui/icons";
+
+// const initialdata = require("./initialData");
+const dataadded = [];
+const dataadded2=[];
+const reorder = (list, startIndex, endIndex) => {
+  console.log(list, startIndex, endIndex);
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  console.log("removed", removed);
+  result.splice(endIndex, 0, removed);
   // console.log(newresult);
-  console.log("newresult",result);
+  console.log("newresult", result);
   return result;
-}
-const additem=(list,startindex,endindex)=>{
-  const itemtobeadded=list[startindex]; 
-  for(var i=0;i<dataadded.length;i++){
-    if(itemtobeadded.ingredientname==dataadded[i].ingredientname){
+};
+const additem = (list, startindex, endindex) => {
+  const itemtobeadded = list[startindex];
+  for (var i = 0; i < dataadded.length; i++) {
+    if (itemtobeadded.ingredientname == dataadded[i].ingredientname) {
       return dataadded;
     }
   }
-  if(endindex>dataadded.length-1){
-    dataadded.push({...itemtobeadded,ingredientid:uuid()});
-  }
-  else{
-    dataadded.splice(endindex,0,{...itemtobeadded,ingredientid:uuid()});
+  if (endindex > dataadded.length - 1) {
+    dataadded.push({ ...itemtobeadded, id: uuid() });
+  } else {
+    dataadded.splice(endindex, 0, { ...itemtobeadded, id: uuid() });
   }
   return dataadded;
-}
+};
 function App() {
-  const[items,setItems]=useState([]);
-  const[items2,setItems2]=useState([]);
+  const theme = "#6bf679";
 
-  
+  const [items, setItems] = useState([]);
+  const [items2, setItems2] = useState([]);
+  const[ingredient,setIngredients]=useState([]);
+  const [loading, setLoading] = useState(false);
+  const [allrecipedetails, setAllrecipedetails] = useState({
+    recipename: "",
+    cookingtime: "",
+    time: "",
+    recipedescription: "",
+    recipeinstruction: "",
+    ingredients: [],
+    recipeimage: "",
+  });
+  const handlechange = (e) => {
+    setAllrecipedetails({
+      ...allrecipedetails,
+      [e.target.name]: e.target.value,
+    });
+    console.log(allrecipedetails);
+  };
+  const handlecreaterecipe = (e) => {
+    e.preventDefault();
+    console.log("creating recipe");
+    const newrecipe = {
+      ownerid: 1,
+      recipename: allrecipedetails.recipename,
+      cookingtime: `${allrecipedetails.cookingtime + allrecipedetails.time}`,
+      description:allrecipedetails.recipedescription,
+      instruction:allrecipedetails.recipeinstruction,
+      ingredients:allrecipedetails.ingredients
+    };
+  };
   const onDragEnd = (result) => {
-    const{destination,source,draggableId}=result;
+    const { destination, source, draggableId } = result;
     console.log(source);
     console.log(destination);
-    if(source.droppableId=='2' && destination==null){
-      items2.splice(source.index,1);
+    if (source.droppableId == "2" && destination == null) {
+      items2.splice(source.index, 1);
       setItems2(items2);
-    }
-    else if(source.droppableId=='1' && destination==null){
+    } else if (source.droppableId == "1" && destination == null) {
       return;
-    }
-    else if(source.droppableId==destination.droppableId){
-      const reorderedItems=reorder(items,source.index,destination.index);
+    } else if (source.droppableId == destination.droppableId) {
+      const reorderedItems = reorder(items, source.index, destination.index);
       setItems(reorderedItems);
-    }
-    else if(source.droppableId!=destination.droppableId){
-      const additems=additem(items,source.index,destination.index);
+    } else if (source.droppableId != destination.droppableId) {
+      const additems = additem(items, source.index, destination.index);
       setItems2(additems);
     }
   };
+  const handlesearchingredient = (e) => {
+    if (e.target.value != "") {
+      const newitems = items.filter((item) => {
+        return item.ingredientname.includes(e.target.value);
+      });
+      setItems(newitems);
+    } else {
+      getallingredients();
+    }
+  };
+  const getallingredients = async () => {
+    const requestOptions = {
+      // method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        //   token: localStorage["token"],
+      },
+    };
+    const getallingredients = await axios.get(
+      "http://localhost:3000/api/v1/ingredients/",
+      requestOptions
+    );
+    const data = await getallingredients.data;
+    // console.log(data);
+    setItems(data);
+    // return ingredients;
+  };
+  // const addingallingredients=(dataadded)=>{
+  //   var addingredient=[];
+  //   for(var i=0;i<dataadded.length;i++){
+  //     addingingredient.push({id:dataadded.id,})
+  //   }
+  //   setItems2(dataadded);
+  // }
   useEffect(() => {
-    setItems(initialdata);
+    getallingredients();
+    // setItems(initialdata);
+    // addingallingredients(dataadded);
     setItems2(dataadded);
-  }, [])
-  
+  }, []);
+  // useEffect(()=>{
+  // console.log("hello");
+  // console.log(items2);
+  // handleingredientschange(datadded);
+  // },[items2])
+
   return (
     <>
-      <DragDropContext onDragEnd={onDragEnd}>
+      <Navbar />
+      <form onSubmit={handlecreaterecipe}>
         <div
           style={{
-            display: "flex",
-            width: "80vw",
-            marginTop: "40px",
-            height: "80vh",
-            backgroundColor: "black",
+            backgroundColor: "white",
             margin: "auto",
-            justifyContent: "center",
+            marginTop: "20px",
+            borderRadius: "5px",
+            border: `2px solid ${theme}`,
+            boxShadow: "4px",
+            width: "89vw",
+            height: "80vh",
+            padding: "10px",
+            display: "flex",
+            flexDirection: "column",
+            // justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <Droppable key={"1"} droppableId={"1"}>
-            {(provided) => {
-              return (
-                <div
-                  style={{
-                    width: "20vw",
-                    height: "60vh",
-                    backgroundColor: "red",
-                    marginRight: "10px",
-                    borderRadius: "20px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    overflowY: "scroll",
-                  }}
-                  // key={"2"}
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
+          <Text
+            fontSize="40px"
+            color="white"
+            sx={{ marginTop: "0", color: `${theme}` }}
+          >
+            Enter new <span style={{ color: `${theme}` }}>Recipe</span>
+          </Text>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                // alignItems: "center",
+              }}
+            >
+              <Text fontSize="1xl" sx={{ marginLeft: "10px" }}>
+                Enter Recipe Name:
+              </Text>
+              <Input
+                sx={{ width: "20vw", marginLeft: "10px", marginTop: "10px" }}
+                placeholder="Enter recipe name"
+                name="recipename"
+                onChange={handlechange}
+                isRequired
+              />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                // justifyContent: "center",
+                // alignItems: "center",
+              }}
+            >
+              <Text fontSize="1xl" sx={{ marginLeft: "30px" }}>
+                Enter Cooking Time:
+              </Text>
+              <div style={{ display: "flex", padding: "10px" }}>
+                <Input
+                  sx={{ width: "22vw", borderRightRadius: "0" }}
+                  type="number"
+                  placeholder="Enter cooking time"
+                  name="cookingtime"
+                  onChange={handlechange}
+                  isRequired
+                />
+                <Select
+                  placeholder="time"
+                  name="time"
+                  sx={{ width: "6vw", borderLeftRadius: "0" }}
+                  onChange={handlechange}
+                  isRequired
                 >
-                  {items.map((data, index) => {
-                    return (
-                      <Draggable
-                        key={data.ingredientid}
-                        draggableId={data.ingredientid}
-                        index={index}
-                      >
+                  <option value="hour">hour</option>
+                  <option value="min">min</option>
+                  <option value="sec">sec</option>
+                </Select>
+              </div>
+            </div>
+            <div>
+              <Text fontSize="1xl" sx={{ marginLeft: "30px" }}>
+                Add recipe Image:
+              </Text>
+              <Input
+                type="file"
+                sx={{ width: "20vw", margin: "10px" }}
+                placeholder="add image"
+                name="recipeimage"
+                accept="image/*"
+                onChange={handlechange}
+                isRequired
+              />
+            </div>
+          </div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <div
+              style={{
+                padding: "10px",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <div>
+                <Text fontSize="1xl" sx={{ marginLeft: "10px" }}>
+                  Add recipe Description:
+                </Text>
+                <Textarea
+                  name="recipedescription"
+                  sx={{ width: "30vw", marginBottom: "10px" }}
+                  placeholder="Enter description of the recipe"
+                  onChange={handlechange}
+                  isRequired
+                />
+              </div>
+              <div>
+                <Text fontSize="1xl" sx={{ marginLeft: "10px" }}>
+                  Add recipe Instruction:
+                </Text>
+                <Textarea
+                  sx={{ width: "30vw" }}
+                  name="recipeinstruction"
+                  placeholder="Enter instruction of the recipe"
+                  onChange={handlechange}
+                  isRequired
+                />
+              </div>
+            </div>
+            <div>
+              <Text fontSize="1xl" sx={{ marginLeft: "10px" }}>
+                Add recipe Ingredients:
+              </Text>
+
+              <div style={{ marginTop: "30px", marginLeft: "10px" }}>
+                <DragDropContext onDragEnd={onDragEnd}>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "40vw",
+                      marginTop: "10px",
+                      height: "30vh",
+                      // backgroundColor: "blue",
+
+                      margin: "auto",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        marginTop: "30px",
+                      }}
+                    >
+                      <Droppable key={"1"} droppableId={"1"}>
                         {(provided) => {
                           return (
-                            <Card
-                              sx={{
-                                width: "15vw",
-                                borderBottom: "1px solid grey",
+                            <div
+                              style={{
+                                width: "20vw",
+                                height: "30vh",
+                                backgroundColor: `${theme}`,
+                                marginRight: "10px",
+                                borderRadius: "2px",
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                overflowY: "scroll",
                               }}
-                              // key={data.ingredientid}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
+                              // key={"2"}
                               ref={provided.innerRef}
+                              {...provided.droppableProps}
                             >
-                              <CardBody>
-                                <Text>{data.ingredientname}</Text>
-                              </CardBody>
-                            </Card>
+                              {items.map((data, index) => {
+                                return (
+                                  <Draggable
+                                    key={data.id}
+                                    draggableId={data.id.toString()}
+                                    index={index}
+                                  >
+                                    {(provided) => {
+                                      return (
+                                        <Card
+                                          sx={{
+                                            width: "15vw",
+                                            borderBottom: "1px solid grey",
+                                          }}
+                                          // key={data.ingredientid}
+                                          {...provided.draggableProps}
+                                          {...provided.dragHandleProps}
+                                          ref={provided.innerRef}
+                                        >
+                                          <CardBody>
+                                            <Text>{data.ingredientname}</Text>
+                                          </CardBody>
+                                        </Card>
+                                      );
+                                    }}
+                                  </Draggable>
+                                );
+                              })}
+                              {provided.placeholder}
+                            </div>
                           );
                         }}
-                      </Draggable>
-                    );
-                  })}
-                  {provided.placeholder}
-                </div>
-              );
-            }}
-          </Droppable>
+                      </Droppable>
+                      <div style={{ display: "flex" }}>
+                        <Input
+                          placeholder="search ingredients"
+                          onChange={handlesearchingredient}
+                        />
+                        <div
+                          style={{
+                            width: "30px",
+                            border: "1px solid light rey",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <SearchIcon sx={{ marginTop: "5px" }} />
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        width: "20vw",
+                        height: "30vh",
+                        // backgroundColor: "blue",
+                        marginRight: "10px",
+                        borderRadius: "2px",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        // overflowY: "scroll",
+                      }}
+                    >
+                      <Droppable key={"2"} droppableId={"2"}>
+                        {(provided) => {
+                          return (
+                            <div
+                              style={{
+                                width: "20vw",
+                                height: "30vh",
+                                backgroundColor: `${theme}`,
+                                marginRight: "10px",
+                                borderRadius: "2px",
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                overflowY: "scroll",
+                              }}
+                              // key={"2"}
+                              ref={provided.innerRef}
+                              {...provided.droppableProps}
+                            >
+                              {items2.map((data, index) => {
+                                return (
+                                  <Draggable
+                                    key={data.id}
+                                    draggableId={data.id.toString()}
+                                    index={index}
+                                  >
+                                    {(provided) => {
+                                      return (
+                                        <Card
+                                          sx={{
+                                            width: "15vw",
+                                            borderBottom: "1px solid grey",
+                                          }}
+                                          // key={data.ingredientid}
+                                          {...provided.draggableProps}
+                                          {...provided.dragHandleProps}
+                                          ref={provided.innerRef}
+                                        >
+                                          <CardBody>
+                                            <Text>{data.ingredientname}</Text>
+                                          </CardBody>
+                                        </Card>
+                                      );
+                                    }}
+                                  </Draggable>
+                                );
+                              })}
+                              {provided.placeholder}
+                            </div>
+                          );
+                        }}
+                      </Droppable>
+                    </div>
+                  </div>
+                </DragDropContext>
+              </div>
+            </div>
+          </div>
+
           <div
-            style={{
-              width: "20vw",
-              height: "60vh",
-              backgroundColor: "blue",
-              marginRight: "10px",
-              borderRadius: "20px",
+            sx={{
               display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              overflowY: "scroll",
+              backgroundColor: "red",
+              justifyContent: "center",
             }}
           >
-             <Droppable key={"2"} droppableId={"2"}>
-            {(provided) => {
-              return (
-                <div
-                  style={{
-                    width: "20vw",
-                    height: "60vh",
-                    backgroundColor: "red",
-                    marginRight: "10px",
-                    borderRadius: "20px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    overflowY: "scroll",
-                  }}
-                  // key={"2"}
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                >
-                  {items2.map((data, index) => {
-                    return (
-                      <Draggable
-                        key={data.ingredientid}
-                        draggableId={data.ingredientid}
-                        index={index}
-                      >
-                        {(provided) => {
-                          return (
-                            <Card
-                              sx={{
-                                width: "15vw",
-                                borderBottom: "1px solid grey",
-                              }}
-                              // key={data.ingredientid}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              ref={provided.innerRef}
-                            >
-                              <CardBody>
-                                <Text>{data.ingredientname}</Text>
-                              </CardBody>
-                            </Card>
-                          );
-                        }}
-                      </Draggable>
-                    );
-                  })}
-                  {provided.placeholder}
-                </div>
-              );
-            }}
-          </Droppable>
+            <Button
+              colorScheme="green"
+              type="submit"
+              sx={{
+                backgroundColor: `${theme}`,
+                width: "10vw",
+                marginTop: "50px",
+              }}
+            >
+              {loading == false ? "add new recipe" : <Spinner />}
+            </Button>
           </div>
         </div>
-      </DragDropContext>
+      </form>
     </>
   );
 }

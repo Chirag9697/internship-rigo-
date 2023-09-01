@@ -1,3 +1,19 @@
+
+// const getallingredients=async()=>{
+//     const requestOptions = {
+//         // method: "GET",
+//         headers: {
+//           "Content-Type": "application/json",
+//         //   token: localStorage["token"],
+//         },
+//       };
+//     const getallingredients=await axios.get("http://localhost:3000/api/v1/ingredients/",requestOptions);
+//     console.log(getallingredients);
+//     // return ingredients;
+// }
+
+
+
 const ingredients=[
     {ingredientid:"1",ingredientname:"water"},
     {ingredientid:"2",ingredientname:"ginger"},
@@ -10,4 +26,5 @@ const ingredients=[
 ]
 
 
+// export default ingredients;
 module.exports=ingredients;

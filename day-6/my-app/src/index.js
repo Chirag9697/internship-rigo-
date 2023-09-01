@@ -3,12 +3,19 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+
 // import {ChakraPr
-import { ChakraProvider } from "@chakra-ui/react";
+import { extendTheme,ChakraProvider } from "@chakra-ui/react";
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const colors={
+  brand:{
+    900:"green",
+  },
+} 
+const theme=extendTheme({colors});
 root.render(
   // <React.StrictMode>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <App />
     </ChakraProvider>
   // </React.StrictMode>
