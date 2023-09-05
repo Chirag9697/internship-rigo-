@@ -219,6 +219,8 @@ export default function Homepage() {
           return (
             <Card key={recipe.id} maxW="sm" sx={{ marginBottom: "20px" }}>
               <CardBody>
+                <Text>{recipe.username}</Text>
+
                 <Image
                   src={recipe.filename}
                   alt="Green double couch with wooden legs"

@@ -111,6 +111,7 @@ export default function Myfavouriterecipies() {
               sx={{ marginBottom: "20px" }}
             >
               <CardBody>
+              <Text>{recipe.username}</Text>
                 <Image
                   src={recipe.filename}
                   alt="Green double couch with wooden legs"
