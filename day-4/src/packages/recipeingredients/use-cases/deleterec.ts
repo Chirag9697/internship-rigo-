@@ -3,7 +3,7 @@ import { recipeingredients } from "../domain/recipeingredients";
 
 export const deleterec=async(data:Partial<recipeingredients>)=>{
     // const{recipeid,ingredientid}=data;
-    const deleterecipeingredient=recipeingredients.query().deleteById(data.recipeid);
+    const deleterecipeingredient=recipeingredients.query().deleteById(data.recipeid.toString());
     if(!deleterecipeingredient){
         throw new Error("not able to delete");
     }

@@ -3,9 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleterecord = void 0;
 // import {user} from '../domain/user';
 const likes_1 = require("../domain/likes");
-const deleterecord = async (id) => {
-    const deleting = await likes_1.likes.query().deleteById(id);
-    console.log(deleting);
+const deleterecord = async (recipeid, userid) => {
+    console.log('deleting');
+    const deleting = await likes_1.likes.query().delete().where('recipeid', '=', `${recipeid}`).andWhere('userid', '=', `${userid}`);
+    console.log("deleting", deleting);
     if (!deleting) {
         throw new Error("not able to delete");
         return;

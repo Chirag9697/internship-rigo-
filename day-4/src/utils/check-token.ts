@@ -6,8 +6,8 @@ dotenv.config();
 export const checktoken=(rolesdata:any)=>{
     return async(req,res,next)=>{
 
-        const token=req.headers['x-access-token'];
-        console.log(token);
+        const token=req.headers['token'];
+        console.log("token",token);
         if(!token){
             return res.status(400).send("you need to login first");
         }
@@ -21,10 +21,11 @@ export const checktoken=(rolesdata:any)=>{
             // console.log("hello I am user",decoded);
             
             req.user=decoded;
+            console.log("using",req.user);
             const user=await fromusers.get_one2(decoded.email);
             console.log(user);
             const role=await fromroles.get_one(user['id']);
-            console.log("roles",role);
+            console.log("roles",role)
 
             console.log("logged in")
             console.log(rolesdata)

@@ -4,17 +4,20 @@ import { users } from "../../users";
 import { fileupload } from "../../fileuploads/domain/fileupload";
 import { favouriterecipies } from "../../favourite-recipies";
 import { ingredients } from "../../ingredients/domain/ingredients";
+import { likes } from "../../likes";
 export class recipies extends Model {
     ownerid?: string
-    idi?: String
+    id?: String
     recipename?: String
     cookingtime?: String
     description?: String
     instruction?: String
-    filename?: String
+    filename?: any
     ingredients?:any
+    // nooflikes?:any
+
     static get tableName() {
-        return "recipies";
+        return "recipies"
     }
     static relationMappings = {
         userrelation: {
@@ -37,7 +40,7 @@ export class recipies extends Model {
             relation: Model.HasManyRelation,
             modelClass: favouriterecipies,
             join: {
-                from: "Recipe.id",
+                from: "recipeies.id",
                 to: "favouriterecipies.recipeid",
             }
         },
@@ -55,6 +58,15 @@ export class recipies extends Model {
 
             }
         },
+        likerelation:{
+            relation:Model.HasOneRelation,
+            modelClass:likes,
+            join:{
+                from:"recipies.id",
+                to:"likes.recipeid"
+
+            }
+        }
 
     
 

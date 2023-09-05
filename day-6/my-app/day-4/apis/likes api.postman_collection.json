@@ -1,0 +1,47 @@
+{
+	"info": {
+		"_postman_id": "7b009b17-07c9-4729-ad69-e2bbee508d5d",
+		"name": "likes api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29016492"
+	},
+	"item": [
+		{
+			"name": "request for adding likes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"recipeid\":\"2\",\r\n    \"userid\":\"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/likes/addlike",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"likes",
+						"addlike"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "request for deleting like",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

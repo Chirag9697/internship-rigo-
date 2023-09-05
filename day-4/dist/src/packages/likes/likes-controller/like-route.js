@@ -28,27 +28,39 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = __importDefault(require("express"));
+const fromusermodel = __importStar(require("../../users"));
 const fromlikemodel = __importStar(require("../../likes"));
 const check_token_1 = require("../../../utils/check-token");
 exports.router = express_1.default.Router();
 exports.router.post('/', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
-    const { recipeid, userid } = req.body;
+    const { email } = req.user;
+    const user = await fromusermodel.get_one2(email);
+    const userid = user['id'];
+    const { recipeid } = req.body;
     try {
         const liked = await fromlikemodel.create({ recipeid, userid });
+        console.log(liked);
         res.status(200).send(liked);
     }
     catch (error) {
-        return res.status(400).send("there is some errer");
+        return res.status(200).send({ error: "there is some error" });
     }
 });
-exports.router.delete('/:id', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
-    const { id } = req.params;
+exports.router.delete('/:recipeid', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
+    const { email } = req.user;
+    const user = await fromusermodel.get_one2(email);
+    const userid = user['id'];
+    console.log("users", userid);
+    // console.log("params")
+    const { recipeid } = req.params;
+    console.log("recipies", recipeid);
+    console.log("details", { userid, recipeid });
     try {
-        await fromlikemodel.deleterecord(id);
+        await fromlikemodel.deleterecord(recipeid, userid);
         return res.status(200).send("successfully deleted");
     }
     catch (error) {
-        return res.status(400).send("there is some error");
+        return res.status(200).send("there is some error");
     }
 });
 //# sourceMappingURL=like-route.js.map

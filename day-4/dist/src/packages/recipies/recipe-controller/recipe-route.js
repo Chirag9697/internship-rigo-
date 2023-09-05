@@ -29,30 +29,82 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = __importDefault(require("express"));
 const multer_1 = __importDefault(require("multer"));
+const fromusermodel = __importStar(require("../../users"));
 const fromrecipemodel = __importStar(require("../../recipies"));
 // import {checktoken} from '../../../utils/check-token'
+const dotenv_1 = __importDefault(require("dotenv"));
+const cloudinary_1 = require("cloudinary");
 const check_token_1 = require("../../../utils/check-token");
+const parser_1 = __importDefault(require("datauri/parser"));
+// import { Path } from 'mongoose';
+const path_1 = __importDefault(require("path"));
 exports.router = express_1.default.Router();
-const upload = (0, multer_1.default)({ dest: 'uploads/' });
+const parser = new parser_1.default();
+dotenv_1.default.config();
+cloudinary_1.v2.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET
+});
+const storage = multer_1.default.memoryStorage();
+const upload = (0, multer_1.default)({ storage: storage });
+// const dUri=new datauri();
+// const dataUri=(req)=>{
+//     return datauri(path.extname(req.file.originalname).toString(), req.file.buffer);
+// }
 exports.router.post('/', upload.single('avatar'), (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     // console.log('helo');
-    const { filename } = req.file;
+    console.log("hello");
+    console.log(req.body);
+    console.log("file", req.file);
+    const extname = path_1.default.extname(req.file.originalname).toString();
+    console.log(extname);
+    const file64 = parser.format(extname.toString(), req.file.buffer);
+    // try{
+    // console.log(file64.content);
+    // }catch(error){
+    // console.log(error);
+    // }
     const { ingredients } = req.body;
     const { recipename, cookingtime, description, instruction, ownerid } = req.body;
+    const result = await cloudinary_1.v2.uploader.upload(file64.content);
+    console.log(result);
+    // .then(result=>console.log(result));
     // console.log(ingredients);
+    console.log(result);
+    const filename = result.url;
     const data = { recipename, cookingtime, filename, description, instruction, ownerid, ingredients };
     try {
         const recipe = await fromrecipemodel.create(data);
         return res.status(200).send(recipe);
     }
     catch (error) {
-        return res.status(200).send("there is some error");
+        return res.status(400).send("there is some error");
     }
-    // return res.send("success");
+    return res.send("success");
 });
 exports.router.get('/', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     try {
-        const result = await fromrecipemodel.get_all(req.query);
+        const { email } = req.user;
+        const { findall } = req.body;
+        const user = fromusermodel.get_one2(email);
+        const ownerid = findall == true ? null : user['id'];
+        const result = await fromrecipemodel.get_all(req.query, ownerid);
+        return res.status(200).send(result);
+    }
+    catch (error) {
+        return res.status(400).send('there is some error');
+    }
+});
+exports.router.get('/myrecipies', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
+    try {
+        const { email } = req.user;
+        // cons-t{findall}=req.body;
+        // const findall=false;
+        const user = await fromusermodel.get_one2(email);
+        const ownerid = user['id'];
+        console.log("ownerid", ownerid);
+        const result = await fromrecipemodel.get_all(req.query, ownerid);
         return res.status(200).send(result);
     }
     catch (error) {

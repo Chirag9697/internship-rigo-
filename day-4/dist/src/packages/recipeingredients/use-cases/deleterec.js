@@ -5,7 +5,7 @@ exports.deleterec = void 0;
 const recipeingredients_1 = require("../domain/recipeingredients");
 const deleterec = async (data) => {
     // const{recipeid,ingredientid}=data;
-    const deleterecipeingredient = recipeingredients_1.recipeingredients.query().deleteById(data.recipeid);
+    const deleterecipeingredient = recipeingredients_1.recipeingredients.query().deleteById(data.recipeid.toString());
     if (!deleterecipeingredient) {
         throw new Error("not able to delete");
     }

@@ -3,7 +3,7 @@ import { users } from "../../users";
 import { Model } from "objection";
 
 export class recipeingredients extends Model{
-    recipeid?:number
+    recipeid?:String
     ingredientid?:number
     // id?:String
     // userid?:String

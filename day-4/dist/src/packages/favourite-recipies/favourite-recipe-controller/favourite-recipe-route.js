@@ -28,25 +28,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = __importDefault(require("express"));
+const fromusermodel = __importStar(require("../../users"));
 const fromfavouriterecipe = __importStar(require("../../favourite-recipies"));
 // import { checktoken } from '../../../utils/check-token';
 // import checktoken from '../../../utils/check-token'
 const check_token_1 = require("../../../utils/check-token");
 exports.router = express_1.default.Router();
 exports.router.post('/', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
-    const { recipeid, userid } = req.body;
+    const { recipeid } = req.body;
+    const { email } = req.user;
+    const user = await fromusermodel.get_one2(email);
+    const userid = user['id'];
+    console.log(userid);
     const data1 = { recipeid, userid };
     try {
         const favrecipe = await fromfavouriterecipe.create(data1);
         return res.send(favrecipe);
     }
     catch (error) {
-        return res.send("there is some error");
+        return res.send({ error: "there is some error" });
     }
 });
 exports.router.get('/', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     try {
-        const favouriterecipe = await fromfavouriterecipe.get_all();
+        const { email } = req.user;
+        const user = await fromusermodel.get_one2(email);
+        const userid = user['id'];
+        const favouriterecipe = await fromfavouriterecipe.get_all(userid);
         return res.send(favouriterecipe);
     }
     catch (error) {

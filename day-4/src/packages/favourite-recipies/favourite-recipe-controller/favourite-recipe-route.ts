@@ -11,13 +11,17 @@ export const router=express.Router();
 
 
 router.post('/',checktoken(['admin','user']),async(req,res)=>{
-    const{recipeid,userid}=req.body;
+    const{recipeid}=req.body;
+    const{email}=req.user;
+    const user=await fromusermodel.get_one2(email);
+    const userid=user['id'];
+    console.log(userid);
     const data1={recipeid,userid};
     try{
         const favrecipe=await fromfavouriterecipe.create(data1);
         return res.send(favrecipe);
     }catch(error){
-        return res.send("there is some error");
+        return res.send({error:"there is some error"});
     }
 
 
@@ -25,7 +29,10 @@ router.post('/',checktoken(['admin','user']),async(req,res)=>{
 
 router.get('/',checktoken(['admin','user']),async(req,res)=>{
     try{
-        const favouriterecipe=await fromfavouriterecipe.get_all();
+        const{email}=req.user;
+        const user=await fromusermodel.get_one2(email);
+        const userid=user['id'];
+        const favouriterecipe=await fromfavouriterecipe.get_all(userid);
         return res.send(favouriterecipe);
     }catch(error){
         return res.send('there is some error');

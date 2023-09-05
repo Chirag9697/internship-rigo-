@@ -16,6 +16,11 @@ export const create=async(data:Partial<likes>)=>{
         throw new Error("recipe not found");
     }
     const data1={recipeid,userid};
+    const findlike=await likes.query().findOne({userid,recipeid});
+    if(findlike){
+        throw new Error("user has already liked");
+        return;
+    }
     const liked=await likes.query().insert(data);
     if(!liked){
         throw new Error("not able to like");

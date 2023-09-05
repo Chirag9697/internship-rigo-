@@ -10,6 +10,7 @@ exports.up = function(knex) {
         table.string('description').notNullable();
         table.string('instruction').notNullable();
         table.string('filename');
+        // table.integer('nooflikes')
         table.integer('ownerid').references('users.id');
       })
 };

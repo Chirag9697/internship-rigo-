@@ -5,7 +5,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable('favouriterecipies',table=>{
         table.increments('id');
-        table.integer('recipeid').references('recipies.id');
+        table.integer('recipeid').references('recipies.id')
         table.integer('userid').references('users.id');
       })
 };

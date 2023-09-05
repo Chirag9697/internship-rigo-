@@ -7,22 +7,34 @@ import { checktoken } from '../../../utils/check-token';
 export const router=express.Router();
 
 router.post('/',checktoken(['admin','user']),async(req,res)=>{
-    const{recipeid,userid}=req.body;
+    const {email}=req.user;
+    const user=await fromusermodel.get_one2(email);
+    const userid=user['id'];
+    const{recipeid}=req.body;
     try{
         const liked=await fromlikemodel.create({recipeid,userid});
+        console.log(liked);
         res.status(200).send(liked);
     }catch(error){
-        return res.status(400).send("there is some errer");
+        return res.status(200).send({error:"there is some error"});
     }
    
 })
 
-router.delete('/:id',checktoken(['admin','user']),async(req,res)=>{
-    const{id}=req.params;
+router.delete('/:recipeid',checktoken(['admin','user']),async(req,res)=>{
+    const {email}=req.user;
+    const user=await fromusermodel.get_one2(email);
+    const userid=user['id'];
+    console.log("users",userid);
+    // console.log("params")
+    const{recipeid}=req.params;
+    console.log("recipies",recipeid);
+    console.log("details",{userid,recipeid});
+
     try{
-        await fromlikemodel.deleterecord(id);
+        await fromlikemodel.deleterecord(recipeid,userid);
         return res.status(200).send("successfully deleted");
     }catch(error){
-        return res.status(400).send("there is some error");
+        return res.status(200).send("there is some error");
     }
 })

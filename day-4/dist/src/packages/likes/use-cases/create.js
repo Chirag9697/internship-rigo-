@@ -40,6 +40,11 @@ const create = async (data) => {
         throw new Error("recipe not found");
     }
     const data1 = { recipeid, userid };
+    const findlike = await likes_1.likes.query().findOne({ userid, recipeid });
+    if (findlike) {
+        throw new Error("user has already liked");
+        return;
+    }
     const liked = await likes_1.likes.query().insert(data);
     if (!liked) {
         throw new Error("not able to like");

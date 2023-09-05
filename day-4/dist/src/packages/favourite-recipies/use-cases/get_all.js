@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.get_all = void 0;
 const favourite_recipies_1 = require("../domain/favourite-recipies");
 // favouriterecipe
-const get_all = async () => {
-    const allrecipies = await favourite_recipies_1.favouriterecipies.query();
+const get_all = async (userid) => {
+    const allrecipies = await favourite_recipies_1.favouriterecipies.query().where('userid', '=', `${userid}`);
     console.log(allrecipies);
     // return allpersons;
     return allrecipies;

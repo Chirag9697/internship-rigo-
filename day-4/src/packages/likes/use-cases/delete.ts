@@ -1,8 +1,9 @@
 // import {user} from '../domain/user';
 import { likes } from "../domain/likes";
-export const deleterecord=async(id:number)=>{
-    const deleting=await likes.query().deleteById(id);
-    console.log(deleting);
+export const deleterecord=async(recipeid,userid)=>{
+    console.log('deleting');
+    const deleting=await likes.query().delete().where('recipeid','=',`${recipeid}`).andWhere('userid','=',`${userid}`);
+    console.log("deleting",deleting);
     if(!deleting){
         throw new Error("not able to delete");
         return;
