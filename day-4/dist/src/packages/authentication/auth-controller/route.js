@@ -45,7 +45,7 @@ exports.router.post('/register', async (req, res) => {
         return res.status(200).send(newuser);
     }
     catch (error) {
-        return res.status(400).send(error);
+        return res.status(200).send({ error: `${error}` });
     }
 });
 exports.router.delete('/deleteuser/:id', async (req, res) => {
@@ -57,7 +57,7 @@ exports.router.delete('/deleteuser/:id', async (req, res) => {
         res.status(200).send("user deleted");
     }
     catch (error) {
-        return res.status(400).send("there is some error");
+        return res.status(200).send({ error: `${error}` });
     }
 });
 exports.router.post('/login', async (req, res) => {
@@ -71,9 +71,9 @@ exports.router.post('/login', async (req, res) => {
         return res.status(200).json(tok);
         //    return res.send();
     }
-    catch (e) {
-        console.log(e);
-        return res.status(400).send("there is some error");
+    catch (error) {
+        console.log(error);
+        return res.status(200).send({ error: `${error}` });
     }
 });
 //# sourceMappingURL=route.js.map

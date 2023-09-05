@@ -28,11 +28,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = __importDefault(require("express"));
+const fromusermodel = __importStar(require("../../users"));
 const fromcommentmodel = __importStar(require("../../comments"));
 const check_token_1 = require("../../../utils/check-token");
 exports.router = express_1.default.Router();
 exports.router.post('/', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
-    const { commenttext, recipeid, userid } = req.body;
+    const { email } = req.user;
+    const user = await fromusermodel.get_one2(email);
+    const userid = user['id'];
+    const { commenttext, recipeid } = req.body;
     const data1 = { commenttext, recipeid, userid };
     try {
         const succ = await fromcommentmodel.create(data1);
@@ -43,9 +47,11 @@ exports.router.post('/', (0, check_token_1.checktoken)(['admin', 'user']), async
         return res.status(400).send("there is some error");
     }
 });
-exports.router.get('/', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
+exports.router.get('/:id', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     try {
-        const allcomments = await fromcommentmodel.get_all();
+        const { id } = req.params;
+        const allcomments = await fromcommentmodel.get_all(id);
+        console.log(allcomments);
         return res.status(200).send(allcomments);
     }
     catch (error) {

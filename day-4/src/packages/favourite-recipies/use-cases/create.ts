@@ -20,12 +20,13 @@ export const create=async(data:Partial<favouriterecipies>)=>{
         // res.send({"failed":"there is  some errror"})
     // }
     // res.send({"success":"recipe added to favourite recipe"});
-    const findrecipe=await favouriterecipies.query().findOne(recipeid);
+    const findrecipe=await favouriterecipies.query().findOne({recipeid,userid});
     if(findrecipe){
         throw new Error("recipe is already favourite");
         return;
     }
     const hel=await favouriterecipies.query().insert(data1);
+    console.log(hel);
     if(!hel){
         throw new Error("not able to add to favourite recipe");
         return;

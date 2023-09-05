@@ -2,6 +2,8 @@ import express from 'express';
 import multer from 'multer';
 import * as fromusermodel from '../../users'; 
 import * as fromrecipemodel from '../../recipies';
+import * as fromcommentmodel from '../../comments';
+import * as fromingredientmodel from '../../recipeingredients';
 // import {checktoken} from '../../../utils/check-token'
 import dotenv from 'dotenv'
 import {v2 as cloudinary} from 'cloudinary';
@@ -25,27 +27,14 @@ const upload=multer({storage:storage});
 //     return datauri(path.extname(req.file.originalname).toString(), req.file.buffer);
 // }
 router.post('/',upload.single('avatar'),checktoken(['admin','user']),async(req,res)=>{
-    // console.log('helo');
-    console.log("hello");
-
-    console.log(req.body);
-    console.log("file",req.file);
+    const {email}=req.user;
+    const user=await fromusermodel.get_one2(email);
+    const ownerid=user['id'];
     const extname=path.extname(req.file.originalname).toString();
-    console.log(extname);
     const file64=parser.format(extname.toString(),req.file.buffer);
-    // try{
-
-        // console.log(file64.content);
-    // }catch(error){
-        // console.log(error);
-    // }
     const{ingredients}=req.body;
-    const{recipename,cookingtime,description,instruction,ownerid}=req.body
+    const{recipename,cookingtime,description,instruction}=req.body
     const result=await cloudinary.uploader.upload(file64.content);
-    console.log(result);
-// .then(result=>console.log(result));
-    // console.log(ingredients);
-    console.log(result);
     const filename=result.url;
     const data={recipename,cookingtime,filename,description,instruction,ownerid,ingredients};
     try{
@@ -73,16 +62,16 @@ router.get('/',checktoken(['admin','user']),async(req,res)=>{
 router.get('/myrecipies',checktoken(['admin','user']),async(req,res)=>{
     try{
         const {email}=req.user;
-        // cons-t{findall}=req.body;
-        // const findall=false;
+        
         const user=await fromusermodel.get_one2(email);
         const ownerid=user['id'];
-        console.log("ownerid",ownerid);
         
+        console.log("ownerid",ownerid);
         const result=await fromrecipemodel.get_all(req.query,ownerid);
+        console.log("results",result);
         return res.status(200).send(result);
     }catch(error){
-        return res.status(400).send('there is some error');
+        return res.status(200).send({error:`${error}`});
     }
 })
 
@@ -90,6 +79,8 @@ router.get('/myrecipies',checktoken(['admin','user']),async(req,res)=>{
 router.delete('/:id',checktoken(['admin','user']),async(req,res)=>{
     const{id}=req.params;
     try{
+        await fromingredientmodel.deleterec({recipeid:id});
+        await fromcommentmodel.deletewithrecipeid(id);
         await fromrecipemodel.deleterecord(id);
         return res.status(200).send("successfully deleted");
     }catch(error){
@@ -101,9 +92,16 @@ router.delete('/:id',checktoken(['admin','user']),async(req,res)=>{
 
 router.put('/:id',upload.single('avatar'),checktoken(['admin','user']),async(req,res)=>{
     const{id}=req.params;
-    const{filename}=req.file
-    const{recipename,cookingtime,description,instruction,ownerid}=req.body;
-    const data={recipename,cookingtime,description,instruction,ownerid,filename};
+    const {email}=req.user;
+    const user=await fromusermodel.get_one2(email);
+    const ownerid=user['id'];
+    const extname=path.extname(req.file.originalname).toString();
+    const file64=parser.format(extname.toString(),req.file.buffer);
+    const result=await cloudinary.uploader.upload(file64.content);
+    const filename=result.url;
+    const{ingredients}=req.body;
+    const{recipename,cookingtime,description,instruction}=req.body;
+    const data={recipename,cookingtime,description,instruction,ownerid,filename,ingredients};
     try{
         await fromrecipemodel.update(data,id);
         return res.send('successfully updated');

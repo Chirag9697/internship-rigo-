@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.get_all = void 0;
 // import {Recipe} from '../domain/recipe';
 const comments_1 = require("../domain/comments");
-const get_all = async () => {
-    const allcomments = await comments_1.comments.query();
+const get_all = async (id) => {
+    const allcomments = await comments_1.comments.query().where('recipeid', '=', `${id}`);
     if (!allcomments) {
         throw new Error("cannot get all comments");
     }

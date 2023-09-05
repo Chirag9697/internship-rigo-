@@ -25,7 +25,7 @@ router.post('/register',async(req,res)=>{
         console.log("New USER",newuser);
         return res.status(200).send(newuser);
     }catch(error){
-        return res.status(400).send(error);
+        return res.status(200).send({error:`${error}`});
     }
 })
 
@@ -40,7 +40,7 @@ router.delete('/deleteuser/:id',async(req,res)=>{
         res.status(200).send("user deleted");
         
     }catch(error){
-        return res.status(400).send("there is some error");
+        return res.status(200).send({error:`${error}`});
     }
 
 })
@@ -55,8 +55,8 @@ router.post('/login',async(req,res)=>{
         console.log(tok);
        return res.status(200).json(tok)
     //    return res.send();
-    }catch(e){
-        console.log(e);
-        return res.status(400).send("there is some error");
+    }catch(error){
+        console.log(error);
+        return res.status(200).send({error:`${error}`});
     }
 })

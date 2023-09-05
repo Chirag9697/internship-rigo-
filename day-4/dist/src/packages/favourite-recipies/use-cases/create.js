@@ -45,12 +45,13 @@ const create = async (data) => {
     // res.send({"failed":"there is  some errror"})
     // }
     // res.send({"success":"recipe added to favourite recipe"});
-    const findrecipe = await favourite_recipies_1.favouriterecipies.query().findOne(recipeid);
+    const findrecipe = await favourite_recipies_1.favouriterecipies.query().findOne({ recipeid, userid });
     if (findrecipe) {
         throw new Error("recipe is already favourite");
         return;
     }
     const hel = await favourite_recipies_1.favouriterecipies.query().insert(data1);
+    console.log(hel);
     if (!hel) {
         throw new Error("not able to add to favourite recipe");
         return;

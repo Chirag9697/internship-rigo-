@@ -13,12 +13,13 @@ const get_all = async (data, ownerid) => {
     var query2 = query;
     if (ownerid) {
         query2 = query2.where('ownerid', '=', `${ownerid}`);
-        console.log(query2);
+        // console.log(query2);
     }
     if (recipename) {
         query2 = query.where('recipename', 'LIKE', `%${recipename}%`);
     }
     var finalrecipies = await query2.page(page !== null && page !== void 0 ? page : 1, limit && 10);
+    console.log("finalrecipies", finalrecipies);
     var finalrecipies2 = [];
     for (var i = 0; i < finalrecipies.results.length; i++) {
         const nooflikes = await likes_1.likes.query().where('recipeid', '=', `${finalrecipies.results[i].id}`).count();

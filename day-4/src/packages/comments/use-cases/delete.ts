@@ -9,4 +9,10 @@ export const deleterecord=async(id:number)=>{
     // return deleting;
     // console.log(allpersons);
 }
+export const deletewithrecipeid=async(recipeid:any)=>{
+    const deleting=await comments.query().delete().where('recipeid','=',`${recipeid}`);
+    // if(!deleting){
+        // throw new Error("not able to delete");
+    // }
+}
     

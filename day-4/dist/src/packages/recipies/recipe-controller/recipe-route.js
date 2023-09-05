@@ -31,6 +31,8 @@ const express_1 = __importDefault(require("express"));
 const multer_1 = __importDefault(require("multer"));
 const fromusermodel = __importStar(require("../../users"));
 const fromrecipemodel = __importStar(require("../../recipies"));
+const fromcommentmodel = __importStar(require("../../comments"));
+const fromingredientmodel = __importStar(require("../../recipeingredients"));
 // import {checktoken} from '../../../utils/check-token'
 const dotenv_1 = __importDefault(require("dotenv"));
 const cloudinary_1 = require("cloudinary");
@@ -53,25 +55,14 @@ const upload = (0, multer_1.default)({ storage: storage });
 //     return datauri(path.extname(req.file.originalname).toString(), req.file.buffer);
 // }
 exports.router.post('/', upload.single('avatar'), (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
-    // console.log('helo');
-    console.log("hello");
-    console.log(req.body);
-    console.log("file", req.file);
+    const { email } = req.user;
+    const user = await fromusermodel.get_one2(email);
+    const ownerid = user['id'];
     const extname = path_1.default.extname(req.file.originalname).toString();
-    console.log(extname);
     const file64 = parser.format(extname.toString(), req.file.buffer);
-    // try{
-    // console.log(file64.content);
-    // }catch(error){
-    // console.log(error);
-    // }
     const { ingredients } = req.body;
-    const { recipename, cookingtime, description, instruction, ownerid } = req.body;
+    const { recipename, cookingtime, description, instruction } = req.body;
     const result = await cloudinary_1.v2.uploader.upload(file64.content);
-    console.log(result);
-    // .then(result=>console.log(result));
-    // console.log(ingredients);
-    console.log(result);
     const filename = result.url;
     const data = { recipename, cookingtime, filename, description, instruction, ownerid, ingredients };
     try {
@@ -99,21 +90,22 @@ exports.router.get('/', (0, check_token_1.checktoken)(['admin', 'user']), async 
 exports.router.get('/myrecipies', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     try {
         const { email } = req.user;
-        // cons-t{findall}=req.body;
-        // const findall=false;
         const user = await fromusermodel.get_one2(email);
         const ownerid = user['id'];
         console.log("ownerid", ownerid);
         const result = await fromrecipemodel.get_all(req.query, ownerid);
+        console.log("results", result);
         return res.status(200).send(result);
     }
     catch (error) {
-        return res.status(400).send('there is some error');
+        return res.status(200).send({ error: `${error}` });
     }
 });
 exports.router.delete('/:id', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     const { id } = req.params;
     try {
+        await fromingredientmodel.deleterec({ recipeid: id });
+        await fromcommentmodel.deletewithrecipeid(id);
         await fromrecipemodel.deleterecord(id);
         return res.status(200).send("successfully deleted");
     }
@@ -123,9 +115,16 @@ exports.router.delete('/:id', (0, check_token_1.checktoken)(['admin', 'user']), 
 });
 exports.router.put('/:id', upload.single('avatar'), (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
     const { id } = req.params;
-    const { filename } = req.file;
-    const { recipename, cookingtime, description, instruction, ownerid } = req.body;
-    const data = { recipename, cookingtime, description, instruction, ownerid, filename };
+    const { email } = req.user;
+    const user = await fromusermodel.get_one2(email);
+    const ownerid = user['id'];
+    const extname = path_1.default.extname(req.file.originalname).toString();
+    const file64 = parser.format(extname.toString(), req.file.buffer);
+    const result = await cloudinary_1.v2.uploader.upload(file64.content);
+    const filename = result.url;
+    const { ingredients } = req.body;
+    const { recipename, cookingtime, description, instruction } = req.body;
+    const data = { recipename, cookingtime, description, instruction, ownerid, filename, ingredients };
     try {
         await fromrecipemodel.update(data, id);
         return res.send('successfully updated');
