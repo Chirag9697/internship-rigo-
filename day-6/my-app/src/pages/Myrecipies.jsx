@@ -21,6 +21,15 @@ import {
   AlertDialogOverlay,
   AlertDialogCloseButton,
 } from "@chakra-ui/react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 import { Image } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
@@ -31,7 +40,35 @@ export default function Myrecipies() {
   const cancelRef = React.useRef();
   const[myrecipies,setMyrecipies]=useState([]);
   const[updaterecipe,setUpdaterecipe]=useState({});
+  const[comments,setComments]=useState([]);
   const[update,setUpdate]=useState(false);
+  const { isOpen:ismodalopen, onOpen:onmodalopen, onClose:onmodalclose } = useDisclosure();
+  const [commentrecipeid,setCommentrecipeid]=useState();
+  const getallcomments = async (id) => {
+    // setComments([]);
+    // setCommentrecipeid(id);
+    const requestOptions = {
+      // method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        token: localStorage["token"],
+      },
+    };
+
+    const recipies = await axios.get(
+      `http://localhost:3000/api/v1/comments/${id}`,
+      requestOptions
+    );
+    const data = await recipies.data;
+      console.log(data);
+    setComments(data);
+
+    onmodalopen();
+    // if(isOpen==false){
+    // setComments([]);
+    // }
+    // console.log(data);
+  };
   const getallmyrecipies = async () => {
     const requestOptions = {
       // method: "GET",
@@ -76,6 +113,32 @@ export default function Myrecipies() {
   const handleupdate=(recipe)=>{
     setUpdaterecipe(recipe);
     setUpdate(true);
+  }
+  const handlecommentupdate=(id)=>{
+    setCommentrecipeid(id);
+    getallcomments(commentrecipeid);
+
+  }
+  const deletecomment=async(id)=>{
+    const requestOptions = {
+      // method: "GET",
+      headers: {
+        token: localStorage["token"],
+      },
+    };
+    // const data = { findall: false };
+    //   const registerdata={registerdetails};
+    const deletecomment = await axios.delete(
+      `http://localhost:3000/api/v1/comments/${id}`,
+      //   logindetails,
+      requestOptions
+    );
+    // const data = await deletefavrecipe.data;
+    // if (!deletefavrecipe) {
+      // console.log("not able to delete");
+    // }
+    // onClose();
+    getallcomments(commentrecipeid);
   }
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -128,7 +191,45 @@ export default function Myrecipies() {
                 >
                   Update
                 </Button>
+                <Button
+                  colorScheme="green"
+                  // onClick={onOpen}
+                  // {...recipe}
+                  // onClick={()=>handleupdate(recipe)}
+                  onClick={()=>handlecommentupdate(recipe.id)}
+                >
+                  UpdateComments
+                </Button>
               </CardBody>
+              <Modal isOpen={ismodalopen} onClose={onmodalclose}>
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Comments</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody sx={{}}>
+                    {/* <di>  */}
+                    <div style={{ height: "50vh", overflowY: "scroll" }}>
+                      {comments.map((comment, index) => {
+                        return (
+                          <div
+                            style={{
+                              width: "100%",
+                              backgroundColor: "red",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            <p>
+                              {comment.commenttext}
+                            </p>
+                            <button onClick={()=>deletecomment(comment.id)}>delete this comment</button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    {/* </div> */}
+                  </ModalBody>
+                </ModalContent>
+              </Modal>
               <AlertDialog
                 isOpen={isOpen}
                 leastDestructiveRef={cancelRef}
