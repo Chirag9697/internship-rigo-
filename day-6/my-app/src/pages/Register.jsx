@@ -7,8 +7,11 @@ import { Input } from "@chakra-ui/react";
 import { Button, ButtonGroup } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useToast } from '@chakra-ui/react'
+
 export default function Register() {
   const theme = "#6bf679"; 
+  const toast = useToast()
   const[registerdetails,setRegisterdetails]=useState({name:"",email:"",password:""});
   const imageurl =
     "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=853&q=80";
@@ -36,6 +39,13 @@ export default function Register() {
         console.log("not able to register");
         return;
     }
+    toast({
+      title: 'Account created.',
+      description: "We've registered your account for you.",
+      status: 'success',
+      duration: 1000,
+      isClosable: true,
+    })
     navigate('/login');
 
 

@@ -1,12 +1,21 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, ButtonGroup } from "@chakra-ui/react";
+import { useToast } from '@chakra-ui/react'
 
 export default function Navbar(props) {
   const navigate = useNavigate();
+  const toast = useToast()
   const handlelogout = () => {
     console.log("logout");
     localStorage.removeItem("token");
+    toast({
+      title: 'Logout',
+      description: "successfully logged out",
+      status: 'success',
+      duration: 1000,
+      isClosable: true,
+    })
     navigate("/");
   };
   const theme = "#6bf679";

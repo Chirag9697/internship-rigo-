@@ -6,9 +6,13 @@ import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import { Button, ButtonGroup } from "@chakra-ui/react";
+import { useToast } from '@chakra-ui/react'
+
 import { useNavigate } from "react-router-dom";
 export default function Login() {
   const theme = "#6bf679";
+  const toast = useToast()
+
   const imageurl =
     "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=853&q=80";
   const [showPassword, setShowPassword] = React.useState(false);
@@ -38,6 +42,13 @@ export default function Login() {
     // console.log(token);
     localStorage.setItem('token',token.token);
     console.log(localStorage.getItem('token'));
+    toast({
+      title: 'login',
+      description: "successfully logged in",
+      status: 'success',
+      duration: 1000,
+      isClosable: true,
+    })
     navigate('/home');
     return;
     // navigate("/login");

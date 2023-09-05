@@ -57,8 +57,9 @@ const additem = (list, startindex, endindex) => {
   }
   return { dataadded, dataadded2 };
 };
-function Createrecipe() {
+function Updaterecipies(props) {
   const Navigate=useNavigate();
+//   console.log(props);
   const toast = useToast()
   if(!localStorage.getItem('token')){
     Navigate('/');
@@ -97,7 +98,7 @@ function Createrecipe() {
     });
     // console.log(allingredients);
     const newrecipe = {
-      ownerid: 1,
+    //   ownerid: 1,
       recipename: allrecipedetails.recipename,
       cookingtime: `${allrecipedetails.cookingtime + allrecipedetails.time}`,
       description: allrecipedetails.recipedescription,
@@ -105,7 +106,7 @@ function Createrecipe() {
       ingredients: allingredients,
     };
     const data = new FormData();
-    data.append("ownerid", newrecipe.ownerid);
+    // data.append("ownerid", newrecipe.ownerid);
     data.append("recipename", newrecipe.recipename);
     data.append("cookingtime", newrecipe.cookingtime);
     data.append("description", newrecipe.description);
@@ -118,16 +119,16 @@ function Createrecipe() {
           "token": localStorage.getItem("token"),
       },
     }
-    const response = await axios.post(
-      "http://localhost:3000/api/v1/recipies/",
+    const response = await axios.put(
+      `http://localhost:3000/api/v1/recipies/${props.id}`,
       data,requestOptions
     );
     const result = await response.data;
     if (result) {
-      console.log("added recipe");
+      console.log("updated recipe");
       toast({
-        title: 'created recipe',
-        description: "sucessfuly added recipe",
+        title: 'updated recipe',
+        description: "sucessfuly updated recipe",
         status: 'success',
         duration: 1000,
         isClosable: true,
@@ -197,7 +198,6 @@ function Createrecipe() {
 
   return (
     <>
-      <Navbar login={true} />
       <form onSubmit={handlecreaterecipe} encType="multipart/form-data">
         <div
           style={{
@@ -221,7 +221,7 @@ function Createrecipe() {
             color="white"
             sx={{ marginTop: "0", color: `${theme}` }}
           >
-            Enter new <span style={{ color: `${theme}` }}>Recipe</span>
+            Update the <span style={{ color: `${theme}` }}>Recipe</span>
           </Text>
           <div style={{ display: "flex", flexDirection: "row" }}>
             <div
@@ -239,6 +239,7 @@ function Createrecipe() {
                 sx={{ width: "20vw", marginLeft: "10px", marginTop: "10px" }}
                 placeholder="Enter recipe name"
                 name="recipename"
+                defaultValue={props.recipename}
                 onChange={handlechange}
                 isRequired
               />
@@ -261,6 +262,7 @@ function Createrecipe() {
                   placeholder="Enter cooking time"
                   name="cookingtime"
                   onChange={handlechange}
+
                   isRequired
                 />
                 <Select
@@ -268,6 +270,8 @@ function Createrecipe() {
                   name="time"
                   sx={{ width: "6vw", borderLeftRadius: "0" }}
                   onChange={handlechange}
+                // value={props}
+
                   isRequired
                 >
                   <option value="hour">hour</option>
@@ -308,6 +312,8 @@ function Createrecipe() {
                   sx={{ width: "30vw", marginBottom: "10px" }}
                   placeholder="Enter description of the recipe"
                   onChange={handlechange}
+                defaultValue={props.description}
+              
                   isRequired
                 />
               </div>
@@ -320,6 +326,8 @@ function Createrecipe() {
                   name="recipeinstruction"
                   placeholder="Enter instruction of the recipe"
                   onChange={handlechange}
+                defaultValue={props.instruction}
+
                   isRequired
                 />
               </div>
@@ -509,7 +517,7 @@ function Createrecipe() {
                 marginTop: "50px",
               }}
             >
-              {loading == false ? "add new recipe" : <Spinner />}
+              {loading == false ? "Update recipe" : <Spinner />}
             </Button>
           </div>
         </div>
@@ -518,4 +526,4 @@ function Createrecipe() {
   );
 }
 
-export default Createrecipe;
+export default Updaterecipies;
