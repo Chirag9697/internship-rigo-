@@ -10,6 +10,7 @@ import {
   CardFooter,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useToast } from '@chakra-ui/react'
 import { Stack } from "@chakra-ui/react";
 import {
   AlertDialog,
@@ -26,6 +27,7 @@ import { Text } from "@chakra-ui/react";
 import { Button, ButtonGroup } from "@chakra-ui/react";
 export default function Myfavouriterecipies() {
   const navigate = useNavigate();
+  const toast = useToast()
   const [favrecipies, setFavrecipies] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
@@ -67,7 +69,15 @@ export default function Myfavouriterecipies() {
     // const data = await deletefavrecipe.data;
     if (!deletefavrecipe) {
       console.log("not able to delete");
+      return;
     }
+    toast({
+      title: 'Delte',
+      description: "deleted from favourite recipe",
+      status: 'success',
+      duration: 2000,
+      isClosable: true,
+    })
     onClose();
     getallmyfavouriterecipies();
     // console.log(data);

@@ -231,19 +231,22 @@ export default function Homepage() {
                 <Button
                   colorScheme="blue"
                   onClick={() => addtofavourites(recipe.id)}
-                  sx={{ marginRight: "10px" }}
+                  sx={{backgroundColor:"#6bf679", marginRight: "10px" }}
+            
                 >
                   Add to favourites
                 </Button>
                 <Button
                   colorScheme="blue"
-                  sx={{ marginRight: "10px" }}
+
+                  sx={{backgroundColor:"#6bf679" ,marginRight: "10px" }}
                   onClick={() => liketherecipe(recipe.id)}
                 >
                   {recipe.nooflikes} Like
                 </Button>
                 <Button
                   colorScheme="blue"
+                  sx={{backgroundColor:"#6bf679"}}
                   onClick={() => getallcomments(recipe.id)}
                 >
                   comment

@@ -21,6 +21,7 @@ import {
   AlertDialogOverlay,
   AlertDialogCloseButton,
 } from "@chakra-ui/react";
+import { useToast } from '@chakra-ui/react'
 import {
   Modal,
   ModalOverlay,
@@ -37,6 +38,7 @@ import { Button, ButtonGroup } from "@chakra-ui/react";
 export default function Myrecipies() {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast()
   const cancelRef = React.useRef();
   const[myrecipies,setMyrecipies]=useState([]);
   const[updaterecipe,setUpdaterecipe]=useState({});
@@ -133,6 +135,15 @@ export default function Myrecipies() {
       //   logindetails,
       requestOptions
     );
+    if(deletecomment){
+      toast({
+        title: 'comment deleted',
+        description: "comment deleted.",
+        status: 'success',
+        duration: 1000,
+        isClosable: true,
+      })
+    }
     // const data = await deletefavrecipe.data;
     // if (!deletefavrecipe) {
       // console.log("not able to delete");
