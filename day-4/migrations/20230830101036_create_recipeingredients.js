@@ -7,6 +7,7 @@ exports.up = function(knex) {
         table.increments('id');
         table.integer('recipeid').references('recipies.id');
         table.integer('ingredientid').references('ingredients.id');
+        table.string('quantity');
       })
 };
 

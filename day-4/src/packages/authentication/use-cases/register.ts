@@ -7,14 +7,16 @@ dotenv.config();
 
 export const register=async(data)=>{
     const {email,password,name,roleuser}=data;
-    const finduser=fromusers.get_one2(email);
-    if(!finduser){
+    const finduser=await fromusers.get_one2(email);
+    console.log("users",finduser);
+   if(finduser){
         throw new Error("email is already used");
         return;
     }
     const data1={email:email,name:name,password:await bcrypt.hash(password,parseInt(process.env.Saltrounds))};
 
     const userid=await fromusers.create(data1);
+    
     const roledata={id:userid['id'],rolename:roleuser}
     const pass=await fromroles.create(roledata);
     if(!pass){

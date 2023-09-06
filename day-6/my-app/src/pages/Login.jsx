@@ -34,8 +34,16 @@ export default function Login() {
     logindetails,
       requestOptions
     );
-    if (!login) {
+    const data=await login.data;
+    if (data.error) {
       console.log("not able to login");
+      toast({
+        title: 'login',
+        description: `${data.error}`,
+        status: 'error',
+        duration: 1000,
+        isClosable: true,
+      })
       return;
     }
     const token=await login.data;

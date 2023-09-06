@@ -27,6 +27,7 @@ exports.get_all = void 0;
 const recipies_1 = require("../domain/recipies");
 const likes_1 = require("../../likes");
 const fromusermodel = __importStar(require("../../users"));
+const fromrecipeingredientmodel = __importStar(require("../../recipeingredients"));
 const get_all = async (data, ownerid) => {
     const query = recipies_1.recipies.query();
     const { recipename } = data;
@@ -58,7 +59,8 @@ const get_all = async (data, ownerid) => {
         // }
         // console.log("users",user.name);
         const nooflikes = await likes_1.likes.query().where('recipeid', '=', `${finalrecipies.results[i].id}`).count();
-        const newresult = Object.assign(Object.assign({}, finalrecipies.results[i]), { username: user.name, nooflikes: nooflikes[0]['count(*)'] });
+        const ingredients = await fromrecipeingredientmodel.get_all(finalrecipies.results[i].id);
+        const newresult = Object.assign(Object.assign({}, finalrecipies.results[i]), { username: user.name, nooflikes: nooflikes[0]['count(*)'], ingredients: ingredients });
         finalrecipies2.push(newresult);
     }
     // const newfinalrecipies=finalrecipies.results.map(async(finalrecipe)=>{

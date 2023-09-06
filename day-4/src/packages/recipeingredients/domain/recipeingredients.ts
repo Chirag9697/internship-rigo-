@@ -5,6 +5,7 @@ import { Model } from "objection";
 export class recipeingredients extends Model{
     recipeid?:String
     ingredientid?:number
+    quantity?:String
     // id?:String
     // userid?:String
     

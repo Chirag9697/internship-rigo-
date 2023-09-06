@@ -16,4 +16,5 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./create"), exports);
 __exportStar(require("./deleterec"), exports);
+__exportStar(require("./get_all"), exports);
 //# sourceMappingURL=index.js.map

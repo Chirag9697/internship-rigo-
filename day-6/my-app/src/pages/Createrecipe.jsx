@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
@@ -18,7 +18,7 @@ import { Input } from "@chakra-ui/react";
 import { Select } from "@chakra-ui/react";
 import { Textarea } from "@chakra-ui/react";
 import { Spinner } from "@chakra-ui/react";
-import { useToast } from '@chakra-ui/react'
+import { useToast } from "@chakra-ui/react";
 
 // import Navbar from "./components/Navbar";
 import Navbar from "../components/Navbar";
@@ -29,7 +29,7 @@ import Login from "./Login.jsx";
 import Register from "./Register";
 import Reactrouter from "../components/Reactrouter";
 
-const dataadded= [];
+const dataadded = [];
 const dataadded2 = [];
 const reorder = (list, startIndex, endIndex) => {
   console.log(list, startIndex, endIndex);
@@ -58,10 +58,10 @@ const additem = (list, startindex, endindex) => {
   return { dataadded, dataadded2 };
 };
 function Createrecipe() {
-  const Navigate=useNavigate();
-  const toast = useToast()
-  if(!localStorage.getItem('token')){
-    Navigate('/');
+  const Navigate = useNavigate();
+  const toast = useToast();
+  if (!localStorage.getItem("token")) {
+    Navigate("/");
   }
   const theme = "#6bf679";
 
@@ -69,6 +69,7 @@ function Createrecipe() {
   const [items2, setItems2] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [loading, setLoading] = useState(false);
+  const[quantity,setQuantity]=useState([{}]);
   const [allrecipedetails, setAllrecipedetails] = useState({
     recipename: "",
     cookingtime: "",
@@ -77,6 +78,8 @@ function Createrecipe() {
     recipeinstruction: "",
     ingredient: [],
     recipeimage: null,
+    quantity:[],
+
   });
   const handlechange = (e) => {
     setAllrecipedetails({
@@ -87,6 +90,45 @@ function Createrecipe() {
     });
     console.log(allrecipedetails);
   };
+  const handleinputchange=ingredientname=>event=>{
+    console.log(event.target.value);
+    // console.log(ingredients[0].itemtobeadded);
+    var i;
+    for(i=0;i<ingredients.length;i++){
+      if(ingredients[i].itemtobeadded.ingredientname===ingredientname){
+        break;
+      }
+    }
+    var flag=true;
+    var j;
+    for(j=0;j<quantity.length;j++){
+      if(quantity[j].id===ingredients[i].itemtobeadded.id.toString()){
+          flag=false;
+          break;
+      }
+    }
+    if(flag==true){
+      // quantitites=
+      var newquantity={id:ingredients[i].itemtobeadded.id.toString(),quantity:0,size:""};
+      newquantity[`${event.target.name}`]=event.target.value;
+      if(quantity.length==0){
+        quantity[0]=newquantity;
+        // setQuantity(quantity);
+
+      }
+      else{
+        quantity.push(newquantity);
+      }      
+      setQuantity(quantity);
+      console.log(quantity);
+    }
+    else{
+      quantity[j][`${event.target.name}`]=event.target.value;
+      console.log(quantity);
+    }
+
+    // console.log("ids",id);
+  }
 
   const handlecreaterecipe = async (e) => {
     e.preventDefault();
@@ -95,45 +137,49 @@ function Createrecipe() {
     const allingredients = ingredients.map((ingredient) => {
       return ingredient.itemtobeadded.id;
     });
+    // const quantities=
     // console.log(allingredients);
+    console.log(quantity);
     const newrecipe = {
       ownerid: 1,
       recipename: allrecipedetails.recipename,
       cookingtime: `${allrecipedetails.cookingtime + allrecipedetails.time}`,
       description: allrecipedetails.recipedescription,
       instruction: allrecipedetails.recipeinstruction,
-      ingredients: allingredients,
+      ingredients: quantity,
     };
+    console.log(newrecipe);
     const data = new FormData();
     data.append("ownerid", newrecipe.ownerid);
     data.append("recipename", newrecipe.recipename);
     data.append("cookingtime", newrecipe.cookingtime);
     data.append("description", newrecipe.description);
     data.append("instruction", newrecipe.instruction);
-    data.append("ingredients", newrecipe.ingredients);
+    data.append("ingredients", JSON.stringify(newrecipe.ingredients));
     data.append("avatar", allrecipedetails.recipeimage);
-    const requestOptions={
+    const requestOptions = {
       headers: {
-        // "Content-Type": "application/json",
-          "token": localStorage.getItem("token"),
+        "Content-Type": "multipart/form-data",
+        token: localStorage.getItem("token"),
       },
-    }
+    };
     const response = await axios.post(
       "http://localhost:3000/api/v1/recipies/",
-      data,requestOptions
+      data,
+      requestOptions
     );
     const result = await response.data;
     if (result) {
       console.log("added recipe");
       toast({
-        title: 'created recipe',
+        title: "created recipe",
         description: "sucessfuly added recipe",
-        status: 'success',
+        status: "success",
         duration: 1000,
         isClosable: true,
-      })
+      });
       setLoading(false);
-      Navigate('/home');
+      Navigate("/home");
     }
     console.log(response);
   };
@@ -149,11 +195,7 @@ function Createrecipe() {
     } else if (source.droppableId == "1" && destination == null) {
       return;
     } else if (source.droppableId == destination.droppableId) {
-      const reorderedItems = reorder(
-        items,
-        source.index,
-        destination.index
-      );
+      const reorderedItems = reorder(items, source.index, destination.index);
       setItems(reorderedItems);
     } else if (source.droppableId != destination.droppableId) {
       const { dataadded, dataadded2 } = additem(
@@ -175,6 +217,7 @@ function Createrecipe() {
       getallingredients();
     }
   };
+  
   const getallingredients = async () => {
     const requestOptions = {
       // method: "GET",
@@ -391,6 +434,7 @@ function Createrecipe() {
                                         >
                                           <CardBody>
                                             <Text>{data.ingredientname}</Text>
+                                            {/* <Input placeholder='Basic usage' /> */}
                                           </CardBody>
                                         </Card>
                                       );
@@ -472,8 +516,38 @@ function Createrecipe() {
                                           {...provided.dragHandleProps}
                                           ref={provided.innerRef}
                                         >
-                                          <CardBody>
+                                          <CardBody
+                                            sx={{
+                                              display: "flex",
+                                              justifyContent: "space-between",
+                                              alignItems: "center",
+                                            }}
+                                          >
                                             <Text>{data.ingredientname}</Text>
+                                            <Input
+                                              placeholder="Qty"
+                                              type="number"
+                                              sx={{ width: "100px" }}
+                                              name="quantity"
+                                              onChange={handleinputchange(data.ingredientname)}
+                                              // value={value<0?}
+                                              // disabled={Value<0?true:false}
+                                            />
+                                              {/* isRequired */}
+                                            <Select placeholder="Select option" name="size" onChange={handleinputchange(data.ingredientname)} isRequired>
+                                              <option value="ml">
+                                                ml
+                                              </option>
+                                              <option value="l">
+                                                l
+                                              </option>
+                                              <option value="gm">
+                                                gm
+                                              </option>
+                                              <option value="kg">
+                                                kg
+                                              </option>
+                                            </Select>
                                           </CardBody>
                                         </Card>
                                       );

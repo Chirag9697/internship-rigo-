@@ -37,13 +37,13 @@ const checktoken = (rolesdata) => {
         const token = req.headers['token'];
         console.log("token", token);
         if (!token) {
-            return res.status(400).send("you need to login first");
+            return res.status(200).send({ error: "you need to login first" });
         }
         console.log(process.env.PRIVATE_KEY);
         await jsonwebtoken_1.default.verify(token.toString(), process.env.PRIVATE_KEY, async function (err, decoded) {
             console.log(decoded);
             if (err) {
-                return res.status(400).send(err.message);
+                return res.status(200).send({ error: `${err.message}` });
             }
             // return decoded;
             // console.log("hello I am user",decoded);
@@ -56,7 +56,7 @@ const checktoken = (rolesdata) => {
             console.log("logged in");
             console.log(rolesdata);
             if (!rolesdata.includes(role.rolename)) {
-                return res.status(400).send("not accessible");
+                return res.status(200).send("not accessible");
             }
             next();
         });

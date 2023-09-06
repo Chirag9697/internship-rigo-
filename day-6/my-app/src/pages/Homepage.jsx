@@ -9,7 +9,12 @@ import { useToast } from "@chakra-ui/react";
 import { Card, CardBody } from "@chakra-ui/react";
 import { Stack } from "@chakra-ui/react";
 import { Image } from "@chakra-ui/react";
+// import FontAwesomeIcon from '@fortawesome/react-fontawesomes'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link } from "react-router-dom";
 import { Heading } from "@chakra-ui/react";
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons'
+
 import {
   Modal,
   ModalOverlay,
@@ -26,7 +31,7 @@ export default function Homepage() {
   const toast = useToast();
   const [allrecipies, setAllrecipies] = useState([]);
   const [newcomment, setNewcomment] = useState("");
-  const[commentrecipid,setCommentrecipeid]=useState();
+  const [commentrecipid, setCommentrecipeid] = useState();
 
   console.log(localStorage.getItem("token"));
   // navigate('/register');
@@ -35,6 +40,17 @@ export default function Homepage() {
   };
   const getallcomments = async (id) => {
     // setComments([]);
+    if (!localStorage["token"]) {
+      toast({
+        title: "error",
+        description: `you need to login first`,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      navigate("/login");
+      return;
+    }
     setCommentrecipeid(id);
     const requestOptions = {
       // method: "GET",
@@ -64,7 +80,7 @@ export default function Homepage() {
       // method: "GET",
       headers: {
         "Content-Type": "application/json",
-        token: localStorage["token"],
+        // token: localStorage["token"],
       },
     };
 
@@ -73,6 +89,7 @@ export default function Homepage() {
       requestOptions
     );
     const data = await recipies.data;
+
     // console.log(data);
     const allrecipy = data.recipies;
     console.log(allrecipy);
@@ -80,6 +97,17 @@ export default function Homepage() {
   };
   const addtofavourites = async (id) => {
     console.log(id);
+    if (!localStorage["token"]) {
+      toast({
+        title: "error",
+        description: `you need to login first`,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      navigate("/login");
+      return;
+    }
     const requestOptions = {
       // method: "GET",
       headers: {
@@ -117,9 +145,17 @@ export default function Homepage() {
     console.log("added to favourite recipe");
   };
   const handleaddcomment = async (id) => {
-    // e.preventDefault();
-    // console.log("id",e.target.id);
-    // console.log(allingredients);
+    if (!localStorage["token"]) {
+      toast({
+        title: "error",
+        description: `you need to login first`,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      navigate("/login");
+      return;
+    }
     console.log("ids", commentrecipid);
     const addnewcomment = {
       recipeid: commentrecipid,
@@ -136,11 +172,22 @@ export default function Homepage() {
       addnewcomment,
       requestOptions
     );
-    const data=await response.data;
+    const data = await response.data;
     // console.log(data);
     getallcomments(commentrecipid);
   };
   const liketherecipe = async (id) => {
+    if (!localStorage["token"]) {
+      toast({
+        title: "error",
+        description: `you need to login first`,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      navigate("/login");
+      return;
+    }
     console.log(id);
     const requestOptions = {
       // method: "GET",
@@ -190,17 +237,30 @@ export default function Homepage() {
     getallrecipies();
   };
   useEffect(() => {
-    if (localStorage.getItem("token") == null) {
-      navigate("/");
-      return;
-    }
+    // if (localStorage.getItem("token") == null) {
+    // navigate("/");
+    // return;
+    // }
     getallrecipies();
   }, []);
+  const handlecardclick=(id)=>{
+    if(!localStorage["token"]){
+      toast({
+        title: "error",
+        description: `you need to login first`,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      navigate("/login");
+      return;
+    }
+  }
 
   // if(loca)
   return (
     <>
-      <Navbar login={true} />
+      <Navbar login={!localStorage["token"] ? false : true} />
       <div style={{ width: "80vh", margin: "auto" }}>
         <Text sx={{ fontSize: "50px" }}>
           Get All <span style={{ color: "green" }}>Recipies</span> Here
@@ -208,93 +268,49 @@ export default function Homepage() {
       </div>
       <div
         style={{
-          marginTop: "10px",
-          width: "60vh",
+          marginTop: "20px",
+          width: "100%",
           margin: "auto",
           display: "flex",
-          flexDirection: "column",
+          // flexDirection: "column",
+          justifyContent:"center",
+          flexWrap:"wrap",
+          padding:"20px"
         }}
       >
         {allrecipies.map((recipe, index) => {
           return (
-            <Card key={recipe.id} maxW="sm" sx={{ marginBottom: "20px" }}>
+            <Link to={{pathname:!localStorage["token"]?"/login":`/recipe/${recipe.id}`}} state={{recipies:recipe}} >
+            <Card  key={recipe.id} maxW="sm" onClick={()=>handlecardclick(recipe.id)} sx={{ marginBottom: "20px",marginRight:"20px",cursor:"pointer"}}>
               <CardBody>
-                <Text>{recipe.username}</Text>
-
+                <Text sx={{marginBottom:"10px",fontWeight:"bold"}}>By {recipe.username}</Text>
+                {/* <FontAwesomeIcon icon={faCoffee} /> */}
+                <Text sx={{marginBottom:"10px"}}>
+                  
+                      {recipe.nooflikes} liked this recipe
+                </Text>
                 <Image
                   src={recipe.filename}
                   alt="Green double couch with wooden legs"
+                  sx={{maxHeight:"300px"}}
                   borderRadius="lg"
-                />
+                  />
                 <Stack mt="6" spacing="3">
                   <Heading size="md">{recipe.recipename}</Heading>
                   <Text>{recipe.description}</Text>
                 </Stack>
-                <Button
-                  colorScheme="blue"
+                {/*
+
                   onClick={() => addtofavourites(recipe.id)}
-                  sx={{backgroundColor:"#6bf679", marginRight: "10px" }}
-            
-                >
-                  Add to favourites
-                </Button>
-                <Button
-                  colorScheme="blue"
-
-                  sx={{backgroundColor:"#6bf679" ,marginRight: "10px" }}
                   onClick={() => liketherecipe(recipe.id)}
-                >
-                  {recipe.nooflikes} Like
-                </Button>
-                <Button
-                  colorScheme="blue"
-                  sx={{backgroundColor:"#6bf679"}}
-                  onClick={() => getallcomments(recipe.id)}
-                >
-                  comment
-                </Button>
+                onClick={() => getallcomments(recipe.id)}
+              */}
+                
+              
               </CardBody>
-              <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>Comments</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody sx={{}}>
-                    {/* <di>  */}
-                    <div style={{ height: "50vh", overflowY: "scroll" }}>
-                      {comments.map((comment, index) => {
-                        return (
-                          <div
-                            style={{
-                              width: "100%",
-                              backgroundColor: "red",
-                              marginBottom: "10px",
-                            }}
-                          >
-                            {comment.commenttext}
-                          </div>
-                        );
-                      })}
-                    </div>
-                    {/* </div> */}
-                  </ModalBody>
-
-                  <ModalFooter>
-                    <Input
-                      placeholder="Add comment"
-                      onChange={handlenewcommentchange}
-                      isRequired
-                    />
-                    <Button
-                      sx={{ backgroundColor: "#6bf679" }}
-                      onClick={() => handleaddcomment(recipe.id)}
-                    >
-                      Add
-                    </Button>
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
+             
             </Card>
+        </Link>
           );
         })}
       </div>

@@ -55,12 +55,14 @@ const upload = (0, multer_1.default)({ storage: storage });
 //     return datauri(path.extname(req.file.originalname).toString(), req.file.buffer);
 // }
 exports.router.post('/', upload.single('avatar'), (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
+    // console.log(JSON.parse(decodeURIComponent(req.body.ingredients)));
     const { email } = req.user;
+    const ingredients = req.body.ingredients;
+    console.log("ingredients", ingredients);
     const user = await fromusermodel.get_one2(email);
     const ownerid = user['id'];
     const extname = path_1.default.extname(req.file.originalname).toString();
     const file64 = parser.format(extname.toString(), req.file.buffer);
-    const { ingredients } = req.body;
     const { recipename, cookingtime, description, instruction } = req.body;
     const result = await cloudinary_1.v2.uploader.upload(file64.content);
     const filename = result.url;
@@ -70,21 +72,20 @@ exports.router.post('/', upload.single('avatar'), (0, check_token_1.checktoken)(
         return res.status(200).send(recipe);
     }
     catch (error) {
-        return res.status(400).send("there is some error");
+        return res.status(400).send({ error: `${error}` });
     }
-    return res.send("success");
 });
-exports.router.get('/', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
+exports.router.get('/', async (req, res) => {
     try {
-        const { email } = req.user;
-        const { findall } = req.body;
-        const user = fromusermodel.get_one2(email);
-        const ownerid = findall == true ? null : user['id'];
-        const result = await fromrecipemodel.get_all(req.query, ownerid);
+        // const {email}=req.user;
+        // const{findall}=req.body;
+        // const user=fromusermodel.get_one2(email);
+        // const ownerid=findall==true?null:user['id'];
+        const result = await fromrecipemodel.get_all(req.query, null);
         return res.status(200).send(result);
     }
     catch (error) {
-        return res.status(400).send('there is some error');
+        return res.status(200).send({ error: `${error}` });
     }
 });
 exports.router.get('/myrecipies', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
@@ -98,7 +99,7 @@ exports.router.get('/myrecipies', (0, check_token_1.checktoken)(['admin', 'user'
         return res.status(200).send(result);
     }
     catch (error) {
-        return res.status(200).send({ error: `${error}` });
+        return res.status(400).send({ error: `${error}` });
     }
 });
 exports.router.delete('/:id', (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
@@ -110,7 +111,7 @@ exports.router.delete('/:id', (0, check_token_1.checktoken)(['admin', 'user']), 
         return res.status(200).send("successfully deleted");
     }
     catch (error) {
-        return res.status(400).send("there is some error");
+        return res.status(400).send({ error: `${error}` });
     }
 });
 exports.router.put('/:id', upload.single('avatar'), (0, check_token_1.checktoken)(['admin', 'user']), async (req, res) => {
@@ -130,7 +131,7 @@ exports.router.put('/:id', upload.single('avatar'), (0, check_token_1.checktoken
         return res.send('successfully updated');
     }
     catch (error) {
-        return res.send("not able to update");
+        return res.status(400).send({ error: `${error}` });
     }
 });
 //# sourceMappingURL=recipe-route.js.map

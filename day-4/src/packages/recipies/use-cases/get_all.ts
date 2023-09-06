@@ -1,6 +1,7 @@
 import {recipies} from '../domain/recipies';
 import { likes } from '../../likes';
 import * as fromusermodel from '../../users';
+import * as fromrecipeingredientmodel from '../../recipeingredients';
 
 export const get_all=async(data:any,ownerid:any)=>{
     const query=recipies.query();
@@ -34,7 +35,8 @@ export const get_all=async(data:any,ownerid:any)=>{
         
         // console.log("users",user.name);
         const nooflikes=await likes.query().where('recipeid','=',`${finalrecipies.results[i].id}`).count();
-        const newresult={...finalrecipies.results[i],username:user.name,nooflikes:nooflikes[0]['count(*)'],};
+        const ingredients=await fromrecipeingredientmodel.get_all(finalrecipies.results[i].id)
+        const newresult={...finalrecipies.results[i],username:user.name,nooflikes:nooflikes[0]['count(*)'],ingredients:ingredients};
         finalrecipies2.push(newresult);
     }
     // const newfinalrecipies=finalrecipies.results.map(async(finalrecipe)=>{

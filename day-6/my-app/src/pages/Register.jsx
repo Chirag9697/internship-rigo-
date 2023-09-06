@@ -35,7 +35,17 @@ export default function Register() {
       );
     //   const exactdata=await register.data;
     //   if()
-    if(!register){
+    const data=await register.data;
+        console.log(data);
+    console.log(data);
+    if(data.error){
+      toast({
+        title: 'Account not created.',
+        description:`${data.error}`,
+        status: 'error',
+        duration: 1000,
+        isClosable: true,
+      })
         console.log("not able to register");
         return;
     }

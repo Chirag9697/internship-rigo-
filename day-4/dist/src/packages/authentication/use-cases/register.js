@@ -34,8 +34,9 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const register = async (data) => {
     const { email, password, name, roleuser } = data;
-    const finduser = fromusers.get_one2(email);
-    if (!finduser) {
+    const finduser = await fromusers.get_one2(email);
+    console.log("users", finduser);
+    if (finduser) {
         throw new Error("email is already used");
         return;
     }

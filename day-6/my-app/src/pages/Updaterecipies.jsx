@@ -91,7 +91,7 @@ function Updaterecipies(props) {
 
   const handlecreaterecipe = async (e) => {
     e.preventDefault();
-    console.log("creating recipe");
+    console.log("updating recipe");
     setLoading(true);
     const allingredients = ingredients.map((ingredient) => {
       return ingredient.itemtobeadded.id;
