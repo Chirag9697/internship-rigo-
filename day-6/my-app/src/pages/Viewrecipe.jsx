@@ -4,10 +4,12 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useLocation, Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import axios from "axios";
+import ReactStars from "react-rating-stars-component";
 import { Image, Box, Text, Textarea } from "@chakra-ui/react";
 import { Fade, ScaleFade, Slide, SlideFade, Collapse } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
+import Rating from "react-rating";
 import { useDisclosure } from "@chakra-ui/react";
 
 import {
@@ -29,9 +31,18 @@ export default function Viewrecipe() {
   const [newcomment, setNewcomment] = useState("");
   const navigate = useNavigate();
   const [comments, setComments] = useState([]);
+  const [rating, setRating] = useState(0);
   // console.log(id);
   const { state } = useLocation();
   console.log(state);
+  const handleRating = (rate) => {
+    setRating(rate); // other logic
+  };
+  // Optinal callback functions
+  const onPointerEnter = () => console.log("Enter");
+  const onPointerLeave = () => console.log("Leave");
+  const onPointerMove = (value, index) => console.log(value, index);
+
   const getallcomments = async () => {
     if (!localStorage["token"]) {
       navigate("/login");
@@ -216,11 +227,18 @@ export default function Viewrecipe() {
           backgroundColor: "red",
           width: "90%",
           alignItems: "center",
-          margin:"auto"
+          margin: "auto",
         }}
-
       >
-        <div style={{ marginTop:"20px",width:"100%",display: "flex",justifyContent:"center", backgroundColor: "blue" }}>
+        <div
+          style={{
+            marginTop: "20px",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            backgroundColor: "blue",
+          }}
+        >
           <div
             style={{
               width: "70%",
@@ -251,22 +269,34 @@ export default function Viewrecipe() {
                 </Tbody>
               </Table>
             </TableContainer>
-           
           </div>
           <div>
-              <Text sx={{ fontWeight: "bold" }}>
-                By {state.recipies.username}
-              </Text>
-              <Image
-                sx={{ width: "500px" }}
-                src={`${state.recipies.filename}`}
-                alt="Dan Abramov"
-              />
-            </div>
+            <Text sx={{ fontWeight: "bold" }}>
+              By {state.recipies.username}
+            </Text>
+            <Image
+              sx={{ width: "500px" }}
+              src={`${state.recipies.filename}`}
+              alt="Dan Abramov"
+            />
+          </div>
         </div>
-        <div style={{marginTop:"10px",width:"30%",backgroundColor:"purple",display:"flex",justifyContent:"space-evenly",marginBottom:"10px"}}>
-          <Button colorScheme="blue" onClick={addtofavourites}>Add to favourites</Button>
-          <Button colorScheme="blue" onClick={liketherecipe}>Like recipe</Button>
+        <div
+          style={{
+            marginTop: "10px",
+            width: "30%",
+            backgroundColor: "purple",
+            display: "flex",
+            justifyContent: "space-evenly",
+            marginBottom: "10px",
+          }}
+        >
+          <Button colorScheme="blue" onClick={addtofavourites}>
+            Add to favourites
+          </Button>
+          <Button colorScheme="blue" onClick={liketherecipe}>
+            Like recipe
+          </Button>
         </div>
       </div>
       <div
@@ -318,7 +348,18 @@ export default function Viewrecipe() {
                 }}
               >
                 {/* <p>by{comment.commentowner}</p> */}
-                <Text sx={{fontWeight:"bold"}}>by {comment.commentowner}</Text>
+                <Text sx={{ fontWeight: "bold" }}>
+                  by {comment.commentowner}
+                </Text>
+                <ReactStars
+                      count={5}
+                      value={4.5}
+                      // onChange={ratingChanged}
+                      // value={5}
+                      size={24}
+                      activeColor="#ffd700"
+                      isHalf={true}
+                    />
                 <p>{comment.commenttext}</p>
               </div>
             );
@@ -336,12 +377,23 @@ export default function Viewrecipe() {
                 sx={{ display: "flex" }}
               >
                 <form onSubmit={addcomment} style={{ width: "100%" }}>
+                  <div>
+                    <ReactStars
+                      count={5}
+                      // onChange={ratingChanged}
+                      size={24}
+                      isHalf={true}
+                      activeColor="#ffd700"
+                    />
+                    
+                  </div>
                   <Textarea
                     placeholder="Add new comment"
                     style={{ color: "black" }}
                     onChange={(e) => setNewcomment(e.target.value)}
                     isRequired
                   />
+
                   <Button colorScheme="blue" type="submit">
                     Add
                   </Button>

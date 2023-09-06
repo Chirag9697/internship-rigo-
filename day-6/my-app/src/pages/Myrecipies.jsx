@@ -126,7 +126,7 @@ export default function Myrecipies() {
     setUpdate(true);
   };
   const handlecommentupdate = (id) => {
-    // setCommentrecipeid(id);
+    setCommentrecipeid(id);
     getallcomments(id);
   };
   const deletecomment = async (id) => {
