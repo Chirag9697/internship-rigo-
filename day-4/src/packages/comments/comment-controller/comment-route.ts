@@ -22,6 +22,9 @@ router.post('/',checktoken(['admin','user']),async(req,res)=>{
 
 router.get('/:id',checktoken(['admin','user']),async(req,res)=>{
     try{
+        // const{email}=req.user;
+        // const user=await fromusermodel.get_one2(email);
+
         const{id}=req.params
         const allcomments=await fromcommentmodel.get_all(id);
         console.log(allcomments);
